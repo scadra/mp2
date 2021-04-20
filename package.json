@@ -1,0 +1,30 @@
+{
+  "name": "agora-front",
+  "private": true,
+  "scripts": {
+    "develop": "gridsome develop",
+    "explore": "gridsome explore",
+    "build": "gridsome build"
+  },
+  "dependencies": {
+    "@types/vuelidate": "^0.7.14",
+    "axios": "^0.21.1",
+    "buefy": "^0.9.6",
+    "gridsome": "^0.7.23",
+    "gridsome-plugin-typescript": "^0.4.0",
+    "install": "^0.13.0",
+    "inversify-props": "^2.2.6",
+    "reflect-metadata": "^0.1.13",
+    "sass": "^1.32.11",
+    "sass-loader": "^10.0.5",
+    "ts-loader": "^8.0.9",
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4",
+    "vue-property-decorator": "^9.1.2",
+    "vue-router": "^3.5.1",
+    "vuelidate": "^0.7.6",
+    "vuelidate-property-decorators": "^1.0.28",
+    "vuex": "^3.6.2",
+    "vuex-module-decorators": "^1.0.1"
+  }
+}

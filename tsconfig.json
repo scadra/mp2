@@ -1,0 +1,65 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "strict": true,
+        "jsx": "preserve",
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "strictNullChecks": false,
+        "baseUrl": ".",
+        "types": [
+            "reflect-metadata",
+            "node"
+        ],
+        "paths": {
+            "@/*": [
+                "src/*"
+            ],
+            "Assets/*": [
+                "src/assets/*"
+            ],
+            "Components/*": [
+                "src/components/*"
+            ],
+            "Config/*": [
+                "src/config/*"
+            ],
+            "Constants/*": [
+                "src/constants/*"
+            ],
+            "Interfaces/*": [
+                "src/services/interfaces/*"
+            ],
+            "Models/*": [
+                "src/models/*"
+            ],
+            "Pages/*": [
+                "src/pages/*"
+            ],
+            "Services/*": [
+                "src/services/impl/*"
+            ],
+            "Store/*": [
+                "src/store/*"
+            ],
+            "Utils/*": [
+                "src/utils/*"
+            ],
+            "Views/*": [
+                "src/views/*"
+            ],
+        },
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ]
+    },
+}
