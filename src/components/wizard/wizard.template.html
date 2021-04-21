@@ -1,0 +1,10 @@
+<div>
+    <ul class="steps">
+        <li class="steps-segment"  v-for="(step, index) in steps" :key="index" >
+          <span class="steps-marker">{{step.icon}}</span>
+          <div class="steps-content">
+            <p class="is-size-4">{{step.title}}</p>
+          </div>
+        </li>
+    </ul>
+</div>

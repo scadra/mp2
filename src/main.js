@@ -22,7 +22,7 @@ export default function (Vue, {
   // Load dependency injection
   buildDependencyContainer();
   // Create defaut component
-  Vue.component('Root', RootLayout);
+  Vue.component('Layout', RootLayout);
 
   // Load dependency only for the client
   if (isClient) {

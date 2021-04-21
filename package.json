@@ -10,6 +10,7 @@
     "@types/vuelidate": "^0.7.14",
     "axios": "^0.21.1",
     "buefy": "^0.9.6",
+    "bulma-o-steps": "^1.1.0",
     "gridsome": "^0.7.23",
     "gridsome-plugin-typescript": "^0.4.0",
     "install": "^0.13.0",
