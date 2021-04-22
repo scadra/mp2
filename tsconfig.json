@@ -51,6 +51,9 @@
             "Utils/*": [
                 "src/utils/*"
             ],
+            "Validations/*": [
+                "src/validations/*"
+            ],
             "Views/*": [
                 "src/views/*"
             ],

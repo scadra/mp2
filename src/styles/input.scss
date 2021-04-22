@@ -1,0 +1,121 @@
+@import 'Styles/colors.scss';
+
+.select {
+    select {
+        &:focus {
+            border-color: $primary-color !important;
+        }
+
+        &:active {
+            border-color: $primary-color !important;
+        }
+    }
+
+    select.is-focused {
+        border-color: $primary-color !important;
+    }
+
+    select.is-active {
+        border-color: $primary-color !important;
+    }
+}
+
+.taginput {
+    .taginput-container.is-focusable {
+        &:focus {
+            border-color: $primary-color !important;
+        }
+
+        &:active {
+            border-color: $primary-color !important;
+        }
+    }
+
+    .is-focused.taginput-container.is-focusable {
+        border-color: $primary-color !important;
+    }
+
+    .is-active.taginput-container.is-focusable {
+        border-color: $primary-color !important;
+    }
+}
+
+.textarea {
+    &:focus {
+        border-color: $primary-color !important;
+    }
+
+    &:active {
+        border-color: $primary-color !important;
+    }
+}
+
+.input {
+    &:focus {
+        border-color: $primary-color !important;
+    }
+
+    &:active {
+        border-color: $primary-color !important;
+    }
+}
+
+.is-focused.textarea {
+    border-color: $primary-color !important;
+}
+
+.is-focused.input {
+    border-color: $primary-color !important;
+}
+
+.is-active.textarea {
+    border-color: $primary-color !important;
+}
+
+.is-active.input {
+    border-color: $primary-color !important;
+}
+
+input {
+    border-radius: 10px !important;
+    border:1px solid $base-color !important;
+}
+.file.is-info .file-cta {
+    background-color: $complementary-color !important;
+}
+.file-cta, .file-name {
+    border-radius: 10px !important;
+    border-color: $base-color !important;
+}
+
+.file-label {
+    width: 100%;
+}
+
+.file-name {
+    width: 100%;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    max-width: none !important;
+}
+
+.file-cta {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+.is-danger.input {
+    border-color: $error-color !important;
+}
+
+.file.is-danger {
+    .file-cta {
+        background: $error-color !important;
+        border-color: $error-color !important;
+    }
+    .file-name {
+        border-color: $error-color !important;
+    }
+}
+.file {
+    margin-bottom: 0px !important;
+}

@@ -28,5 +28,6 @@ module.exports = {
       .set('Templates', path.resolve(__dirname, './src/templates/'))
       .set('Store', path.resolve(__dirname, './src/store/'))
       .set('Utils', path.resolve(__dirname, './src/utils/'))
+      .set('Validations', path.resolve(__dirname, './src/validations/'))
   },
 }

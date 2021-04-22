@@ -1,0 +1,22 @@
+<div>
+    <p class="buttons">
+        <button class="button is-link" @click="back()"  v-if="currentStep > 0">
+          <span class="icon is-small">
+            <i class="fas fa-step-backward"></i>
+          </span>
+          <span>Back</span>
+        </button>
+        <button class="button is-primary is-outlined" @click="next()" v-if="currentStep < steps.length - 1">
+          <span>Next</span>
+          <span class="icon is-small">
+            <i class="fas fa-step-forward"></i>
+          </span>
+        </button>
+        <button class="button is-primary is-outlined" @click="save()" v-if="currentStep === steps.length - 1">
+            <span>Confirm</span>
+            <span class="icon is-small">
+              <i class="fas fa-step-forward"></i>
+            </span>
+          </button>
+      </p>
+</div>

@@ -13,6 +13,8 @@ import buildDependencyContainer from '@/app.container';
 //Scss files
 import 'Styles/main.scss';
 import 'buefy/dist/buefy.css';
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 export default function (Vue, {
   router,

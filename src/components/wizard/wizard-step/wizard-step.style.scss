@@ -1,0 +1,65 @@
+@import "Styles/colors.scss";
+
+
+.steps {
+    margin: 6% 1% 4% 1%;
+    &:not(.is-hollow) {
+        .is-complete {
+            &::after  {
+                background-color: $complementary-color !important;
+            }
+        }
+        .steps-segment.is-active {
+            .steps-marker {
+                &:not(.is-hollow) {
+                    background-color: $complementary-color;
+                }
+            }
+
+            &::after {
+                background: linear-gradient(90deg, $complementary-color 50%, $base-color 50%);
+            }
+
+            .steps-content {
+                color: $complementary-color;
+            }
+        }
+       .steps-segment {
+            .steps-marker {
+                height: 2.2rem;
+                width: 2.2rem;
+            }
+
+            .steps-content {
+                margin-top: 2%;
+                color: $base-color;
+            }
+
+            &::after {
+                background: $base-color;
+            }
+
+            &:not(:last-child) {
+                &::after {
+                    height: 0.2em !important;
+                    top: calc(1.3rem - (0.2em)) !important;
+                }
+            }
+        }
+
+        .steps-segment.is-active ~ .steps-segment {
+            .steps-marker {
+                &:not(.is-hollow) {
+                    background-color: $base-color;
+                    color: white;
+                }
+            }
+        }
+        .steps-marker {
+            &:not(.is-hollow) {
+                background-color: $complementary-color;
+            }
+            
+        }
+    }
+}

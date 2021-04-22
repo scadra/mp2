@@ -1,0 +1,12 @@
+<div>
+  <ul class="steps has-content-centered">
+    <li class="steps-segment" v-for="(step, index) in steps" :key="index"
+      :class="{'is-active': index === syncCurrentStep, 'is-complete': syncCurrentStep > index}">
+      <span class="steps-marker"><em :class="[step.icon]"></em></span>
+      <em data-v-6196e72f="" class="fas fa-info-circle"></em>
+      <div class="steps-content">
+        <p class="is-size-6">{{step.title}}</p>
+      </div>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,56 @@
+<div class="columns is-multiline">
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Product name:</strong>
+            </div>
+            <div class="column is-8">
+                <input class="input" type="text" v-model="syncApi.productName"
+                    :class="{'is-danger': $v.api.productName.$invalid && $v.api.productName.$dirty}"
+                    @blur="$v.api.productName.$touch()">
+                <p class="help is-danger" v-if="$v.api.productName.$invalid && $v.api.productName.$dirty">This field is
+                    required</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Organization name:</strong>
+            </div>
+            <div class="column is-8">
+                <input class="input" type="text" v-model="api.organization"
+                    :class="{'is-danger': $v.api.organization.$invalid && $v.api.organization.$dirty}"
+                    @blur="$v.api.organization.$touch()">
+                <p class="help is-danger" v-if="$v.api.organization.$invalid && $v.api.organization.$dirty">This field
+                    is
+                    required</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Swagger:</strong>
+            </div>
+            <div class="column is-8">
+                <b-field class="file">
+                    <b-upload v-model="api.swagger" expanded>
+                        <a class="button is-primary is-fullwidth"
+                            :class="{'is-danger': $v.api.swagger.$invalid && $v.api.swagger.$dirty}"
+                            @click="$v.api.swagger.$touch">
+                            <b-icon icon="api.swagger"></b-icon>
+                            <span>{{ getFileName(api.swagger) }}</span>
+                        </a>
+                    </b-upload>
+                </b-field>
+                <p class="help is-danger"
+                    v-if="$v.api.swagger.$invalid && $v.api.swagger.$dirty && !$v.api.swagger.required">This field is
+                    required</p>
+                <p class="help is-danger"
+                    v-if="$v.api.swagger.$invalid && $v.api.swagger.$dirty && !$v.api.swagger.fileFormat">This format is
+                    not supported (please use json, yaml)</p>
+            </div>
+        </div>
+    </div>
+</div>

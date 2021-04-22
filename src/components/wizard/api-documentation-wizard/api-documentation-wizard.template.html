@@ -1,0 +1,52 @@
+<div class="columns is-multiline">
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Overview:</strong>
+            </div>
+            <div class="column is-8">
+                <b-field class="file">
+                    <b-upload v-model="api.swagger" expanded>
+                        <a class="button is-primary is-fullwidth"
+                            :class="{'is-danger': $v.api.overview.$invalid && $v.api.overview.$dirty}"
+                            @click="$v.api.overview.$touch">
+                            <b-icon icon="api.overview"></b-icon>
+                            <span>{{ getFileName() }}</span>
+                        </a>
+                    </b-upload>
+                </b-field>
+                <p class="help is-danger"
+                    v-if="$v.api.overview.$invalid && $v.api.overview.$dirty && !$v.api.overview.required">This field is
+                    required</p>
+                <p class="help is-danger"
+                    v-if="$v.api.overview.$invalid && $v.api.overview.$dirty && !$v.api.overview.fileFormat">This format is
+                    not supported (please use json, yaml)</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Documentation:</strong>
+            </div>
+            <div class="column is-8">
+                <b-field class="file">
+                    <b-upload v-model="api.documentation" expanded>
+                        <a class="button is-primary is-fullwidth"
+                            :class="{'is-danger': $v.api.documentation.$invalid && $v.api.documentation.$dirty}"
+                            @click="$v.api.documentation.$touch">
+                            <b-icon icon="api.documentation"></b-icon>
+                            <span>{{ getFileName() }}</span>
+                        </a>
+                    </b-upload>
+                </b-field>
+                <p class="help is-danger"
+                    v-if="$v.api.documentation.$invalid && $v.api.documentation.$dirty && !$v.api.documentation.required">This field is
+                    required</p>
+                <p class="help is-danger"
+                    v-if="$v.api.documentation.$invalid && $v.api.documentation.$dirty && !$v.api.documentation.fileFormat">This format is
+                    not supported (please use json, yaml)</p>
+            </div>
+        </div>
+    </div>
+</div>
