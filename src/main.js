@@ -19,7 +19,8 @@ import '@fortawesome/fontawesome-free/js/all.js'
 export default function (Vue, {
   router,
   head,
-  isClient
+  isClient,
+  appOptions
 }) {
   // Load dependency injection
   buildDependencyContainer();
@@ -33,6 +34,8 @@ export default function (Vue, {
     Vue.use(Vuex);
     Vue.use(Vuelidate);
     Vue.use(VueRouter);
+    // Define globale use for ts
+    appOptions.$v = Vuelidate;
   }
 
 }

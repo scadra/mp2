@@ -48,8 +48,8 @@
                     v-if="$v.api.swagger.$invalid && $v.api.swagger.$dirty && !$v.api.swagger.required">This field is
                     required</p>
                 <p class="help is-danger"
-                    v-if="$v.api.swagger.$invalid && $v.api.swagger.$dirty && !$v.api.swagger.fileFormat">This format is
-                    not supported (please use json, yaml)</p>
+                    v-if="$v.api.swagger.$invalid && $v.api.swagger.$dirty && !$v.api.swagger.fileFormat && $v.api.swagger.required">This format is
+                    not supported (please use json, yaml format)</p>
             </div>
         </div>
     </div>

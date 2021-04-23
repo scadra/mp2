@@ -6,13 +6,13 @@
           </span>
           <span>Back</span>
         </button>
-        <button class="button is-primary is-outlined" @click="next()" v-if="currentStep < steps.length - 1">
+        <button class="button is-primary is-outlined" @click="next()" v-if="currentStep < steps.length - 1" :disabled="isValid()">
           <span>Next</span>
           <span class="icon is-small">
             <i class="fas fa-step-forward"></i>
           </span>
         </button>
-        <button class="button is-primary is-outlined" @click="save()" v-if="currentStep === steps.length - 1">
+        <button class="button is-primary is-outlined" @click="save()" v-if="currentStep === steps.length - 1" :disabled="isValid()">
             <span>Confirm</span>
             <span class="icon is-small">
               <i class="fas fa-step-forward"></i>

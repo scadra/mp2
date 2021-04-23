@@ -13,11 +13,6 @@ export default class ApiDocumentationWizard extends Vue{
     @PropSync("api") syncApi!: ApiCreation;
     @Validations() validations = ValidationApiModel;
 
-    handleFileUpload(event: any) {
-        this.syncApi.overview = event.target.files[0];
-        this.syncApi.documentation = event.target.files[0];
-    }
-
     getFileName(file: File): string {
         return MessageDisplay.getFileName(file);
     }

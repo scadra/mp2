@@ -8,6 +8,9 @@
             &::after  {
                 background-color: $complementary-color !important;
             }
+            .steps-content {
+                    color: $complementary-color !important;
+            }
         }
         .steps-segment.is-active {
             .steps-marker {

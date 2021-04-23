@@ -6,12 +6,12 @@
             </div>
             <div class="column is-8">
                 <b-field class="file">
-                    <b-upload v-model="api.swagger" expanded>
+                    <b-upload v-model="api.overview" expanded>
                         <a class="button is-primary is-fullwidth"
                             :class="{'is-danger': $v.api.overview.$invalid && $v.api.overview.$dirty}"
                             @click="$v.api.overview.$touch">
                             <b-icon icon="api.overview"></b-icon>
-                            <span>{{ getFileName() }}</span>
+                            <span>{{ getFileName(api.overview) }}</span>
                         </a>
                     </b-upload>
                 </b-field>
@@ -19,8 +19,8 @@
                     v-if="$v.api.overview.$invalid && $v.api.overview.$dirty && !$v.api.overview.required">This field is
                     required</p>
                 <p class="help is-danger"
-                    v-if="$v.api.overview.$invalid && $v.api.overview.$dirty && !$v.api.overview.fileFormat">This format is
-                    not supported (please use json, yaml)</p>
+                    v-if="$v.api.overview.$invalid && $v.api.overview.$dirty && !$v.api.overview.fileFormat && $v.api.overview.required">This format is
+                    not supported (please use html format)</p>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
                             :class="{'is-danger': $v.api.documentation.$invalid && $v.api.documentation.$dirty}"
                             @click="$v.api.documentation.$touch">
                             <b-icon icon="api.documentation"></b-icon>
-                            <span>{{ getFileName() }}</span>
+                            <span>{{ getFileName(api.documentation) }}</span>
                         </a>
                     </b-upload>
                 </b-field>
@@ -44,8 +44,8 @@
                     v-if="$v.api.documentation.$invalid && $v.api.documentation.$dirty && !$v.api.documentation.required">This field is
                     required</p>
                 <p class="help is-danger"
-                    v-if="$v.api.documentation.$invalid && $v.api.documentation.$dirty && !$v.api.documentation.fileFormat">This format is
-                    not supported (please use json, yaml)</p>
+                    v-if="$v.api.documentation.$invalid && $v.api.documentation.$dirty && !$v.api.documentation.fileFormat && $v.api.documentation.required">This format is
+                    not supported (please use html format)</p>
             </div>
         </div>
     </div>
