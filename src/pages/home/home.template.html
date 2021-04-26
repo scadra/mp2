@@ -7,10 +7,11 @@
                 <p class="has-text-right step is-size-7 light-text">Step {{currentStep + 1}}/{{steps.length }}</p>
                 <transition name="fade" mode="out-in">
                     <api-information-wizard v-if="currentStep === 0" :api.sync="api"></api-information-wizard>
-                    <api-documentation-wizard v-if="currentStep === 1" :api.sync="api"></api-documentation-wizard>
+                    <api-authorization-wizard v-if="currentStep === 1" :api.sync="api" ></api-authorization-wizard>
+                    <api-documentation-wizard v-if="currentStep === 2" :api.sync="api"></api-documentation-wizard>
                 </transition>
             </div>
-            <wizard-footer :steps="steps" :currentStep.sync="currentStep"></wizard-footer>
+            <wizard-footer :steps="steps" :currentStep.sync="currentStep" @confirm="confirm()"></wizard-footer>
         </div>
     </div>
 </Layout>

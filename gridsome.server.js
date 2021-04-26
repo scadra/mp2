@@ -5,9 +5,31 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
+const {
+  createProxyMiddleware
+} = require("http-proxy-middleware");
+
 module.exports = function (api) {
+
+  // Create middleware for api
+  api.configureServer(app => {
+    app.use(
+      createProxyMiddleware("/api/", {
+        target: `${process.env.GRIDSOME_CAMUNDA_URL}`,
+        changeOrigin: true
+      }),
+    );
+  });
+
   api.loadSource(({ addCollection }) => {
-    // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
+    api.configureServer(app => {
+      app.use(
+        createProxyMiddleware("/api/", {
+          target: `${process.env.GRIDSOME_CAMUNDA_URL}`,
+          changeOrigin: true
+        }),
+      );
+    });
   })
 
   api.createPages(({ createPage }) => {

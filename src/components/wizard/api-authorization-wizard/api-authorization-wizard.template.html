@@ -1,0 +1,57 @@
+<div class="columns is-multiline">
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Model :</strong>
+            </div>
+            <div class="column is-8">
+                <b-field>
+                    <b-select placeholder="Select a authorization model"  v-model="api.authorizationModel">
+                        <option
+                            v-for="option in authorizationModels"
+                            :value="option"
+                            :key="option">
+                            {{ option }}
+                        </option>
+                    </b-select>
+                </b-field>
+                <p class="help is-danger" v-if="$v.api.authorizationModel.$invalid && $v.api.authorizationModel.$dirty">This field is
+                    required</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Url:</strong>
+            </div>
+            <div class="column is-8">
+                <input class="input" type="text" v-model="api.authorizationUrl"
+                    :class="{'is-danger': $v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty}"
+                    @blur="$v.api.authorizationUrl.$touch()">
+                <p class="help is-danger" v-if="$v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty && !$v.api.authorizationUrl.required">This field
+                    is
+                    required</p>
+                <p class="help is-danger" v-if="$v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty && $v.api.authorizationUrl.required && !$v.api.authorizationUrl.url">This field
+                        has to be an url</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Token url:</strong>
+            </div>
+            <div class="column is-8">
+                <input class="input" type="text" v-model="api.authorizationTokenUrl"
+                    :class="{'is-danger': $v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty}"
+                    @blur="$v.api.authorizationTokenUrl.$touch()">
+                <p class="help is-danger" v-if="$v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty && !$v.api.authorizationTokenUrl.required">This field
+                    is
+                    required</p>
+                <p class="help is-danger" v-if="$v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty && $v.api.authorizationTokenUrl.required && !$v.api.authorizationTokenUrl.url">This field
+                        has to be an url</p>
+            </div>
+        </div>
+    </div>
+</div>

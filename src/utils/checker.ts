@@ -1,7 +1,18 @@
+/**
+ * An utils to check some format, extensions,...
+ * @class
+ */
 export class Checker {
-    static allowedFormat(filename: string, formats: Array<string>): boolean {
-        let extension = filename.split(".");
-        console.log(extension)
-        return formats.includes(extension[extension.length - 1]);
-    }
+
+  /**
+   * Check if the filename extension is allowed
+   * @string filename: as all extensions files are not supported, we check the extension in the filename
+   * @Array formats: to specify the allowed formats
+   * @static
+   * @returns boolean
+   */
+  static allowedFormat(filename: string, formats: Array<string>): boolean {
+    let extension = filename.split(".");
+    return formats.includes(extension[extension.length - 1]);
+  }
 }

@@ -119,3 +119,21 @@ input {
 .file {
     margin-bottom: 0px !important;
 }
+
+.select {
+    width: 100%;
+
+    select { 
+        background-color: $complementary-color !important;
+        color: white !important;
+        width: 100%;
+
+        option {
+            background-color: white !important;
+        }
+    }
+    
+    &::after {
+        border-color: white !important;
+    }
+}

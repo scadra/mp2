@@ -13,6 +13,13 @@ module.exports = {
     }
   ],
   chainWebpack: (config) => {
+    devServer = {
+      proxy: {
+        '/api': {
+          target: process.env.GRIDSOME_CAMUNDA_URL
+        }
+      },
+    },
     config.resolve.alias
       .set('Assets', path.resolve(__dirname, './src/assets/'))
       .set('Aspsp', path.resolve(__dirname, './src/aspsp/'))

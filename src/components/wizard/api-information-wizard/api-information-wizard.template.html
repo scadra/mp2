@@ -31,6 +31,23 @@
     <div class="column is-10 is-offset-1">
         <div class="columns">
             <div class="column is-3 label-form dark-text">
+                <strong>Host:</strong>
+            </div>
+            <div class="column is-8">
+                <input class="input" type="text" v-model="api.host"
+                    :class="{'is-danger': $v.api.host.$invalid && $v.api.host.$dirty}"
+                    @blur="$v.api.host.$touch()">
+                <p class="help is-danger" v-if="$v.api.host.$invalid && $v.api.host.$dirty && !$v.api.host.required">This field
+                    is
+                    required</p>
+                <p class="help is-danger" v-if="$v.api.host.$invalid && $v.api.host.$dirty && $v.api.host.required && !$v.api.host.url">This field
+                        has to be an url</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
                 <strong>Swagger:</strong>
             </div>
             <div class="column is-8">

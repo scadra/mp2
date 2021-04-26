@@ -15,6 +15,8 @@ import 'Styles/main.scss';
 import 'buefy/dist/buefy.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
+//Internal dependencies
+import store from 'Store'
 
 export default function (Vue, {
   router,
@@ -37,5 +39,5 @@ export default function (Vue, {
     // Define globale use for ts
     appOptions.$v = Vuelidate;
   }
-
+  appOptions.store = new Vuex.Store(store)
 }
