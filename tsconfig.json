@@ -1,7 +1,8 @@
 {
+    "exclude": ["node_modules"],
     "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
+        "target": "ES2019",
+        "module": "ESnext",
         "strict": true,
         "jsx": "preserve",
         "importHelpers": true,
@@ -15,7 +16,8 @@
         "baseUrl": ".",
         "types": [
             "reflect-metadata",
-            "node"
+            "node",
+            "@types/jest"
         ],
         "paths": {
             "@/*": [
@@ -59,7 +61,7 @@
             ],
         },
         "lib": [
-            "esnext",
+            "ES2019",
             "dom",
             "dom.iterable",
             "scripthost"
