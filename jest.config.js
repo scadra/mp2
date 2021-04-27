@@ -2,26 +2,20 @@
  * @see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-jest/presets/default
  */
 module.exports = {
+    testRegex: "((\\.|/)spec)\\.(jsx?|tsx?)$",
     moduleFileExtensions: [
-        'js',
-        'jsx',
-        'json',
-        'vue',
-        "ts"
+      "js",
+      "ts",
+      "json",
+      "vue"
     ],
-    transform: {
-        '^.+\\.vue$': require.resolve('vue-jest'),
-        '^.+\\.jsx?$': require.resolve('babel-jest'),
-        "^.+\\.tsx?$": require.resolve("ts-jest"),
-    },
-    transformIgnorePatterns: ['/node_modules/'],
     moduleNameMapper: {
-        'Components/(.*)$': '<rootDir>/src/components/$1',
-        '^__test-utils__/(.)$': '<rootDir>/js/app/__test-utils__/$'
+        "Store(.*)$": "<rootDir>/src/store/$1"
     },
-    testMatch: [
-        '**/tests/**/**/*.spec.ts',
-        '**/tests/**/*.spec.ts',
-        '**/__tests__/*.[jt]s?(x)'
-    ],
+    transform: {
+      ".*\\.(vue)$": "vue-jest",
+      "^.+\\.ts?$": "ts-jest",
+      "^.+\\.js$": "babel-jest"
+    },
+    testURL: "http://localhost/"
 }

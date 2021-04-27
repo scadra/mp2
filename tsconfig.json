@@ -17,7 +17,7 @@
         "types": [
             "reflect-metadata",
             "node",
-            "@types/jest"
+            "jest",
         ],
         "paths": {
             "@/*": [

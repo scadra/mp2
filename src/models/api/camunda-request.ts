@@ -6,5 +6,5 @@ import { ApiCreation } from 'Models/api/api-creation';
  * @class
  */
 export class CamundaRequest {
-    variables: ApiCreation;
+    variables: ApiCreation; 
 }
