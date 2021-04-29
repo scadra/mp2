@@ -27,6 +27,7 @@ export default function (Vue, {
 }) {
   // Load dependency injection
   buildDependencyContainer();
+  
   // Create defaut component
   Vue.component('Layout', RootLayout);
 
