@@ -74,7 +74,7 @@ describe("CamundaStore: State", () => {
         done();
     });
     it("path should be init with api/bpm", async (done: Function) => {
-        expect(service.path).toEqual("api/bpm");
+        expect(service).toEqual("api/bpm");
         done();
     });
 });

@@ -1,24 +1,33 @@
+import IConfigurationService from 'Interfaces/configuration.interface';
 // Dependencies
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { serialize } from 'object-to-formdata';
+import { Inject } from 'inversify-props';
 // Models
 import { CamundaRequest } from "Models/api/camunda-request";
 import { StepResponse } from "Models/step/step-response";
-import { CONVERTOR } from '@/utils/convertor';
+import { EnvVariable } from 'Models/enum/env.variables.enum';
 
-const auth = {
-  auth: {
-    username: process.env.GRIDSOME_CAMUNDA_USER,
-    password:  process.env.GRIDSOME_CAMUNDA_PASSWORD
-  }
-}
 /**
  * Define the camunda module
  * @Module
  */
 @Module({ namespaced: true})
 class CamundaStore extends VuexModule {
+  //Injection of configuration service
+  @Inject()
+  private configurationService!: IConfigurationService;
+
+  private header: AxiosRequestConfig = { 
+    auth: {
+      username: null,
+      password: null
+     }
+  };
+  
+  private path: string = "api/bpm";
+
   /**
    * States
    * @StepResponse step: The actual step
@@ -27,8 +36,6 @@ class CamundaStore extends VuexModule {
    */
   step: StepResponse = null;
   errorMsg: string | null = null;
-  path: string = "api/bpm";
-
 
   //Getters
   get returnNextStep() {
@@ -60,10 +67,10 @@ class CamundaStore extends VuexModule {
       this.context.commit("setErrorMsg", null);
       const response = await axios.post(
         `/${this.path}/${
-          process.env.GRIDSOME_CAMUNDA_PROCESS_ID
+          await this.configurationService.getConfig(EnvVariable.CAMUNDA_PROCESS_ID)
         }/next`,
         request,
-        auth
+        this.header
       );
       if (response.data) {
         this.context.commit("setStep", response.data);
@@ -79,15 +86,16 @@ class CamundaStore extends VuexModule {
    */
   @Action
   public async start(request: CamundaRequest) {
+    this.header.auth.username = await this.configurationService.getConfig(EnvVariable.CAMUNDA_USER);
+    this.header.auth.password = await this.configurationService.getConfig(EnvVariable.CAMUNDA_PASSWORD);
     try {
       this.context.commit("setErrorMsg", null);
-      console.log(request)
       const response = await axios.post(
         `/${this.path}/${
-          process.env.GRIDSOME_CAMUNDA_PROCESS_ID
+          await this.configurationService.getConfig(EnvVariable.CAMUNDA_PROCESS_ID)
         }/start`,
-        serialize(request),
-        auth
+        serialize(request.variables),
+        this.header
       );
       if (response.data && response.data.nextStep) {
         this.context.commit("setStep", response.data);

@@ -6,6 +6,7 @@ import Buefy from 'buefy';
 import Vuex from 'vuex';
 import Vuelidate from 'vuelidate';
 import VueRouter from 'vue-router';
+import 'reflect-metadata';
 //Layouts
 import RootLayout from 'Layouts/root/root.vue';
 //Container
