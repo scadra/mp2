@@ -17,10 +17,19 @@ export default class ApiAuthorizationWizard extends Vue{
     @PropSync("api") syncApi!: ApiCreation;
     @Validations() validations = ValidationApiModel;
 
-    authorizationModels: String[] = ["Client credentials", "Basic"];
+    authorizationModels: String[] = ["Client credentials", "Authorization code"];
 
     // Hooks
     beforeMount() {
         this.syncApi.authorizationModel = this.authorizationModels[0];
+    }
+
+    /**
+   * Set PKCE
+   * @boolean : value
+   */
+    setRequirePKCE(value: boolean) {
+        this.syncApi.requirePkce = value;
+        this.$forceUpdate();
     }
 } 

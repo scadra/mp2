@@ -41,7 +41,9 @@ const request = {
     host: 'String',
     authorizationModel: 'String',
     authorizationTokenUrl: 'String',
-    authorizationUrl: 'String'
+    authorizationUrl: 'String',
+    requirePkce: false,
+    requireMtls: false
   } as ApiCreation
 } as CamundaRequest;
 

@@ -48,6 +48,19 @@
     <div class="column is-10 is-offset-1">
         <div class="columns">
             <div class="column is-3 label-form dark-text">
+                <strong>require MTLS:</strong>
+            </div>
+            <div class="column is-8">
+                <div class="buttons has-addons">
+                    <button class="button" :class="{'is-danger is-selected': !syncApi.requireMtls}" @click="setRequireMTLS(false)">No</button>
+                    <button class="button" :class="{'is-success is-selected': syncApi.requireMtls}" @click="setRequireMTLS(true)">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
                 <strong>Swagger:</strong>
             </div>
             <div class="column is-8">
