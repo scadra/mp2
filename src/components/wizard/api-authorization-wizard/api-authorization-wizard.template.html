@@ -6,7 +6,7 @@
             </div>
             <div class="column is-8">
                 <b-field>
-                    <b-select placeholder="Select a authorization model"  v-model="api.authorizationModel">
+                    <b-select placeholder="Select a authorization model"  v-model="api.authorizationModel" @input="$forceUpdate()">
                         <option
                             v-for="option in authorizationModels"
                             :value="option"
@@ -51,6 +51,19 @@
                     required</p>
                 <p class="help is-danger" v-if="$v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty && $v.api.authorizationTokenUrl.required && !$v.api.authorizationTokenUrl.url">This field
                         has to be an url</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1" v-if="api.authorizationModel === 'Authorization code'">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>require PKCE:</strong>
+            </div>
+            <div class="column is-8">
+                <div class="buttons has-addons">
+                    <button class="button" :class="{'is-danger is-selected': !syncApi.requirePkce}" @click="setRequirePKCE(false)">No</button>
+                    <button class="button" :class="{'is-success is-selected': syncApi.requirePkce}" @click="setRequirePKCE(true)">Yes</button>
+                </div>
             </div>
         </div>
     </div>

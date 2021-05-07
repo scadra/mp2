@@ -25,4 +25,13 @@ export default class ApiInformationWizard extends Vue {
   getFileName(file: File): string {
     return MessageDisplay.getFileName(file);
   }
+
+  /**
+   * Set MTLS
+   * @boolean : value
+   */
+  setRequireMTLS(value: boolean) {
+    this.syncApi.requireMtls = value;
+    this.$forceUpdate();
+  }
 }
