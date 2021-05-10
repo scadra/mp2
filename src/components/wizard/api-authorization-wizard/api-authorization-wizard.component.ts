@@ -17,7 +17,7 @@ export default class ApiAuthorizationWizard extends Vue{
     @PropSync("api") syncApi!: ApiCreation;
     @Validations() validations = ValidationApiModel;
 
-    authorizationModels: String[] = ["Client credentials", "Authorization code"];
+    authorizationModels: String[] = ["Client credentials", "Authorization code", "Basic"];
 
     // Hooks
     beforeMount() {
