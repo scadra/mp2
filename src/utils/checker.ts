@@ -15,4 +15,16 @@ export class Checker {
     let extension = filename.split(".");
     return formats.includes(extension[extension.length - 1]);
   }
+
+
+  /**
+   * Check if string are equals
+   * @string source: string to compare
+   * @string destination: string to be compared
+   * @static
+   * @returns boolean
+   */
+  static compareString(source: string, destination: string): boolean {
+    return source.toUpperCase() === destination.toUpperCase();
+  }
 }

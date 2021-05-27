@@ -43,7 +43,9 @@ const request = {
     authorizationTokenUrl: 'String',
     authorizationUrl: 'String',
     requirePkce: false,
-    requireMtls: false
+    requireMtls: false,
+    defaultCliendId: 'string',
+    defaultClientSecret: 'string'
   } as ApiCreation
 } as CamundaRequest;
 
@@ -68,11 +70,11 @@ describe("CamundaStore: init store", () => {
  */
 describe("CamundaStore: State", () => {
     it("step should be init with null value", async (done: Function) => {
-      expect(service.step).toEqual(null);
+      expect(service.returnNextStep).toEqual(null);
       done();
     });
     it("errorMsg should be init with null value", async (done: Function) => {
-        expect(service.errorMsg).toEqual(null);
+        expect(service.returnErrorMsg).toEqual(null);
         done();
     });
     it("path should be init with api/bpm", async (done: Function) => {
@@ -104,12 +106,12 @@ describe("CamundaStore: Getters", () => {
 describe("CamundaStore: Mutations", () => {
   it("setStep should set step", async (done: Function) => {
     service.setStep(step);
-    expect(service.step).toEqual(step);
+    expect(service.returnNextStep).toEqual(step);
     done();
   });
   it("setErrorMsg should set errorMsg", async (done: Function) => {
     service.setErrorMsg("error");
-    expect(service.errorMsg).toEqual("error");
+    expect(service.returnErrorMsg).toEqual("error");
     done();
   });
 });
@@ -120,12 +122,12 @@ describe("CamundaStore: Mutations", () => {
 describe("CamundaStore: Actions", () => {
   it("next method without error", async (done: Function) => {
     service.next(request);
-    expect(service.step).toEqual(step);
+    expect(service.returnNextStep).toEqual(step);
     done();
   });
   it("next method with error", async (done: Function) => {
     service.setStep(step);
-    expect(service.step).toEqual(step);
+    expect(service.returnNextStep).toEqual(step);
     done();
   });
 });
