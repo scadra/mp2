@@ -14,6 +14,8 @@ export class ApiCreation {
     authorizationUrl: String;
     requirePkce: boolean = false;
     requireMtls: boolean = false;
+    defaultCliendId!: String;
+    defaultClientSecret!: String;
     
     constructor() {
         this.productName = null;

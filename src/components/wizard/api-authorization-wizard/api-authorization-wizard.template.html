@@ -6,16 +6,15 @@
             </div>
             <div class="column is-8">
                 <b-field>
-                    <b-select placeholder="Select a authorization model"  v-model="api.authorizationModel" @input="$forceUpdate()">
-                        <option
-                            v-for="option in authorizationModels"
-                            :value="option"
-                            :key="option">
+                    <b-select placeholder="Select a authorization model" v-model="api.authorizationModel"
+                        @input="$forceUpdate()">
+                        <option v-for="option in authorizationModels" :value="option" :key="option">
                             {{ option }}
                         </option>
                     </b-select>
                 </b-field>
-                <p class="help is-danger" v-if="$v.api.authorizationModel.$invalid && $v.api.authorizationModel.$dirty">This field is
+                <p class="help is-danger" v-if="$v.api.authorizationModel.$invalid && $v.api.authorizationModel.$dirty">
+                    This field is
                     required</p>
             </div>
         </div>
@@ -29,11 +28,15 @@
                 <input class="input" type="text" v-model="api.authorizationUrl"
                     :class="{'is-danger': $v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty}"
                     @blur="$v.api.authorizationUrl.$touch()">
-                <p class="help is-danger" v-if="$v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty && !$v.api.authorizationUrl.required">This field
+                <p class="help is-danger"
+                    v-if="$v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty && !$v.api.authorizationUrl.required">
+                    This field
                     is
                     required</p>
-                <p class="help is-danger" v-if="$v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty && $v.api.authorizationUrl.required && !$v.api.authorizationUrl.url">This field
-                        has to be an url</p>
+                <p class="help is-danger"
+                    v-if="$v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty && $v.api.authorizationUrl.required && !$v.api.authorizationUrl.url">
+                    This field
+                    has to be an url</p>
             </div>
         </div>
     </div>
@@ -46,11 +49,37 @@
                 <input class="input" type="text" v-model="api.authorizationTokenUrl"
                     :class="{'is-danger': $v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty}"
                     @blur="$v.api.authorizationTokenUrl.$touch()">
-                <p class="help is-danger" v-if="$v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty && !$v.api.authorizationTokenUrl.required">This field
+                <p class="help is-danger"
+                    v-if="$v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty && !$v.api.authorizationTokenUrl.required">
+                    This field
                     is
                     required</p>
-                <p class="help is-danger" v-if="$v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty && $v.api.authorizationTokenUrl.required && !$v.api.authorizationTokenUrl.url">This field
-                        has to be an url</p>
+                <p class="help is-danger"
+                    v-if="$v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty && $v.api.authorizationTokenUrl.required && !$v.api.authorizationTokenUrl.url">
+                    This field
+                    has to be an url</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10 is-offset-1" v-if="api.authorizationModel !== 'Basic'">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Client ID:</strong>
+            </div>
+            <div class="column is-8">
+                <div class="buttons has-addons">
+                    <input class="input" type="text" v-model="api.defaultClientId"/>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Client secret:</strong>
+            </div>
+            <div class="column is-8">
+                <div class="buttons has-addons">
+                    <input class="input" type="text" v-model="api.defaultClientSecret"/>
+                </div>
             </div>
         </div>
     </div>
@@ -61,8 +90,10 @@
             </div>
             <div class="column is-8">
                 <div class="buttons has-addons">
-                    <button class="button" :class="{'is-danger is-selected': !syncApi.requirePkce}" @click="setRequirePKCE(false)">No</button>
-                    <button class="button" :class="{'is-success is-selected': syncApi.requirePkce}" @click="setRequirePKCE(true)">Yes</button>
+                    <button class="button" :class="{'is-danger is-selected': !syncApi.requirePkce}"
+                        @click="setRequirePKCE(false)">No</button>
+                    <button class="button" :class="{'is-success is-selected': syncApi.requirePkce}"
+                        @click="setRequirePKCE(true)">Yes</button>
                 </div>
             </div>
         </div>

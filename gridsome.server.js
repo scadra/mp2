@@ -9,10 +9,6 @@ const {
   createProxyMiddleware
 } = require("http-proxy-middleware");
 
-const url = process.env.VUE_APP_CONFIG_LOCATION ? process.env.VUE_APP_CONFIG_LOCATION : './static/configuration.json';
-let formatted = require(url)
-process.env.GRIDSOME_CAMUNDA_URL = formatted.GRIDSOME_CAMUNDA_URL
-
 module.exports = function (api) {
 
   // Create middleware for api
