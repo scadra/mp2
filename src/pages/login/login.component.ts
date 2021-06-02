@@ -30,13 +30,13 @@ const authenticationStore = namespace("AuthenticationStore");
 export default class Login extends Vue {
 
   @authenticationStore.Action
-  login!: (user: UserLogin) => void
+  login!: (user: UserLogin) => void;
 
   @authenticationStore.Getter
-  returnIsLoading!: () => boolean
+  returnIsLoading!: () => boolean;
 
   @authenticationStore.Getter
-  returnErrorMessage!: () => String | null
+  returnErrorMessage!: () => String | null;
 
   user: UserLogin = {
     username: "",
@@ -47,11 +47,9 @@ export default class Login extends Vue {
   @Validations() validations = ValidationLoginModel;
 
   // Hook
-  beforeMount() {
-  }
+  beforeMount() {}
 
   async signIn() {
     await this.login(this.user);
   }
-
 }
