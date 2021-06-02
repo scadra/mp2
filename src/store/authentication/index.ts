@@ -47,10 +47,21 @@ export default class AuthenticationStore extends VuexModule {
     try {
         await this.authenticationService.login(user);
         this.context.commit('setErrorMessage', null);
-    } catch(response) {
-        this.context.commit('setErrorMessage', response.data.detail);
+    } catch(error) {
+        this.context.commit('setErrorMessage', error.data.detail);
     } finally {
         this.context.commit('setIsLoading', false);
+    }
+  }
+
+  @Action
+  async resetPassword(email: String): Promise<void> {
+    this.context.commit('setIsLoading', true);
+    try {
+      await this.authenticationService.resetPassword(email);
+      this.context.commit('setErrorMessage', null);
+    } catch(error) {
+      this.context.commit('setErrorMessage', error.data.detail);
     }
   }
 }
