@@ -9,6 +9,7 @@ import VueRouter from 'vue-router';
 import 'reflect-metadata';
 //Layouts
 import RootLayout from 'Layouts/root/root.vue';
+import Logo from 'Layouts/logo/logo.vue';
 //Container
 import buildDependencyContainer from '@/app.container';
 //Scss files
@@ -30,6 +31,7 @@ export default function (Vue, {
   
   // Create defaut component
   Vue.component('Layout', RootLayout);
+  Vue.component('Logo', Logo);
 
   // Load dependency only for the client
   if (isClient) {

@@ -20,6 +20,7 @@ class CamundaStore extends VuexModule {
  
   @Inject()
   private configurationService!: IConfigurationService;
+  
   /**
    * States
    * @StepResponse step: The actual step

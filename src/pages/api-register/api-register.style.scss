@@ -1,0 +1,12 @@
+@import "Styles/colors.scss";
+@import "Styles/text.scss";
+
+.content {
+    max-height: 50vh;
+    margin: 1%;
+
+    .step {
+        margin-right: 3%;
+        font-weight: 500;
+    }
+}

@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 // Dependencies
 import axios from "axios";
 import { serialize } from 'object-to-formdata'; 

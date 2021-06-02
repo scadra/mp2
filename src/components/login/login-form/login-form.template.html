@@ -1,0 +1,31 @@
+<div class="columns is-multiline is-centered">
+    <div class="column is-2 label-form dark-text">
+        <strong>Username:</strong>
+    </div>
+    <div class="column is-9">
+        <input class="input" type="text" v-model="syncUser.username"
+            :class="{'is-danger': $v.user.username.$invalid && $v.user.username.$dirty}"
+            @blur="$v.user.username.$touch()" />
+        <p class="help is-danger"
+            v-if="$v.user.username.$invalid && $v.user.username.$dirty && !$v.user.username.required">
+            This field
+            is
+            required</p>
+        <p class="help is-danger"
+            v-if="$v.user.username.$invalid && $v.user.username.$dirty && $v.user.username.required && !$v.user.username.email">
+            This field must be an email</p>
+    </div>
+    <div class="column is-2 label-form dark-text">
+        <strong>Password:</strong>
+    </div>
+    <div class="column is-9">
+        <input class="input" type="password" v-model="syncUser.password"
+            :class="{'is-danger': $v.user.password.$invalid && $v.user.password.$dirty}"
+            @blur="$v.user.password.$touch()" />
+        <p class="help is-danger"
+            v-if="$v.user.password.$invalid && $v.user.password.$dirty && !$v.user.password.required">
+            This field
+            is
+            required</p>
+    </div>
+</div>

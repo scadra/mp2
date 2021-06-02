@@ -27,5 +27,19 @@
 }
 body {
     background: $primary-color !important;
-    height: 101.7vh;
+    min-height: 100vh;
+}
+
+.container {
+    border: 1px solid $light-color;
+    border-radius: 10px;
+    background: $light-color;
+    .button-container {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.page-content {
+    min-height: 89vh;
 }
