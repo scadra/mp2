@@ -19,7 +19,6 @@ export default class AuthenticationService implements IAuthenticationService {
    */
   async login(user: UserLogin): Promise<void> {
     const response = await axios.post(`${this.path}/login`, user);
-    console.log(response)
     return response.data
   }
 

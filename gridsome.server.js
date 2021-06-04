@@ -13,31 +13,6 @@ module.exports = function (api) {
 
   // Create middleware for api
   api.configureServer(app => {
-    let cookies;
-    function relayRequestHeaders(proxyReq, req) {
-      if (cookies) {
-        console.log(cookies)
-        let sessionId= cookies.find(cookie => cookie.includes("JSESSIONID"))
-        if(sessionId) {
-          let splitted = sessionId.split(';')
-          console.log(splitted)
-          let value = splitted[0].split("JSESSIONID=")
-          console.log(value)
-          proxyReq.setHeader('JSESSIONID', value[1]);
-
-          console.log(proxyReq.headers)
-        }
-      }
-    };
-    
-    function relayResponseHeaders(proxyRes, req, res) {
-      let proxyCookie = proxyRes.headers["set-cookie"];
-      if (proxyCookie) {
-        cookies = proxyCookie;
-        let sessionId= cookies.find(cookie => cookie.includes("JSESSIONID"));
-        console.log(cookies)
-      }
-    };
     app.use(
       createProxyMiddleware("/api/", {
         target: `${process.env.GRIDSOME_BACK_URL}`,
