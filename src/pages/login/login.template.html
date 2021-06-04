@@ -5,8 +5,11 @@
             <notification v-if="returnErrorMessage !== null" :text="returnErrorMessage" className="is-danger"></notification>
             <h3 class="title is-3">Sign In</h3>
             <login-form :user.sync="user"></login-form>
+            <div class="columns is-centered" v-if="errorClick === 3">
+                <vue-recaptcha :sitekey="keyRecaptcha" :loadRecaptchaScript="true" @verify="onVerify"> </vue-recaptcha>
+            </div>
             <div class="button-container">
-                <b-button type="is-primary" @click="signIn()" :disabled="$v.$invalid" :loading="returnIsLoading">Sign in</b-button>
+                <b-button type="is-primary" @click="signIn()" :disabled="disableButton()" :loading="returnIsLoading">Sign in</b-button>
             </div>
         </div>
     </div>
