@@ -38,6 +38,9 @@ export default class Login extends Vue {
   @authenticationStore.Getter
   returnErrorMessage!: () => String | null
 
+  @authenticationStore.Getter
+  returnIsAuth!: () => boolean
+
   user: UserLogin = {
     username: "",
     password: ""
@@ -52,6 +55,9 @@ export default class Login extends Vue {
 
   async signIn() {
     await this.login(this.user);
+    if(this.returnIsAuth) {
+      this.$router.push('/')
+    }
   }
 
 }

@@ -16,18 +16,21 @@
           <g-link class="nav__link navbar-item" to="/">Home</g-link>
         </div>
         <div class="navbar-item">
-          <g-link class="nav__link navbar-item" to="/api-register/">Register an API</g-link>
+          <g-link class="nav__link navbar-item" to="/api-register/" v-if="returnIsAuth">Register an API</g-link>
         </div>
 
         <div id="navbarBasicExample" class="navbar-menu">
     
           <div class="navbar-end">
-            <div class="navbar-item">
+            <div class="navbar-item" v-if="!returnIsAuth">
               <g-link  class="nav__link navbar-item sign-up-item" to="/register/">Sign up <img src="~Assets/img/molecular.svg"/></g-link >
             </div>
-            <div class="navbar-item">
+            <div class="navbar-item" v-if="!returnIsAuth">
                 <g-link  class="navbar-item" to="/login">Log In</g-link >       
             </div>
+            <div class="navbar-item" v-if="returnIsAuth">
+              <g-link  class="navbar-item" to="/profile">Welcome</g-link >       
+          </div>
           </div>
         </div>
       </nav>

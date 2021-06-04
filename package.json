@@ -16,6 +16,7 @@
     "gridsome": "^0.7.23",
     "gridsome-plugin-typescript": "^0.4.0",
     "http-proxy-middleware": "^1.0.6",
+    "http-proxy-middleware-secure-cookies": "^0.1.8",
     "install": "^0.13.0",
     "inversify-props": "^2.2.6",
     "object-to-formdata": "^4.1.0",

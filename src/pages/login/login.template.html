@@ -6,7 +6,7 @@
             <h3 class="title is-3">Sign In</h3>
             <login-form :user.sync="user"></login-form>
             <div class="button-container">
-                <b-button type="is-primary" @click="login()" :disabled="$v.$invalid" :loading="returnIsLoading">Sign in</b-button>
+                <b-button type="is-primary" @click="signIn()" :disabled="$v.$invalid" :loading="returnIsLoading">Sign in</b-button>
             </div>
         </div>
     </div>
