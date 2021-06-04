@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 // Dependencies
 import axios from "axios";
 import { serialize } from 'object-to-formdata'; 
@@ -11,7 +10,7 @@ import { StepResponse } from "Models/step/step-response";
 
 @injectable()
 export default class CamundaService implements ICamundaService {
-  private path: string = "api/bpm";
+  private path: string = "camunda/api/bpm";
 
   private headers = { 
     auth: { 

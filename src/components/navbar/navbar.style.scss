@@ -1,0 +1,57 @@
+@import 'Styles/colors.scss';
+
+.navbar {
+    background: transparent;
+    padding: 1% 5%;
+    .navbar-brand {
+        width: 13%;
+        .navbar-item {
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+        }
+    }
+    .navbar-item {
+        padding: 0.5rem 0.55rem;
+        color: white;
+        font-weight: 400;
+        &:hover {
+            background: transparent;
+            font-weight: 600
+        }
+        .luxh-logo {
+            width: 45%;
+        }
+    }
+    .sign-up-item {
+        background-color: $light-color;
+        color: $primary-color;
+        border-radius: 10px;
+        -webkit-transition: 0.2s ease-in;
+        transition: 0.2s ease-in;
+        img {
+            -webkit-transition: 0.2s ease-out;
+            transition: 0.2s ease-out;
+            height: 21px;
+            padding-left: 8px;
+            padding-bottom: 4px;
+            right: 0;
+            position: absolute;
+            opacity: 0;
+            -webkit-transform: translateX(-15px) scale(.6);
+            -ms-transform: translateX(-15px) scale(.6);
+            transform: translateX(-15px) scale(.6);
+        }
+        &:hover {
+            background-color: $light-color;
+            color: $primary-color;
+            transition: all 0.2s ease-out 0s;
+            padding-right: 44px;
+            img {
+                opacity: 1;
+                -webkit-transform: translateX(-16px) scale(1);
+                -ms-transform: translateX(-16px) scale(1);
+                transform: translateX(-16px) scale(1);
+            }
+        }
+    }
+}
