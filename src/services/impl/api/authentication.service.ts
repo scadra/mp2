@@ -38,6 +38,6 @@ export default class AuthenticationService implements IAuthenticationService {
    * @return Promise function with type void
    */
   async resetPassword(email: String): Promise<void> {
-    return await axios.post(`/api/reset-password`, email);
+    return await axios.post(`/api/reset-password`, {"email": email});
   }
 }

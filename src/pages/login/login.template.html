@@ -10,7 +10,7 @@
                 <vue-recaptcha :sitekey="keyRecaptcha" :loadRecaptchaScript="true" @verify="onVerify"> </vue-recaptcha>
             </div>
             <div class="button-container">
-                <b-button type="is-primary" @click="login()" :disabled="$v.$invalid" :loading="returnIsLoading">Sign in
+                <b-button type="is-primary" @click="signIn()" :disabled="$v.$invalid" :loading="returnIsLoading">Sign in
                 </b-button>
             </div>
         </div>
