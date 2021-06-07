@@ -60,7 +60,7 @@ export default class AuthenticationStore extends VuexModule {
         await this.authenticationService.login(user);
         this.context.commit('setErrorMessage', null);
     } catch(error) {
-        this.context.commit('setErrorMessage', "Invalid credentials !");
+        this.context.commit('setErrorMessage', "Username and password do not match or you do not have an account yet.");
         this.context.commit('setIsAuth', true);
         await this.authenticationService.secure(user);
     } finally {
