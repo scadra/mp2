@@ -1,0 +1,16 @@
+<div class="columns is-multiline is-centered">
+    <div class="column is-2 label-form dark-text">
+        <strong>Email:</strong>
+    </div>
+    <div class="column is-9">
+        <input type="text" class="input" v-model="emailSync" :class="{'is-danger': $v.email.$invalid && $v.email.$dirty}" @blur="$v.email.$touch()" />
+        <p class="help is-danger"
+            v-if="$v.email.$invalid && $v.email.$dirty && !$v.email.required">
+            This field
+            is
+            required</p>
+        <p class="help is-danger"
+            v-if="$v.email.$invalid && $v.email.$dirty && $v.email.required && !$v.email.email">
+            This field must be an email</p>
+    </div>
+</div>

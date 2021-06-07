@@ -32,13 +32,13 @@ const authenticationStore = namespace("AuthenticationStore");
 export default class Login extends Vue {
 
   @authenticationStore.Action
-  login!: (user: UserLogin) => void
+  login!: (user: UserLogin) => void;
 
   @authenticationStore.Getter
-  returnIsLoading!: () => boolean
+  returnIsLoading!: () => boolean;
 
   @authenticationStore.Getter
-  returnErrorMessage!: () => String | null
+  returnErrorMessage!: () => String | null;
 
   @authenticationStore.Getter
   returnIsAuth!: () => boolean
@@ -58,8 +58,7 @@ export default class Login extends Vue {
   @Validations() validations = ValidationLoginModel;
 
   // Hook
-  beforeMount() {
-  }
+  beforeMount() {}
 
   async signIn() {
     await this.login(this.user);
@@ -78,5 +77,4 @@ export default class Login extends Vue {
   disableButton() {
     return this.$v.$invalid || this.errorClick >= 3 && !this.checkRecaptcha
   }
-
 }
