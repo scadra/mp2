@@ -15,16 +15,20 @@ module.exports = function (api) {
   api.configureServer(app => {
     app.use(
       createProxyMiddleware("/api/", {
-        target: `${process.env.GRIDSOME_CAMUNDA_URL}`,
-        changeOrigin: true
+        target: `${process.env.GRIDSOME_BACK_URL}`,
+        changeOrigin: true,
       }),
     );
   });
 
-  api.loadSource(({ addCollection }) => {
-  })
 
-  api.createPages(({ createPage }) => {
+  api.loadSource(({
+    addCollection
+  }) => {})
+
+  api.createPages(({
+    createPage
+  }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api/
   })
 }
