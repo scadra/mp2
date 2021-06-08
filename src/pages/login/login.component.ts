@@ -45,11 +45,12 @@ export default class Login extends Vue {
 
   errorClick: number = 0;
 
-  checkRecaptcha: boolean = false;
+  recaptchaValid: String = null;
 
   user: UserLogin = {
     username: "",
-    password: ""
+    password: "",
+    recaptcha: null,
   };
 
   keyRecaptcha: String = process.env.GRIDSOME_RECAPTCHA
@@ -61,20 +62,23 @@ export default class Login extends Vue {
   beforeMount() {}
 
   async signIn() {
+    this.user.recaptcha = this.recaptchaValid
     await this.login(this.user);
     if(this.returnIsAuth) {
       this.$router.push('/')
     }
-    this.errorClick ++; 
+    this.errorClick ++;
   }
 
-  onVerify(response: String) {
-    if(response) {
-      this.checkRecaptcha = true;
-    }
+  onCaptchaVerify(response: string) {
+    this.recaptchaValid = response;
+  }
+
+  onCaptchaExpired() {
+    this.recaptchaValid = null;
   }
 
   disableButton() {
-    return this.$v.$invalid || this.errorClick >= 3 && !this.checkRecaptcha
+    return this.$v.$invalid || this.errorClick >= 3 && this.recaptchaValid == null
   }
 }

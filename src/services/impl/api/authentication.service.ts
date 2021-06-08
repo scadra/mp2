@@ -4,7 +4,7 @@ import IAuthenticationService from "Interfaces/api/authentication.interface";
 import { UserLogin } from "Models/user/user-login";
 // Dependencies
 import { injectable } from "inversify-props";
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 axios.defaults.withCredentials = true
 
@@ -19,8 +19,21 @@ export default class AuthenticationService implements IAuthenticationService {
    * @return Promise function with type void
    */
   async login(user: UserLogin): Promise<void> {
-    const response = await axios.post(`${this.path}/login`, user);
-    return response.data
+    let resp:AxiosResponse = null;
+
+    let captchaHeader = user.recaptcha != null ? {
+      headers: {captchaCode: user.recaptcha}
+    } : {};
+
+    await axios.post(`${this.path}/login`, user, captchaHeader)
+      .then(response => resp = response)
+      .catch(error => console.log("Error: " + error + " - " + (typeof error)));
+
+    if (resp != null) {
+      return resp.data
+    }
+
+    return new Promise<void>((resolve, reject) => reject())
   }
 
     /**
