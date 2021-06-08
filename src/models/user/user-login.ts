@@ -1,4 +1,5 @@
 export class UserLogin {
     username: String;
-    password: String; 
+    password: String;
+    recaptcha: String;
 }
