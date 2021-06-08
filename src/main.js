@@ -44,4 +44,5 @@ export default function (Vue, {
     appOptions.$v = Vuelidate;
   }
   appOptions.store = new Vuex.Store(store)
+  appOptions.router = router
 }

@@ -1,3 +1,4 @@
+import { Token } from 'Models/keycloak/token.interface';
 import IAuthenticationService from 'Interfaces/api/authentication.interface';
 import { UserLogin } from 'Models/user/user-login';
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators";
@@ -20,6 +21,7 @@ export default class AuthenticationStore extends VuexModule {
    */
   private isLoading: boolean = false;
   private errorMessage: String | null = null;
+  private isAuth: boolean = false;
 
   //getters
   get returnIsLoading() {
@@ -28,6 +30,10 @@ export default class AuthenticationStore extends VuexModule {
 
   get returnErrorMessage() {
     return this.errorMessage;
+  }
+
+  get returnIsAuth() {
+    return this.isAuth;
   }
 
   //Mutations
@@ -41,6 +47,12 @@ export default class AuthenticationStore extends VuexModule {
     this.errorMessage = response;
   }
 
+  @Mutation
+  setIsAuth(response: boolean) {
+    this.isAuth = response;
+  }
+
+
   @Action
   async login(user: UserLogin): Promise<void> {
     this.context.commit('setIsLoading', true);
@@ -48,7 +60,9 @@ export default class AuthenticationStore extends VuexModule {
         await this.authenticationService.login(user);
         this.context.commit('setErrorMessage', null);
     } catch(error) {
-        this.context.commit('setErrorMessage', error.data.detail);
+        this.context.commit('setErrorMessage', "Username and password do not match or you do not have an account yet.");
+        this.context.commit('setIsAuth', true);
+        await this.authenticationService.secure(user);
     } finally {
         this.context.commit('setIsLoading', false);
     }
