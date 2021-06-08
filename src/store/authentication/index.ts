@@ -69,10 +69,10 @@ export default class AuthenticationStore extends VuexModule {
   }
 
   @Action
-  async resetPassword(email: String): Promise<void> {
+  async resetPassword(email: String, recaptchaResponse: String): Promise<void> {
     this.context.commit('setIsLoading', true);
     try {
-      await this.authenticationService.resetPassword(email);
+      await this.authenticationService.resetPassword(email, recaptchaResponse);
       this.context.commit('setErrorMessage', null);
     } catch(error) {
       this.context.commit('setErrorMessage', error.data.detail);

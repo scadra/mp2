@@ -3,5 +3,5 @@ import { UserLogin } from 'Models/user/user-login';
 export default interface IAuthenticationService {
     login(user: UserLogin):Promise<void>
 	secure(user: UserLogin):Promise<void>
-    resetPassword(email: String): Promise<void>
+    resetPassword(email: String, recaptchaResponse: String): Promise<void>
 }
