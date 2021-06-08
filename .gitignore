@@ -7,3 +7,6 @@ dist
 
 
 package-lock.json
+
+.idea
+*.iml

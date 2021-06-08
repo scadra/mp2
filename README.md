@@ -1,4 +1,36 @@
-# Default starter for Gridsome
+# Agora Front
+
+## Technologies
+
+to do
+
+## Install node/npm
+
+Get lastest version of npm (not LTS)
+
+Add the path of npm into your Windows environment variables
+
+## Launch the application
+
+First you need to execute: ``npm install``
+Then ``npm run develop``
+
+If you have issues with dependeny, you can delete the folder ``node_modules``
+And run again ``npm install``
+
+All the command ``npm run xxx`` can be found in the file `package.json` (scripts section)
+
+
+## CI/CD
+
+to do
+
+## Sonar
+
+to do
+
+
+(fhu: The rest of the documentation is useful ??)
 
 This is the project you get when you run `gridsome create new-project`.
 
