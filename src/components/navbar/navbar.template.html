@@ -30,7 +30,10 @@
             </div>
             <div class="navbar-item" v-if="returnIsAuth">
               <g-link  class="navbar-item" to="/profile">Welcome</g-link >       
-          </div>
+            </div>
+            <div class="navbar-item" v-if="returnIsAuth">
+              <b-button @click="signOut()">Logout</b-button>
+            </div>
           </div>
         </div>
       </nav>
