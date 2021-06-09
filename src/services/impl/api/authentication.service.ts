@@ -36,6 +36,11 @@ export default class AuthenticationService implements IAuthenticationService {
     return new Promise<void>((resolve, reject) => reject())
   }
 
+  async logout(): Promise<void> {
+    // TODO logout on SSO
+    return new Promise<void>((resolve, reject) => resolve())
+  }
+
     /**
    * secure post
    * @UserLogin user information: username + password
