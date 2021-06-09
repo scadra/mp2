@@ -52,7 +52,6 @@ export default class AuthenticationStore extends VuexModule {
     this.isAuth = response;
   }
 
-
   @Action
   async login(user: UserLogin): Promise<void> {
     this.context.commit('setIsLoading', true);
@@ -67,6 +66,11 @@ export default class AuthenticationStore extends VuexModule {
     } finally {
         this.context.commit('setIsLoading', false);
     }
+  }
+
+  @Action
+  async logout(): Promise<void> {
+    this.context.commit('setIsAuth', false);
   }
 
   @Action
