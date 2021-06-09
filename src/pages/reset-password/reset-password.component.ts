@@ -5,14 +5,16 @@ import ResetForm from "Components/reset/reset-form/reset-form.vue";
 import { Validations } from "vuelidate-property-decorators";
 import { ResetPasswordValidation } from "Validations/reset-password.validation";
 import { namespace } from "vuex-class";
+import Notification from 'Components/shared/notification/notification.vue';
 import VueRecaptcha from 'vue-recaptcha';
 
-const AuthenticationStore = namespace("AuthenticationStore");
+const authenticationStore = namespace("AuthenticationStore");
 
 @Component({
     metaInfo: "Reset password",
     components: {
         ResetForm,
+        Notification,
         VueRecaptcha
     }
 })
@@ -24,14 +26,18 @@ export default class ResetPassword extends Vue {
 
     @Validations() validation = ResetPasswordValidation;
 
-    @AuthenticationStore.Action
+    @authenticationStore.Action
     resetPassword!: (email: String, recaptchaResponse: String) => Promise<void>
 
-    @AuthenticationStore.Getter
+    @authenticationStore.Getter
     returnIsLoading!: () => boolean
 
+    @authenticationStore.Getter
+    returnResetPasswordSent!: () => boolean | false;
+
     async reset() {
-        await this.resetPassword(this.email, this.recaptchaResponse)
+        await this.resetPassword(this.email, this.recaptchaResponse);
+        this.$router.push('/login');
     }
 
     onCaptchaExpired() {
