@@ -43,6 +43,9 @@ export default class Login extends Vue {
   @authenticationStore.Getter
   returnIsAuth!: () => boolean
 
+  @authenticationStore.Getter
+    returnResetPasswordSent!: () => boolean | false;
+
   errorClick: number = 0;
 
   recaptchaValid: String = null;

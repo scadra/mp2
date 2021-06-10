@@ -4,6 +4,8 @@
         <div class="column is-6 container">
             <notification v-if="returnErrorMessage !== null" :text="returnErrorMessage" className="is-danger">
             </notification>
+            <notification v-if="returnResetPasswordSent" class="notification is-success" text="You requested a password reset. You should receive an email with instructions on how to reset your password.">
+            </notification>
             <h3 class="title is-3">Sign In</h3>
             <login-form :user.sync="user"></login-form>
             <div class="columns is-centered" v-if="errorClick &gt;= 3 ">

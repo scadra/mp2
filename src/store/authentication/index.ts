@@ -22,6 +22,7 @@ export default class AuthenticationStore extends VuexModule {
   private isLoading: boolean = false;
   private errorMessage: String | null = null;
   private isAuth: boolean = false;
+  private resetPasswordSent: boolean = false;
 
   //getters
   get returnIsLoading() {
@@ -34,6 +35,10 @@ export default class AuthenticationStore extends VuexModule {
 
   get returnIsAuth() {
     return this.isAuth;
+  }
+
+  get returnResetPasswordSent() {
+    return this.resetPasswordSent;
   }
 
   //Mutations
@@ -50,6 +55,11 @@ export default class AuthenticationStore extends VuexModule {
   @Mutation
   setIsAuth(response: boolean) {
     this.isAuth = response;
+  }
+
+  @Mutation
+  setResetPasswordSent(isResetPasswordSent: boolean) {
+    this.resetPasswordSent = isResetPasswordSent;
   }
 
   @Action
@@ -69,18 +79,16 @@ export default class AuthenticationStore extends VuexModule {
   }
 
   @Action
-  async logout(): Promise<void> {
-    this.context.commit('setIsAuth', false);
-  }
-
-  @Action
-  async resetPassword(email: String): Promise<void> {
+  async resetPassword(email: String, recaptchaResponse: String): Promise<void> {
     this.context.commit('setIsLoading', true);
     try {
-      await this.authenticationService.resetPassword(email);
+      await this.authenticationService.resetPassword(email, recaptchaResponse);
       this.context.commit('setErrorMessage', null);
+      this.context.commit('setResetPasswordSent', true);
     } catch(error) {
-      this.context.commit('setErrorMessage', error.data.detail);
+      this.context.commit('setErrorMessage', "You requested a password reset but an error occurred. Please try again or contact Luxhub support (TDB).");
+    } finally {
+      this.context.commit('setIsLoading', false);
     }
   }
 }
