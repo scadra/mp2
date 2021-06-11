@@ -85,19 +85,19 @@ pipeline {
                 mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
                         from: 'Jenkins <jenkins@luxhub.com>',
                         to: 'patrice.jacquot@luxhub.com',
-                        mimeType: 'text/html'
-                body: """
-                    <html><body>${commitEmail}-${commitEmail2}
-                    <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
-                    <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
-                    <hr/>
-                    <p>Commit ${commitHash} by ${commitAuthor}: </p>
-                    <pre>${commitMessage}</pre>
-                    <hr/>
-                    <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
-                    ${previousBuild ? '<p>Previous build on this branch was ' + previousBuild.result + '.</p>' : ''}
-                    </body></html>
-                  """
+                        mimeType: 'text/html',
+                        body: """
+                            <html><body>${commitEmail}-${commitEmail2}
+                            <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
+                            <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
+                            <hr/>
+                            <p>Commit ${commitHash} by ${commitAuthor}: </p>
+                            <pre>${commitMessage}</pre>
+                            <hr/>
+                            <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
+                            ${previousBuild ? '<p>Previous build on this branch was ' + previousBuild.result + '.</p>' : ''}
+                            </body></html>
+                          """
             }
             deleteDir()
         }
