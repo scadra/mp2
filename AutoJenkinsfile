@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Publish') {
+        stage('Report') {
             steps {
                 // TODO
                 sh 'ls -l dist'
