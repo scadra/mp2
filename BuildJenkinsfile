@@ -2,7 +2,6 @@ def nexusSnapshotsId = 'nexus-snapshots'
 def nexusSnapshotsUrl = 'https://nexus.luxhub.local:9443/repository/maven-snapshots/'
 def nexusReleasesId = 'nexus-releases'
 def nexusReleasesUrl = 'https://nexus.luxhub.local:9443/repository/maven-releases/'
-def repositoryId = ''
 def groupId = 'com.luxhub.agora'
 def artifactId = 'agora-front'
 def artifactFile = "${artifactId}-${release.version}-bin.zip"
@@ -26,6 +25,7 @@ pipeline {
                 timeout(time: 20, unit: 'MINUTES')
             }
             steps {
+                sh "git checkout ${params.branch}"
                 sh 'node -v'
                 sh 'npm --version'
                 sh 'npm install'
@@ -56,14 +56,8 @@ pipeline {
                     echo packageJson.version
                     echo packageJson.description
                 }
-                sh "mvn deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusSnapshotsId} -Durl=${nexusSnapshots} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${release.version}"
+                sh "mvn deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusSnapshotsId} -Durl=${nexusSnapshotsUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${release.version}"
             }
-        }
-    }
-
-    post {
-        regression {
-            
         }
     }
 }
