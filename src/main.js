@@ -34,7 +34,8 @@ export default function (Vue, {
   Vue.component('Logo', Logo);
 
   // Load dependency only for the client
-  if (isClient) {
+  // #PJA: commented the condition to allow "npm run build"
+  //if (isClient) {
     // Add dependencies inside de vue instance
     Vue.use(Buefy)
     Vue.use(Vuex);
@@ -42,7 +43,7 @@ export default function (Vue, {
     Vue.use(VueRouter);
     // Define globale use for ts
     appOptions.$v = Vuelidate;
-  }
+  //}
   appOptions.store = new Vuex.Store(store)
   appOptions.router = router
 }
