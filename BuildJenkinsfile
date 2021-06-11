@@ -5,7 +5,9 @@ def version = params['release.version']
 def artifactFile = "${artifactId}-${version}-bin.zip"
 def snapshotVersion = version.endsWith('-SNAPSHOT')
 def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
-def nexusUrl = snapshotVersion ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots' : 'https://nexus.luxhub.local:9443/repository/maven-releases'
+def nexusUrl = snapshotVersion
+    ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots'
+    : 'https://nexus.luxhub.local:9443/repository/maven-releases'
 
 pipeline {
 
@@ -77,7 +79,6 @@ pipeline {
                     ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
                     : version
 
-                echo snapshotVersion
                 echo timestamp
 
                 mail subject: "Artifact '${artifactFile}' published",
