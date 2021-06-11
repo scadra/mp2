@@ -4,7 +4,7 @@ def nexusReleasesId = 'nexus-releases'
 def nexusReleasesUrl = 'https://nexus.luxhub.local:9443/repository/maven-releases/'
 def groupId = 'com.luxhub.agora'
 def artifactId = 'agora-front'
-def artifactFile = "${artifactId}-${release.version}-bin.zip"
+def artifactFile = "${artifactId}-${params['release.version']}-bin.zip"
 
 pipeline {
 
@@ -52,7 +52,7 @@ pipeline {
                     echo packageJson.version
                     echo packageJson.description
                 }
-                sh "mvn deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusSnapshotsId} -Durl=${nexusSnapshotsUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${release.version}"
+                sh "mvn deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusSnapshotsId} -Durl=${nexusSnapshotsUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']}"
             }
         }
     }
