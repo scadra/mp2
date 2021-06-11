@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh 'node -v'
                 sh 'npm --version'
-                sh 'npm install'
+                //sh 'npm install'
             }
         }
 
@@ -32,8 +32,8 @@ pipeline {
                 timeout(time: 10, unit: 'MINUTES')
             }
             steps {
-                sh 'npm run build'
-                zip dir: 'dist', zipFile: 'result.zip', archive: true
+                //sh 'npm run build'
+                //zip dir: 'dist', zipFile: 'result.zip', archive: true
                 //zip dir: 'dist', zipFile: 'result.zip', archive: true
             }
         }
@@ -78,14 +78,15 @@ pipeline {
                 def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                 def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
                 def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
+                def commitEmail2 = sh (script: 'git log -1 --pretty=%ae', returnStdout: true).trim()
                 def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
 
                 mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
                         from: 'Jenkins <jenkins@luxhub.com>',
-                        to: commitEmail,
+                        to: 'patrice.jacquot@luxhub.com',
                         mimeType: 'text/html'
                 body: """
-                    <html><body>
+                    <html><body>${commitEmail}-${commitEmail2}
                     <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
                     <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
                     <hr/>
