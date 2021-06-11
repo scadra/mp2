@@ -1,0 +1,37 @@
+pipeline {
+
+    agent {
+        label 'master'
+    }
+
+    tools {
+        nodejs "nodejs-14.15.0"
+    }
+
+    stages {
+        stage('Tools version') {
+
+        }
+
+        stage('Deps') {
+            steps {
+                sh 'node -v'
+                sh 'npm --version'
+                sh 'npm install'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                // TODO
+                sh 'ls -l dist'
+            }
+        }
+    }
+}
