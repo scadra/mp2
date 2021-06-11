@@ -1,4 +1,4 @@
-pipeline {
+﻿pipeline {
 
     agent {
         label 'master'
@@ -20,6 +20,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm run build'
+                zip dir: 'dist', zipFile: 'result.zip', archive: true
             }
         }
 
@@ -27,7 +28,14 @@ pipeline {
             steps {
                 // TODO
                 sh 'ls -l dist'
+                sh 'ls -l result.zip'
             }
+        }
+    }
+
+    post {
+        always {
+            mail subject: 'Test email from Jenkins', from: 'Jenkins <jenkins@luxhub.com>', to: 'patrice.jacquot@luxhub.com', body: 'Test email from Jenkins'
         }
     }
 }

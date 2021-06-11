@@ -1,4 +1,4 @@
-pipeline {
+﻿pipeline {
 
     agent {
         label 'master'
@@ -28,6 +28,12 @@ pipeline {
                 // TODO
                 sh 'ls -l dist'
             }
+        }
+    }
+
+    post {
+        regression {
+            
         }
     }
 }
