@@ -61,9 +61,9 @@ pipeline {
                             ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
                             : version;
                     actualLocation = "${nexusUrl}/${groupPath}/${artifactId}/${version}/${artifactId}-${actualVersion}-bin.zip"
+                    sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} -Ddescription='${packageJson.description}' --batch-mode"
+                    echo "Artifact ${mvnCoordinates} published to ${actualLocation}"
                 }
-                sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} -Ddescription='${packageJson.description}' --batch-mode"
-                echo "Artifact ${mvnCoordinates} published to ${actualLocation}"
             }
         }
 
