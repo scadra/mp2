@@ -1,7 +1,14 @@
 ﻿pipeline {
 
-    agent {
-        label 'master'
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(daysToKeepStr: '15', numToKeepStr: '5'))
+    }
+
+    triggers {
+        gitlab(triggerOnPush: true, branchFilterType: 'All')
     }
 
     tools {
@@ -10,6 +17,9 @@
 
     stages {
         stage('Deps') {
+            options {
+                timeout(time: 20, unit: 'MINUTES')
+            }
             steps {
                 sh 'node -v'
                 sh 'npm --version'
@@ -18,8 +28,13 @@
         }
 
         stage('Build') {
+            options {
+                timeout(time: 10, unit: 'MINUTES')
+            }
             steps {
                 sh 'npm run build'
+                zip dir: 'dist', zipFile: 'result.zip', archive: true
+                //zip dir: 'dist', zipFile: 'result.zip', archive: true
             }
         }
 
@@ -27,6 +42,16 @@
             steps {
                 // TODO
                 sh 'ls -l dist'
+                sh 'ls -l result.zip'
+            }
+        }
+    }
+
+    post {
+        post {
+            always {
+                deleteDir()
+                mail subject: 'Test email from Jenkins', from: 'Jenkins <jenkins@luxhub.com>', to: 'patrice.jacquot@luxhub.com', body: 'Test email from Jenkins'
             }
         }
     }
