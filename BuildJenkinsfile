@@ -67,20 +67,20 @@ pipeline {
 
                 def a1 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml", returnStdout: true).trim()
                 echo a1
-                def a2 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value>", returnStdout: true).trim()
+                def a2 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>'", returnStdout: true).trim()
                 echo a2
-                def a3 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value> | head -1", returnStdout: true).trim()
+                def a3 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1", returnStdout: true).trim()
                 echo a3
 
 
                 def timestamp = snapshotVersion
-                    ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value> | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
+                    ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
                     : version
 
                 echo snapshotVersion
                 echo timestamp
 
-                mail subject: "Artifact published: ${artifactFile}",
+                mail subject: "Artifact '${artifactFile}' published",
                         from: 'Jenkins <jenkins@luxhub.com>',
                         to: 'patrice.jacquot@luxhub.com',
                         mimeType: 'text/html',
