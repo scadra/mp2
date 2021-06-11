@@ -95,7 +95,6 @@ pipeline {
                             <pre>${commitMessage}</pre>
                             <hr/>
                             <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
-                            ${previousBuild ? '<p>Previous build on this branch was ' + previousBuild.result + '.</p>' : ''}
                             </body></html>
                           """
             }
