@@ -32,6 +32,7 @@ pipeline {
                 timeout(time: 10, unit: 'MINUTES')
             }
             steps {
+                echo 'noop'
                 //sh 'npm run build'
                 //zip dir: 'dist', zipFile: 'result.zip', archive: true
                 //zip dir: 'dist', zipFile: 'result.zip', archive: true
