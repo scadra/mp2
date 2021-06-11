@@ -49,16 +49,17 @@ pipeline {
 
     post {
         unsuccessful {
-            def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-            def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
-            def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
-            def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
+            script {
+                def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
+                def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
+                def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
 
-            mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
-                    from: 'Jenkins <jenkins@luxhub.com>',
-                    to: commitEmail,
-                    mimeType: 'text/html'
-            body: """
+                mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
+                        from: 'Jenkins <jenkins@luxhub.com>',
+                        to: commitEmail,
+                        mimeType: 'text/html'
+                body: """
                     <html><body>
                     <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
                     <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
@@ -70,18 +71,20 @@ pipeline {
                     ${previousBuild ? '<p>Previous build on this branch was ' + previousBuild.result + '.</p>' : ''}
                     </body></html>
                   """
+            }
         }
         always {
-            def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-            def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
-            def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
-            def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
+            script {
+                def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
+                def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
+                def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
 
-            mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
-                    from: 'Jenkins <jenkins@luxhub.com>',
-                    to: commitEmail,
-                    mimeType: 'text/html'
-            body: """
+                mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
+                        from: 'Jenkins <jenkins@luxhub.com>',
+                        to: commitEmail,
+                        mimeType: 'text/html'
+                body: """
                     <html><body>
                     <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
                     <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
@@ -93,6 +96,7 @@ pipeline {
                     ${previousBuild ? '<p>Previous build on this branch was ' + previousBuild.result + '.</p>' : ''}
                     </body></html>
                   """
+            }
             deleteDir()
         }
     }
