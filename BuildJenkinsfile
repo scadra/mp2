@@ -2,12 +2,14 @@ def groupId = 'com.luxhub.agora'
 def groupPath = groupId.replace('.', '/')
 def artifactId = 'agora-front'
 def version = params['release.version']
+def mvnCoordinates = "${groupId}:${artifactId}:${version}"
 def artifactFile = "${artifactId}-${version}-bin.zip"
 def snapshotVersion = version.endsWith('-SNAPSHOT')
 def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
 def nexusUrl = snapshotVersion
     ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots'
     : 'https://nexus.luxhub.local:9443/repository/maven-releases'
+def actualLocation = ''
 
 pipeline {
 
@@ -41,6 +43,7 @@ pipeline {
             steps {
                 sh 'npm run build'
                 zip dir: 'dist', zipFile: "${artifactFile}", archive: true
+                echo "Artifact built and archived: ${artifactFile}"
             }
         }
 
@@ -54,56 +57,44 @@ pipeline {
                     echo packageJson.name
                     echo packageJson.version
                     echo packageJson.description
+                    def actualVersion = snapshotVersion
+                            ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
+                            : version;
+                    actualLocation = "${nexusUrl}/${groupPath}/${artifactId}/${version}/${artifactId}-${actualVersion}-bin.zip"
                 }
-                sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} --batch-mode"
+                sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} -Ddescription='${packageJson.description}' --batch-mode"
+                echo "Artifact ${mvnCoordinates} published to ${actualLocation}"
             }
         }
+
+        /*stage('Deploy') {
+            when {
+                expression { params.deploy }
+            }
+            steps {
+                echo "Deploying to ${params.deployTarget}"
+            }
+        }*/
     }
 
     post {
         success {
-            script {
-                def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
-                def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
-
-                def a1 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml", returnStdout: true).trim()
-                echo a1
-                def a2 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>'", returnStdout: true).trim()
-                echo a2
-                def a3 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1", returnStdout: true).trim()
-                echo a3
-
-
-                def timestamp = snapshotVersion
-                    ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
-                    : version
-
-                echo timestamp
-
-                mail subject: "Artifact '${artifactFile}' published",
-                        from: 'Jenkins <jenkins@luxhub.com>',
-                        to: 'patrice.jacquot@luxhub.com',
-                        mimeType: 'text/html',
-                        body: """
-                            <html><body>
-                            <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
-                            <p>
-                                <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> run by the job <strong>${env.JOB_NAME}</strong>
-                                from the branch <strong>${params['git.branch']}</strong>.
-                            </p>
-                            <p>
-                                Artifact <a href="${nexusUrl}${groupPath}/${artifactId}/${version}/${artifactId}-${timestamp}-bin.zip">
-                                <strong>${groupId}:${artifactId}:${version}</a></strong> has been published to Nexus.
-                            </p>
-                            <hr/>
-                            <p>
-                                Last commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>:
-                            </p>
-                            <pre>${commitMessage}</pre>
-                            </body></html>
-                          """
-            }
+            mail subject: "Artifact '${artifactFile}' published to Nexus",
+                    from: 'Jenkins <jenkins@luxhub.com>',
+                    to: 'patrice.jacquot@luxhub.com',
+                    mimeType: 'text/html',
+                    body: """
+                        <html><body>
+                        <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
+                        <p>
+                            <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>
+                            ran on the branch <strong>${params['git.branch']}</strong>.
+                        </p>
+                        <p>
+                            Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> has been published to Nexus ${snapshotVersion ? 'SNAPSHOT' : 'RELEASE'}.
+                        </p>
+                        </body></html>
+                      """
         }
         always {
             deleteDir()
