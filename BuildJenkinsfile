@@ -65,8 +65,16 @@ pipeline {
                 def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
                 def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
                 def timestamp = snapshotVersion
-                    ? sh (script: "curl ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value> -E | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
+                    ? sh (script: "curl ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value> | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
                     : version
+
+                def a1 = sh (script: "curl ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml", returnStdout: true).trim()
+                echo a1
+                def a2 = sh (script: "curl ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value>", returnStdout: true).trim()
+                echo a2
+
+                echo snapshotVersion
+                echo timestamp
 
                 mail subject: "Artifact published: ${artifactFile}",
                         from: 'Jenkins <jenkins@luxhub.com>',
@@ -74,13 +82,19 @@ pipeline {
                         mimeType: 'text/html',
                         body: """
                             <html><body>
-                            <h1>Job ${env.JOB_BASE_NAME}: ${currentBuild.currentResult}</h1>
-                            <p><a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> run by the job <strong>${env.JOB_NAME}</strong>.</p>
-                            <p>The artifact <a href="${nexusUrl}${groupPath}/${artifactId}/${version}/${artifactId}-${timestamp}-bin.zip">
-                                <strong>${groupId}:${artifactId}:${version}</a></strong> built from the branch <strong>${params['git.branch']}</strong>.
+                            <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
+                            <p>
+                                <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> run by the job <strong>${env.JOB_NAME}</strong>
+                                from the branch <strong>${params['git.branch']}</strong>.
+                            </p>
+                            <p>
+                                Artifact <a href="${nexusUrl}${groupPath}/${artifactId}/${version}/${artifactId}-${timestamp}-bin.zip">
+                                <strong>${groupId}:${artifactId}:${version}</a></strong> has been published to Nexus.
                             </p>
                             <hr/>
-                            <p>Last commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>: </p>
+                            <p>
+                                Last commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>:
+                            </p>
                             <pre>${commitMessage}</pre>
                             </body></html>
                           """
