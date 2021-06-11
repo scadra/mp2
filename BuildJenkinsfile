@@ -21,8 +21,7 @@ pipeline {
                 timeout(time: 20, unit: 'MINUTES')
             }
             steps {
-                sh 'git fetch --all'
-                sh "git checkout ${params['git.branch']} origin/${params['git.branch']}"
+                sh 'git status'
                 sh 'node -v'
                 sh 'npm --version'
                 sh 'npm install'
