@@ -64,7 +64,8 @@ pipeline {
             }
         }
         always {
-            deleteDir()
+            // Don't delete the whole workspace to speed-up builds
+            sh 'rm -f agora-front-AUTO-SNAPSHOT-bin.zip'
         }
     }
 }
