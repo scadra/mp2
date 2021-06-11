@@ -1,10 +1,10 @@
-def nexusSnapshotsId = 'nexus-snapshots'
-def nexusSnapshotsUrl = 'https://nexus.luxhub.local:9443/repository/maven-snapshots/'
-def nexusReleasesId = 'nexus-releases'
-def nexusReleasesUrl = 'https://nexus.luxhub.local:9443/repository/maven-releases/'
 def groupId = 'com.luxhub.agora'
 def artifactId = 'agora-front'
-def artifactFile = "${artifactId}-${params['release.version']}-bin.zip"
+def version = params['release.version']
+def artifactFile = "${artifactId}-${version}-bin.zip"
+def snapshotVersion = version.endsWith('-SNAPSHOT')
+def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
+def nexusUrl = snapshotVersion ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots/' : 'https://nexus.luxhub.local:9443/repository/maven-releases/'
 
 pipeline {
 
@@ -52,12 +52,36 @@ pipeline {
                     echo packageJson.version
                     echo packageJson.description
                 }
-                sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusSnapshotsId} -Durl=${nexusSnapshotsUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} --batch-mode"
+                sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} --batch-mode"
             }
         }
     }
 
     post {
+        success {
+            script {
+                def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
+                def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
+
+                mail subject: "Artifact published: ${artifactFile}",
+                        from: 'Jenkins <jenkins@luxhub.com>',
+                        to: 'patrice.jacquot@luxhub.com',
+                        mimeType: 'text/html',
+                        body: """
+                            <html><body>
+                            <h1>Job ${env.JOB_BASE_NAME}: ${currentBuild.currentResult}</h1>
+                            <p><a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> run by the job <strong>${env.JOB_NAME}</strong>.</p>
+                            <p>The artifact <strong>${groupId}:${artifactId}:${version}</strong> built from the branch <strong>${params['git.branch']}</strong>
+                            has just been published here: <a href="${nexusUrl}${groupId.replace('.', '/')}/${artifactId}/${version}/${artifactFile}">
+                                                                   ${nexusUrl}${groupId.replace('.', '/')}/${artifactId}/${version}/${artifactFile}</a>.</p>
+                            <hr/>
+                            <p>Last commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>: </p>
+                            <pre>${commitMessage}</pre>
+                            </body></html>
+                          """
+            }
+        }
         always {
             deleteDir()
         }
