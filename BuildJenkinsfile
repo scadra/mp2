@@ -52,7 +52,7 @@ pipeline {
                     echo packageJson.version
                     echo packageJson.description
                 }
-                sh "mvn deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusSnapshotsId} -Durl=${nexusSnapshotsUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']}"
+                sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusSnapshotsId} -Durl=${nexusSnapshotsUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} --batch-mode"
             }
         }
     }
