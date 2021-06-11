@@ -48,11 +48,9 @@ pipeline {
     }
 
     post {
-        post {
-            always {
-                deleteDir()
-                mail subject: 'Test email from Jenkins', from: 'Jenkins <jenkins@luxhub.com>', to: 'patrice.jacquot@luxhub.com', body: 'Test email from Jenkins'
-            }
+        always {
+            deleteDir()
+            mail subject: 'Test email from Jenkins', from: 'Jenkins <jenkins@luxhub.com>', to: 'patrice.jacquot@luxhub.com', body: 'Test email from Jenkins'
         }
     }
 }
