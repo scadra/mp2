@@ -21,12 +21,6 @@ pipeline {
                 timeout(time: 20, unit: 'MINUTES')
             }
             steps {
-                script {
-                    def packageJson = readJSON file: 'package.json'
-                    echo packageJson.name
-                    echo packageJson.version
-                    echo packageJson.description
-                }
                 sh 'node -v'
                 sh 'npm --version'
                 sh 'npm install'

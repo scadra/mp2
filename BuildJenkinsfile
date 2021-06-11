@@ -1,19 +1,27 @@
+def nexusSnapshotsId = 'nexus-snapshots'
+def nexusSnapshotsUrl = 'https://nexus.luxhub.local:9443/repository/maven-snapshots/'
+def nexusReleasesId = 'nexus-releases'
+def nexusReleasesUrl = 'https://nexus.luxhub.local:9443/repository/maven-releases/'
+def repositoryId = ''
+def groupId = 'com.luxhub.agora'
+def artifactId = 'agora-front'
+def artifactFile = "${artifactId}-${release.version}-bin.zip"
+
 pipeline {
 
     agent {
         label 'master'
     }
 
-    tools {
-        nodejs "nodejs-14.15.0"
-    }
-
     params {
-        string(name: 'release.version', defaultValue: '', description: 'Version of artifact agora-front-VERSION-bin.zip')
+        string(name: 'release.version', defaultValue: '0.0.1-SNAPSHOT', description: 'Version of artifact agora-front-VERSION-bin.zip')
     }
 
     stages {
         stage('Dependencies') {
+            tools {
+                nodejs "nodejs-14.15.0"
+            }
             options {
                 timeout(time: 20, unit: 'MINUTES')
             }
@@ -25,19 +33,30 @@ pipeline {
         }
 
         stage('Build') {
+            tools {
+                nodejs "nodejs-14.15.0"
+            }
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
             steps {
                 sh 'npm run build'
-                zip dir: 'dist', zipFile: 'agora-front-AUTO-SNAPSHOT-bin.zip', archive: true
+                zip dir: 'dist', zipFile: "${artifactFile}", archive: true
             }
         }
 
         stage('Publish') {
+            tools {
+                maven: 'maven-3.6.0'
+            }
             steps {
-                // TODO
-                sh 'ls -l dist'
+                script {
+                    def packageJson = readJSON file: 'package.json'
+                    echo packageJson.name
+                    echo packageJson.version
+                    echo packageJson.description
+                }
+                sh "mvn deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusSnapshotsId} -Durl=${nexusSnapshots} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${release.version}"
             }
         }
     }
