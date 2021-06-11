@@ -91,7 +91,7 @@ pipeline {
                             ran on the branch <strong>${params['git.branch']}</strong>.
                         </p>
                         <p>
-                            Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> has been published to Nexus ${snapshotVersion ? 'SNAPSHOT' : 'RELEASE'}.
+                            Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> has been published to <strong>${nexusId}</strong>.
                         </p>
                         </body></html>
                       """
