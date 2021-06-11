@@ -12,10 +12,6 @@ pipeline {
         label 'master'
     }
 
-    params {
-        string(name: 'release.version', defaultValue: '0.0.1-SNAPSHOT', description: 'Version of artifact agora-front-VERSION-bin.zip')
-    }
-
     stages {
         stage('Dependencies') {
             tools {
@@ -47,7 +43,7 @@ pipeline {
 
         stage('Publish') {
             tools {
-                maven: 'maven-3.6.0'
+                maven 'maven-3.6.0'
             }
             steps {
                 script {
