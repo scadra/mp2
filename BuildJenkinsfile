@@ -8,8 +8,15 @@ pipeline {
         nodejs "nodejs-14.15.0"
     }
 
+    params {
+        string(name: 'release.version', defaultValue: '', description: 'Version of artifact agora-front-VERSION-bin.zip')
+    }
+
     stages {
-        stage('Deps') {
+        stage('Dependencies') {
+            options {
+                timeout(time: 20, unit: 'MINUTES')
+            }
             steps {
                 sh 'node -v'
                 sh 'npm --version'
@@ -18,8 +25,12 @@ pipeline {
         }
 
         stage('Build') {
+            options {
+                timeout(time: 10, unit: 'MINUTES')
+            }
             steps {
                 sh 'npm run build'
+                zip dir: 'dist', zipFile: 'agora-front-AUTO-SNAPSHOT-bin.zip', archive: true
             }
         }
 

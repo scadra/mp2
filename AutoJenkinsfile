@@ -1,3 +1,5 @@
+def packageJson = readJSON file: 'package.json'
+
 pipeline {
 
     agent any
@@ -21,9 +23,12 @@ pipeline {
                 timeout(time: 20, unit: 'MINUTES')
             }
             steps {
+                echo packageJson.name
+                echo packageJson.version
+                echo packageJson.description
                 sh 'node -v'
                 sh 'npm --version'
-                //sh 'npm install'
+                sh 'npm install'
             }
         }
 
@@ -32,18 +37,8 @@ pipeline {
                 timeout(time: 10, unit: 'MINUTES')
             }
             steps {
-                echo 'noop'
-                //sh 'npm run build'
-                //zip dir: 'dist', zipFile: 'result.zip', archive: true
-                //zip dir: 'dist', zipFile: 'result.zip', archive: true
-            }
-        }
-
-        stage('Report') {
-            steps {
-                // TODO
-                sh 'ls -l dist'
-                sh 'ls -l result.zip'
+                sh 'npm run build'
+                zip dir: 'dist', zipFile: 'agora-front-AUTO-SNAPSHOT-bin.zip', archive: true
             }
         }
     }
@@ -56,48 +51,24 @@ pipeline {
                 def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
                 def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
 
-                mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
+                mail subject: "${currentBuild.currentResult}: ${env.JOB_BASE_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
                         from: 'Jenkins <jenkins@luxhub.com>',
                         to: commitEmail,
-                        mimeType: 'text/html'
-                body: """
-                    <html><body>
-                    <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
-                    <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
-                    <hr/>
-                    <p>Commit ${commitHash} by ${commitAuthor}: </p>
-                    <pre>${commitMessage}</pre>
-                    <hr/>
-                    <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
-                    ${previousBuild ? '<p>Previous build on this branch was ' + previousBuild.result + '.</p>' : ''}
-                    </body></html>
-                  """
-            }
-        }
-        always {
-            script {
-                def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
-                def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
-                def commitEmail2 = sh (script: 'git log -1 --pretty=%ae', returnStdout: true).trim()
-                def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
-
-                mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
-                        from: 'Jenkins <jenkins@luxhub.com>',
-                        to: 'patrice.jacquot@luxhub.com',
                         mimeType: 'text/html',
                         body: """
-                            <html><body>${commitEmail}-${commitEmail2}
-                            <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
-                            <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
-                            <hr/>
-                            <p>Commit ${commitHash} by ${commitAuthor}: </p>
-                            <pre>${commitMessage}</pre>
-                            <hr/>
+                            <html><body>
+                            <h1>Job ${env.JOB_BASE_NAME}: ${currentBuild.currentResult}</h1>
+                            <p>This is the build <strong>#${env.BUILD_NUMBER}</strong> on branch
+                                <strong>${env.BRANCH_NAME}</strong> run by the job <strong>${env.JOB_NAME}</strong>.</p>
                             <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
+                            <hr/>
+                            <p>Commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>: </p>
+                            <pre>${commitMessage}</pre>
                             </body></html>
                           """
             }
+        }
+        always {
             deleteDir()
         }
     }
