@@ -16,7 +16,7 @@ pipeline {
     }
 
     stages {
-        stage('Deps') {
+        stage('Dependencies') {
             options {
                 timeout(time: 20, unit: 'MINUTES')
             }
@@ -48,9 +48,52 @@ pipeline {
     }
 
     post {
+        unsuccessful {
+            def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+            def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
+            def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
+            def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
+
+            mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
+                    from: 'Jenkins <jenkins@luxhub.com>',
+                    to: commitEmail,
+                    mimeType: 'text/html'
+            body: """
+                    <html><body>
+                    <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
+                    <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
+                    <hr/>
+                    <p>Commit ${commitHash} by ${commitAuthor}: </p>
+                    <pre>${commitMessage}</pre>
+                    <hr/>
+                    <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
+                    ${previousBuild ? '<p>Previous build on this branch was ' + previousBuild.result + '.</p>' : ''}
+                    </body></html>
+                  """
+        }
         always {
+            def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+            def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
+            def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
+            def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
+
+            mail subject: "FAILED: ${env.JOB_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
+                    from: 'Jenkins <jenkins@luxhub.com>',
+                    to: commitEmail,
+                    mimeType: 'text/html'
+            body: """
+                    <html><body>
+                    <h1>Job ${env.JOB_NAME} failed (${currentBuild.currentResult})</h1>
+                    <p>This is the build #${env.BUILD_NUMBER} on branch ${env.BRANCH_NAME}.</p>
+                    <hr/>
+                    <p>Commit ${commitHash} by ${commitAuthor}: </p>
+                    <pre>${commitMessage}</pre>
+                    <hr/>
+                    <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
+                    ${previousBuild ? '<p>Previous build on this branch was ' + previousBuild.result + '.</p>' : ''}
+                    </body></html>
+                  """
             deleteDir()
-            mail subject: 'Test email from Jenkins', from: 'Jenkins <jenkins@luxhub.com>', to: 'patrice.jacquot@luxhub.com', body: 'Test email from Jenkins'
         }
     }
 }
