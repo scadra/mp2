@@ -64,14 +64,18 @@ pipeline {
                 def commitMessage = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                 def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
                 def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
-                def timestamp = snapshotVersion
-                    ? sh (script: "curl ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value> | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
-                    : version
 
-                def a1 = sh (script: "curl ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml", returnStdout: true).trim()
+                def a1 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml", returnStdout: true).trim()
                 echo a1
-                def a2 = sh (script: "curl ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value>", returnStdout: true).trim()
+                def a2 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value>", returnStdout: true).trim()
                 echo a2
+                def a3 = sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value> | head -1", returnStdout: true).trim()
+                echo a3
+
+
+                def timestamp = snapshotVersion
+                    ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep <value> | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
+                    : version
 
                 echo snapshotVersion
                 echo timestamp
