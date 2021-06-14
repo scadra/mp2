@@ -4,7 +4,7 @@
             <wizard-step :steps="steps" :currentStep.sync="currentStep"></wizard-step>
             <hr />
             <div class="content">
-                <p class="has-text-right step is-size-7 light-text">Step {{currentStep + 1}}/{{steps.length }}</p>
+                <p class="has-text-right step is-size-7 light-text">Step {{currentStep + 1}}/{{steps ? steps.length : 1}}</p>
                 <transition name="fade" mode="out-in">
                     <api-information-wizard v-if="currentStep === 0" :api.sync="api"></api-information-wizard>
                     <api-authorization-wizard v-if="currentStep === 1" :api.sync="api" ></api-authorization-wizard>
