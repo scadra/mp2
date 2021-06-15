@@ -26,9 +26,10 @@ module.exports = function (api) {
     addCollection
   }) => {})
 
-  api.createPages(({
-    createPage
-  }) => {
-    // Use the Pages API here: https://gridsome.org/docs/pages-api/
+  api.createPages(({ createPage }) => {
+    createPage(  {
+      path: '/component/apiportal/reset',
+      component: './src/pages/new-password.vue'
+    })
   })
 }

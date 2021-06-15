@@ -4,13 +4,13 @@ import IAuthenticationService from "Interfaces/api/authentication.interface";
 import { UserLogin } from "Models/user/user-login";
 // Dependencies
 import { injectable } from "inversify-props";
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
+import { ResetPassword } from "@/models/user/reset-password";
 
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true;
 
 @injectable()
 export default class AuthenticationService implements IAuthenticationService {
-
   private path: string = "api";
 
   /**
@@ -19,29 +19,21 @@ export default class AuthenticationService implements IAuthenticationService {
    * @return Promise function with type void
    */
   async login(user: UserLogin): Promise<void> {
-    let resp:AxiosResponse = null;
-
-    let captchaHeader = user.recaptcha != null ? {
-      headers: {captchaCode: user.recaptcha}
-    } : {};
-
-    await axios.post(`${this.path}/login`, user, captchaHeader)
-      .then(response => resp = response)
-      .catch(error => console.log("Error: " + error + " - " + (typeof error)));
-
-    if (resp != null) {
-      return resp.data
+    const options = this.initHeaderWithCaptcha(user.recaptcha);
+    try {
+      await axios.post(`${this.path}/login`, user, options);
+    } catch (error) {
+      console.log("Error: " + error + " - " + typeof error);
+      throw Error(error);
     }
-
-    return new Promise<void>((resolve, reject) => reject())
   }
 
   async logout(): Promise<void> {
     // TODO logout on SSO
-    return new Promise<void>((resolve, reject) => resolve())
+    return new Promise<void>((resolve, reject) => resolve());
   }
 
-    /**
+  /**
    * secure post
    * @UserLogin user information: username + password
    * @return Promise function with type void
@@ -57,19 +49,42 @@ export default class AuthenticationService implements IAuthenticationService {
    * @return Promise function with type void
    */
   async resetPassword(email: String, recaptchaResponse: String): Promise<void> {
-    let resp: AxiosResponse = null;
-    const options = {
-      headers: {'captchaCode': recaptchaResponse}
-    };
-
-    await axios.post(`/${this.path}/reset-password`, {"email": email}, options)
-    .then(response => resp = response)
-    .catch(error => console.log("Error: " + error + " - " + (typeof error)));
-
-    if (resp != null) {
-      return resp.data
+    const options = this.initHeaderWithCaptcha(recaptchaResponse);
+    try {
+      return axios.post(
+        `${this.path}/reset-password`,
+        { email: email },
+        options
+      );
+    } catch (error) {
+      console.log("Error: " + error + " - " + typeof error);
+      throw Error(error);
     }
+  }
 
-    return new Promise<void>((resolve, reject) => reject())
+  /**
+   * changePassword
+   * @ResetPassword resetPassword with the different informations needed
+   * @return Promise function with type void
+   */
+  async changePassword(resetPassword: ResetPassword): Promise<void> {
+    delete resetPassword.repeatPassword;
+    return await axios.post(
+      `${window.location.protocol + "//" + window.location.host}/${this.path}/update-forgotten-password`,
+      resetPassword
+    );
+  }
+
+  /**
+   * initHeaderWithCaptcha
+   * @ResetPassStringword recaptcha
+   * @return Promise function with type void
+   */
+  private initHeaderWithCaptcha(recaptcha: String) {
+    return recaptcha != null
+      ? {
+          headers: { captchaCode: recaptcha },
+        }
+      : {};
   }
 }

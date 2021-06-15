@@ -34,6 +34,9 @@ export default class Login extends Vue {
   @authenticationStore.Action
   login!: (user: UserLogin) => void;
 
+  @authenticationStore.Action
+  reinitMessage!: () => void;
+
   @authenticationStore.Getter
   returnIsLoading!: () => boolean;
 
@@ -42,9 +45,6 @@ export default class Login extends Vue {
 
   @authenticationStore.Getter
   returnIsAuth!: () => boolean
-
-  @authenticationStore.Getter
-    returnResetPasswordSent!: () => boolean | false;
 
   errorClick: number = 0;
 
@@ -62,7 +62,9 @@ export default class Login extends Vue {
   @Validations() validations = ValidationLoginModel;
 
   // Hook
-  beforeMount() {}
+  beforeMount() {
+    this.reinitMessage()
+  }
 
   async signIn() {
     this.user.recaptcha = this.recaptchaValid
@@ -84,4 +86,15 @@ export default class Login extends Vue {
   disableButton() {
     return this.$v.$invalid || this.errorClick >= 3 && this.recaptchaValid == null
   }
+
+  redirectMessage() {
+    let message = '';
+    if(this.$route.query.resetSent) {
+      message = 'You requested a password reset. You should receive an email with instructions on how to reset your password.';
+    } else if (this.$route.query.passwordUpdated) {
+      message = 'You password has been successfully updated';
+    }
+    return message;
+  }
+  
 }
