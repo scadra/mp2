@@ -4,15 +4,17 @@
         <div class="column is-6 container">
             <notification v-if="returnErrorMessage !== null" :text="returnErrorMessage" className="is-danger">
             </notification>
-            <notification v-if="returnResetPasswordSent" class="notification is-success" text="You requested a password reset. You should receive an email with instructions on how to reset your password.">
+            <notification v-if="$route.query.resetSent || $route.query.passwordUpdated" 
+            :text="redirectMessage()" 
+            className="is-success" >
             </notification>
             <h3 class="title is-3">Sign In</h3>
             <login-form :user.sync="user"></login-form>
-            <div class="columns is-centered" v-if="errorClick &gt;= 3 ">
+            <div class="columns is-centered" v-if="errorClick == 3 ">
                 <vue-recaptcha :sitekey="keyRecaptcha" :loadRecaptchaScript="true" @verify="onCaptchaVerify" @expired="onCaptchaExpired"> </vue-recaptcha>
             </div>
             <div class="button-container">
-                <b-button type="is-primary" @click="signIn()" :disabled="this.$v.$invalid || this.errorClick &gt;= 3 &amp;&amp; this.recaptchaValid == null" :loading="returnIsLoading">Sign in
+                <b-button type="is-primary" @click="signIn()" :disabled="this.$v.$invalid || this.errorClick == 3 && this.recaptchaValid == null" :loading="returnIsLoading">Sign in
                 </b-button>
                 <g-link class="button ml-5" to="/reset-password/">Forgot password</g-link>
             </div>

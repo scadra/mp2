@@ -1,7 +1,8 @@
 import Vue from 'vue';
 
-import VueRouter from 'vue-router';
+import VueRouter, { Route } from 'vue-router';
 import Home from 'Pages/Index.vue';
+import ResetPasswordForm from 'Pages/new-password/new-password.vue';
 
 Vue.use(VueRouter);
 
@@ -12,6 +13,12 @@ const routes = [
     name: 'Home',
     component: Home,
   },
+  {
+    path: '/component/apiportal/reset',
+    name: 'reset-link',
+    props: (route: Route) => ({email: route.query.email, validator: route.query.validator}),
+    component: ResetPasswordForm
+  }
 ]
 
 const router = new VueRouter({
