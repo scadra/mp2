@@ -8,13 +8,13 @@
             :text="redirectMessage()" 
             className="is-success" >
             </notification>
-            <h3 class="title is-3">Sign In</h3>
+            <h3 class="title is-3">Log In</h3>
             <login-form :user.sync="user"></login-form>
-            <div class="columns is-centered" v-if="errorClick == 3 ">
+            <div class="columns is-centered" v-if="errorClick >= 3 ">
                 <vue-recaptcha :sitekey="keyRecaptcha" :loadRecaptchaScript="true" @verify="onCaptchaVerify" @expired="onCaptchaExpired"> </vue-recaptcha>
             </div>
             <div class="button-container">
-                <b-button type="is-primary" @click="signIn()" :disabled="this.$v.$invalid || this.errorClick == 3 && this.recaptchaValid == null" :loading="returnIsLoading">Sign in
+                <b-button type="is-primary" @click="signIn()" :disabled="$v.$invalid || errorClick == 3 && recaptchaValid == null" :loading="returnIsLoading">Sign in
                 </b-button>
                 <g-link class="button ml-5" to="/reset-password/">Forgot password</g-link>
             </div>

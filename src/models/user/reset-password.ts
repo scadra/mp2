@@ -1,11 +1,11 @@
 
 export class ResetPassword {
-    email: String;
-    validation: String;
+    email: string;
+    validation: string;
     password: String;
     repeatPassword: String;
 
-    constructor(email: String, validation: String) {
+    constructor(email: string, validation: string) {
         this.email = email;
         this.validation = validation;
         this.password = "";
