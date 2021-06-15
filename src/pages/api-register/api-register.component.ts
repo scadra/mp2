@@ -35,7 +35,7 @@ const camundaStore = namespace("CamundaStore");
   },
 })
 export default class ApiRegister extends Vue {
-  steps!: Step[];
+  steps: Step[] = this.initSteps();
   currentStep: number = 0;
   api = new ApiCreation();
 
@@ -46,17 +46,12 @@ export default class ApiRegister extends Vue {
   // Validation for the form
   @Validations() validations = ValidationApiModel;
 
-  // Hook
-  beforeMount() {
-    this.initSteps();
-  }
-
   /**
    * init the different steps
    * @void
    */
-  initSteps(): void {
-    this.steps = [
+  initSteps(): Step[] {
+    return [
       {
         icon: "fas fa-info",
         title: "API informations",

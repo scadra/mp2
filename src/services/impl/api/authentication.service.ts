@@ -4,8 +4,8 @@ import IAuthenticationService from "Interfaces/api/authentication.interface";
 import { UserLogin } from "Models/user/user-login";
 // Dependencies
 import { injectable } from "inversify-props";
-import axios, { AxiosResponse } from "axios";
-import { ResetPassword } from "@/models/user/reset-password";
+import axios from "axios";
+import { ResetPassword } from "Models/user/reset-password";
 
 axios.defaults.withCredentials = true;
 

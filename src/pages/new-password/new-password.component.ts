@@ -33,8 +33,8 @@ export default class ResetPasswordForm extends Vue {
   returnErrorMessage!: () => String | null;
 
   resetPassword: ResetPassword = new ResetPassword(
-    this.$route.query.email.toString(),
-    this.$route.query.validator.toString()
+    this.$route.query.email as string,
+    this.$route.query.validator as string
   );
 
   beforeMount() {
