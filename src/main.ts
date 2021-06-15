@@ -34,6 +34,7 @@ export default function (Vue: any, {
   Vue.component('Logo', Logo);
 
   // Load dependency only for the client
+  // #PJA: commented the condition to allow "npm run build"
   if (isClient) {
     // Add dependencies inside de vue instance
     Vue.use(Buefy)

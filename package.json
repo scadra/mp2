@@ -1,5 +1,7 @@
 {
   "name": "agora-front",
+  "version": "0.0.1",
+  "description": "Frontend (static web files) for the new Marketplace v2. Built with VueJS, Typescript, Gridsome, Bulma.",
   "private": true,
   "scripts": {
     "build": "gridsome build",
