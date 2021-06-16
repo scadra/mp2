@@ -25,6 +25,7 @@ pipeline {
     parameters {
         string(name: 'branch', defaultValue: 'master', description: 'Branch to build and release')
         string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: 'Artifact version to publish to Nexus')
+        choice(name: 'deploy', choices: ['', 'port1-dev.luxhub.local'], description: 'Server where to deploy')
     }
 
     stages {
@@ -92,7 +93,7 @@ pipeline {
                     echo packageJson.name
                     echo packageJson.version
                     echo packageJson.description
-                    sh "${mvnCmd} deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} -Ddescription='${packageJson.description}'"
+                    sh "${mvnCmd} deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${version} -Ddescription='${packageJson.description}'"
                     def actualVersion = snapshotVersion
                             ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
                             : version;
@@ -102,14 +103,19 @@ pipeline {
             }
         }
 
-        /*stage('Deploy') {
+        stage('Deploy') {
             when {
-                expression { params.deploy }
+                expression { params.deploy != '' }
             }
             steps {
-                echo "Deploying to ${params.deployTarget}"
+                echo "Executing deploy job to target ${params.deploy}"
+                build job: 'Marketplace-Frontend-Deploy',
+                    parameters: [
+                        string(name: 'version', value: params.version),
+                        string(name: 'target', value: params.deploy)
+                    ]
             }
-        }*/
+        }
     }
 
     post {
