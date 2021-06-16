@@ -1,19 +1,14 @@
 def groupId = 'com.luxhub.agora'
 def groupPath = groupId.replace('.', '/')
 def artifactId = 'marketplace-front'
-def version = params['release.version']
-def mvnCoordinates = "${groupId}:${artifactId}:${version}"
+def mvnCoordinates = "${groupId}:${artifactId}:${version}:zip:bin"
 def artifactFile = "${artifactId}-${version}-bin.zip"
-def snapshotVersion = version.endsWith('-SNAPSHOT')
-def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
-def nexusUrl = snapshotVersion
-    ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots'
-    : 'https://nexus.luxhub.local:9443/repository/maven-releases'
-def actualLocation = ''
-
-jnkUsername = params['release.jenkinsUsername'] // 'jenk2adm'
-destinationServer = params['release.destination'] // port1-dev.luxhu.local
-
+def mavenRepositories =
+        'nexus-snapshots::default::https://nexus.luxhub.local:9443/repository/maven-snapshots,' +
+        'nexus-releases::default::https://nexus.luxhub.local:9443/repository/maven-releases'
+def sshCmd = "ssh -o StrictHostKeyChecking=no"
+def sshOrig = "jenk2adm@${env.JENKINS_URL.contains('prd') ? 'jump-prd.luxhub.local' : 'jump-dev.luxhub.local'}"
+def sshDest = "jenk2adm@${target}"
 
 pipeline {
 
@@ -22,20 +17,48 @@ pipeline {
     }
 
     parameters {
-
+        string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: 'Version to deploy')
+        choice(name: 'target', choice: ['port1-dev.luxhub.local'], description: 'Server where to deploy')
     }
 
     stages {
+        stage('Download') {
+            steps {
+                echo "Downloading ${mvnCoordinates} to ${artifactFile}"
+                script {
+                    def packageJson = readJSON file: 'package.json'
+                    echo packageJson.name
+                    echo packageJson.version
+                    echo packageJson.description
+                    // Get artifact into local repo
+                    sh "mvn -s /opt/jenkins/home/maven-settings.xml dependency:get -DremoteRepositories=${mavenRepositories} -Dartifact=${mvnCoordinates}"
+                    // Copy artifact from local repo to current directory
+                    sh "mvn -s /opt/jenkins/home/maven-settings.xml dependency:copy -Dartifact=${mvnCoordinates} -DoutputDirectory=."
+                }
+            }
+        }
+
+        stage('Copy') {
+            steps {
+                echo "Copy ${artifactFile} to ${params.target}"
+                sshagent(['5bf76f15-b91a-4eb5-ae97-4f7481b6d06c']) {
+                    sh "${sshCmd} ${sshOrig} 'scp ${artifactFile} ${sshDest}:/tmp/${artifactFile}'"
+                    sh "${sshCmd} ${sshDest} 'chmod 666 /tmp/${artifactFile}'"
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
-                echo "Deploying to ${params.deployTarget}"
+                echo "Deploying ${artifactFile} to ${params.target}"
+
             }
         }
     }
 
     post {
         success {
-            mail subject: "Artifact '${artifactFile}' published to Nexus",
+            mail subject: "Deployed '${artifactFile}' published to ${target}",
                     from: 'Jenkins <jenkins@luxhub.com>',
                     to: 'patrice.jacquot@luxhub.com',
                     mimeType: 'text/html',
@@ -47,7 +70,7 @@ pipeline {
                             ran on the branch <strong>${params['git.branch']}</strong>.
                         </p>
                         <p>
-                            Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> has been published to <strong>${nexusId}</strong>.
+                            Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> from <strong>${nexusId}</strong> has been deployed to ${target}.
                         </p>
                         </body></html>
                       """

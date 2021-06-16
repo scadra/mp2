@@ -54,11 +54,11 @@ pipeline {
             steps {
                 echo 'Dependency check for vulnerabilities'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh "npm audit --audit-level=high >${securityAuditFile} | tee ${WORKSPACE}/${codeLintReportFile}"
+                    sh 'npm audit --audit-level=high'
                 }
                 echo 'Source code quality check'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh "npm run lint 2>&1 | tee ${WORKSPACE}/${codeLintReportFile}"
+                    sh 'npm run lint'
                 }
             }
         }
@@ -71,11 +71,6 @@ pipeline {
                 def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
                 def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
                 def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
-                // Avoid error reading nonexistent file
-                sh "touch ${securityAuditFile}"
-                sh "touch ${codeLintReportFile}"
-                def securityAudit = readFile "${WORKSPACE}/${securityAuditFile}"
-                def codeLintReport = readFile "${WORKSPACE}/${codeLintReportFile}"
 
                 mail subject: "${currentBuild.currentResult}: ${env.JOB_BASE_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
                         from: 'Jenkins <jenkins@luxhub.com>',
@@ -90,11 +85,6 @@ pipeline {
                             <hr/>
                             <p>Commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>: </p>
                             <pre>${commitMessage}</pre>
-                            <hr/>
-                            <p>Security audit report: </p>
-                            <pre>${securityAudit}</pre>
-                            <p>Code lint report: </p>
-                            <pre>${codeLintReport}</pre>
                             </body></html>
                           """
             }

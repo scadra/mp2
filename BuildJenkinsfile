@@ -2,7 +2,7 @@ def groupId = 'com.luxhub.agora'
 def groupPath = groupId.replace('.', '/')
 def artifactId = 'marketplace-front'
 def version = params['release.version']
-def mvnCoordinates = "${groupId}:${artifactId}:${version}"
+def mvnCoordinates = "${groupId}:${artifactId}:${version}:bin:zip"
 def artifactFile = "${artifactId}-${version}-bin.zip"
 def snapshotVersion = version.endsWith('-SNAPSHOT')
 def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
@@ -15,6 +15,11 @@ pipeline {
 
     agent {
         label 'master'
+    }
+
+    parameters {
+        string(name: 'git.branch', defaultValue: 'master', description: 'Branch from where to build and release')
+        string(name: 'release.version', defaultValue: '0.0.1-SNAPSHOT', description: '0.0.1')
     }
 
     stages {
@@ -52,18 +57,19 @@ pipeline {
                 maven 'maven-3.6.0'
             }
             steps {
+                echo "Publishing to ${nexusId}"
                 script {
                     def packageJson = readJSON file: 'package.json'
                     echo packageJson.name
                     echo packageJson.version
                     echo packageJson.description
+                    sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} -Ddescription='${packageJson.description}' --batch-mode"
                     def actualVersion = snapshotVersion
                             ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
                             : version;
                     actualLocation = "${nexusUrl}/${groupPath}/${artifactId}/${version}/${artifactId}-${actualVersion}-bin.zip"
-                    sh "mvn -s /opt/jenkins/home/maven-settings.xml deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${params['release.version']} -Ddescription='${packageJson.description}' --batch-mode"
-                    echo "Artifact ${mvnCoordinates} published to ${actualLocation}"
                 }
+                echo "Artifact ${mvnCoordinates} published to ${actualLocation}"
             }
         }
 
