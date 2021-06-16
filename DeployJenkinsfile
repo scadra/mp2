@@ -42,7 +42,7 @@ pipeline {
                     // Get artifact into local repo
                     sh "${mvnCmd} dependency:get -DremoteRepositories=${mavenRepositories} -Dartifact=${mvnCoordinates}"
                     // Copy artifact from local repo to current directory
-                    sh "${mvnCmd} mvn dependency:copy -Dartifact=${mvnCoordinates} -DoutputDirectory=."
+                    sh "${mvnCmd} dependency:copy -Dartifact=${mvnCoordinates} -DoutputDirectory=."
                     sh "ll"
                     sh "ll ${artifactFile}"
                 }
