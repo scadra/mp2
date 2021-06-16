@@ -53,14 +53,14 @@ pipeline {
             }
             steps {
                 echo 'Dependency check for vulnerabilities'
-                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    tee(securityAuditFile) {
+                tee(securityAuditFile) {
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                         sh 'npm audit --audit-level=high'
                     }
                 }
                 echo 'Source code quality check'
-                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    tee(codeLintReportFile) {
+                tee(codeLintReportFile) {
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                         sh 'npm run lint'
                     }
                 }
