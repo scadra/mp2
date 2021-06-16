@@ -86,7 +86,6 @@ pipeline {
         always {
             // Don't delete the whole workspace to speed-up builds
             sh "rm -f ${archivedArtifact}"
-            sh "rm -f ${archivedAudit}"
         }
     }
 }
