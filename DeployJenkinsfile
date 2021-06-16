@@ -67,9 +67,9 @@ pipeline {
                         if (params.cleanup) {
                             echo 'Cleaning deployment directory'
                             sh """
-                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
-                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} rm -rf ${deploymentPath}'"
-                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}' || true"
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} rm -rf ${deploymentPath}' || true"
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}' || true"
                             """
                         }
                     }
@@ -77,7 +77,7 @@ pipeline {
                     sh """
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip -u /tmp/${artifactFile} -d ${deploymentPath}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
-                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'rm -rf /tmp/${artifactFile}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'rm -rf /tmp/${artifactFile}' || true"
                     """
                 }
             }
