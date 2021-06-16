@@ -89,7 +89,7 @@ pipeline {
                             <p>This is the build <strong>#${env.BUILD_NUMBER}</strong> on branch
                                 <strong>${env.BRANCH_NAME}</strong> run by the job <strong>${env.JOB_NAME}</strong>.</p>
                             <h2>Outcome</h2>
-                            <p>${currentBuild.currentResult == 'UNSTABLE' ? 'Artifact archived anyway: ' + archivedArtifact : 'Build failed entirely.'}</p>
+                            <p>${currentBuild.currentResult == 'UNSTABLE' ? 'Web app archived anyway: <a href="' + env.BUILD_URL + '/artifact/' + archivedArtifact + '">' + archivedArtifact + '</a>.' : 'Build failed entirely.'}</p>
                             <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
                             <p>Commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>: </p>
                             <pre>${commitMessage}</pre>
