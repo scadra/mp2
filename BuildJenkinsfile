@@ -17,6 +17,11 @@ pipeline {
         label 'master'
     }
 
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
     parameters {
         string(name: 'git.branch', defaultValue: 'master', description: 'Branch from where to build and release')
         string(name: 'release.version', defaultValue: '0.0.1-SNAPSHOT', description: '0.0.1')
@@ -49,6 +54,30 @@ pipeline {
                 sh 'npm run build'
                 zip dir: 'dist', zipFile: "${artifactFile}", archive: true
                 echo "Artifact built and archived: ${artifactFile}"
+            }
+        }
+
+        // TODO should fail completely if building a release version (non-snapshot)
+        stage('QA') {
+            options {
+                timeout(time: 15, unit: 'MINUTES')
+            }
+            tools {
+                nodejs "nodejs-14.15.0"
+            }
+            steps {
+                echo 'Dependency check for vulnerabilities'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh 'npm audit --audit-level=high'
+                }
+                echo 'Source code quality check'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh 'npm run lint'
+                }
+                echo 'Unit tests with Jest'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh 'npm run test'
+                }
             }
         }
 
@@ -85,17 +114,19 @@ pipeline {
 
     post {
         success {
-            mail subject: "Artifact '${artifactFile}' published to Nexus",
+            mail subject: "${artifactFile} published to Nexus",
                     from: 'Jenkins <jenkins@luxhub.com>',
                     to: 'patrice.jacquot@luxhub.com',
                     mimeType: 'text/html',
                     body: """
                         <html><body>
                         <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
+                        <h2>Execution</h2>
                         <p>
                             <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>
                             ran on the branch <strong>${params['git.branch']}</strong>.
                         </p>
+                        <h2>Outcome</h2>
                         <p>
                             Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> has been published to <strong>${nexusId}</strong>.
                         </p>
