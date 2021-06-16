@@ -3,7 +3,7 @@ def groupPath = groupId.replace('.', '/')
 def artifactId = 'marketplace-front'
 def mvnCoordinates = "${groupId}:${artifactId}:${version}:bin:zip"
 def artifactFile = "${artifactId}-${version}-bin.zip"
-def snapshotVersion = version.endsWith('-SNAPSHOT')
+def snapshotVersion = params.version.endsWith('-SNAPSHOT')
 def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
 def nexusUrl = snapshotVersion
     ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots'
@@ -23,8 +23,8 @@ pipeline {
     }
 
     parameters {
-        string(name: 'branch', defaultValue: 'master', description: 'Branch from where to build and release')
-        string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: '0.0.1')
+        string(name: 'branch', defaultValue: 'master', description: 'Branch to build and release')
+        string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: 'Artifact version to publish to Nexus')
     }
 
     stages {
