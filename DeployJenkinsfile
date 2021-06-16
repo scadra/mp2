@@ -1,11 +1,16 @@
 def groupId = 'com.luxhub.agora'
 def groupPath = groupId.replace('.', '/')
 def artifactId = 'marketplace-front'
-def mvnCoordinates = "${groupId}:${artifactId}:${version}:zip:bin"
-def artifactFile = "${artifactId}-${version}-bin.zip"
+def mvnCoordinates = "${groupId}:${artifactId}:${params.version}:zip:bin"
+def artifactFile = "${artifactId}-${params.version}-bin.zip"
 def mavenRepositories =
         'nexus-snapshots::default::https://nexus.luxhub.local:9443/repository/maven-snapshots,' +
         'nexus-releases::default::https://nexus.luxhub.local:9443/repository/maven-releases'
+def snapshotVersion = params.version.endsWith('-SNAPSHOT')
+def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
+def nexusUrl = snapshotVersion
+        ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots'
+        : 'https://nexus.luxhub.local:9443/repository/maven-releases'
 def sshCmd = "ssh -o StrictHostKeyChecking=no"
 def sshOrig = "jenk2adm@${env.JENKINS_URL.contains('prd') ? 'jump-prd.luxhub.local' : 'jump-dev.luxhub.local'}"
 def sshDest = "jenk2adm@${target}"
