@@ -53,16 +53,12 @@ pipeline {
             }
             steps {
                 echo 'Dependency check for vulnerabilities'
-                tee(securityAuditFile) {
-                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                        sh 'npm audit --audit-level=high'
-                    }
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh "npm audit --audit-level=high >${securityAuditFile} 2>&1"
                 }
                 echo 'Source code quality check'
-                tee(codeLintReportFile) {
-                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                        sh 'npm run lint'
-                    }
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh "npm run lint >${codeLintReportFile} 2>&1"
                 }
             }
         }
@@ -75,6 +71,9 @@ pipeline {
                 def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
                 def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
                 def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
+                // Avoid error reading nonexistent file
+                sh "touch ${securityAuditFile}"
+                sh "touch ${codeLintReportFile}"
                 def securityAudit = readFile securityAuditFile
                 def codeLintReport = readFile codeLintReportFile
 
