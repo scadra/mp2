@@ -92,9 +92,9 @@ pipeline {
                             <pre>${commitMessage}</pre>
                             <hr/>
                             <p>Security audit report: </p>
-                            <pre>${securityAudit}</pre>
+                            <pre>${securityAudit.split('\n')[n]}</pre>
                             <p>Code lint report: </p>
-                            <pre>${codeLintReport}</pre>
+                            <pre>${codeLintReport.split('\n')[n]}</pre>
                             </body></html>
                           """
             }
