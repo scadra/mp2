@@ -74,8 +74,8 @@ pipeline {
                 // Avoid error reading nonexistent file
                 sh "touch ${securityAuditFile}"
                 sh "touch ${codeLintReportFile}"
-                def securityAudit = readFile securityAuditFile
-                def codeLintReport = readFile codeLintReportFile
+                def securityAudit = readFile "${WORKSPACE}/${securityAuditFile}"
+                def codeLintReport = readFile "${WORKSPACE}/${codeLintReportFile}"
 
                 mail subject: "${currentBuild.currentResult}: ${env.JOB_BASE_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
                         from: 'Jenkins <jenkins@luxhub.com>',
@@ -92,9 +92,9 @@ pipeline {
                             <pre>${commitMessage}</pre>
                             <hr/>
                             <p>Security audit report: </p>
-                            <pre>${securityAudit.split('\n')[n]}</pre>
+                            <pre>${securityAudit}</pre>
                             <p>Code lint report: </p>
-                            <pre>${codeLintReport.split('\n')[n]}</pre>
+                            <pre>${codeLintReport}</pre>
                             </body></html>
                           """
             }
