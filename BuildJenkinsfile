@@ -119,12 +119,15 @@ pipeline {
     }
 
     post {
-        success {
-            mail subject: "${artifactFile} published to ${nexusId}",
-                    from: 'Jenkins <jenkins@luxhub.com>',
-                    to: 'patrice.jacquot@luxhub.com',
-                    mimeType: 'text/html',
-                    body: """
+        always {
+            deleteDir()
+            script {
+                if (!params.deploy && (currentBuild.status == 'SUCCESS' || currentBuild.status == 'UNSTABLE')) {
+                    mail subject: "${artifactFile} published to ${nexusId}",
+                            from: 'Jenkins <jenkins@luxhub.com>',
+                            to: 'patrice.jacquot@luxhub.com',
+                            mimeType: 'text/html',
+                            body: """
                         <html><body>
                         <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
                         <h2>Suggested action</h2>
@@ -140,9 +143,8 @@ pipeline {
                         </p>
                         </body></html>
                       """
-        }
-        always {
-            deleteDir()
+                }
+            }
         }
     }
 }
