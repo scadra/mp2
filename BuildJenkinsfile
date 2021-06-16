@@ -123,7 +123,7 @@ pipeline {
             deleteDir()
             script {
                 if (!params.deploy && (currentBuild.currentResult == 'SUCCESS' || currentBuild.currentResult == 'UNSTABLE')) {
-                    mail subject: "${artifactFile} published to ${nexusId}",
+                    mail subject: "${artifactFile} PUBLISHED to ${nexusId}",
                             from: 'Jenkins <jenkins@luxhub.com>',
                             to: 'patrice.jacquot@luxhub.com',
                             mimeType: 'text/html',

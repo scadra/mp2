@@ -116,7 +116,7 @@ pipeline {
                         : version;
                 def actualLocation = "${nexusUrl}/${groupPath}/${artifactId}/${version}/${artifactId}-${actualVersion}-bin.zip"
 
-                mail subject: "${artifactFile} deployed to ${target}",
+                mail subject: "${artifactFile} DEPLOYED to ${target}",
                         from: 'Jenkins <jenkins@luxhub.com>',
                         to: 'patrice.jacquot@luxhub.com',
                         mimeType: 'text/html',
@@ -124,13 +124,15 @@ pipeline {
                             <html><body>
                             <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
                             <h2>Suggested action</h2>
-                            <p>Test the new features of the application on <strong>${target}</strong>.</p>
+                            <p>Test the new features of the application: <a href="https://${target}:441">https://${target}:441</a>.</p>
+                            <h2>Execution</h2>
                             <p>
                                 <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>
                                 ran on the branch <strong>${params['git.branch']}</strong>.
                             </p>
+                            <h2>Outcome</h2>
                             <p>
-                                Artifact <strong>${mvnCoordinates}</strong> from <strong>${nexusId}</strong> has been deployed to ${target}.
+                                Artifact <strong>${mvnCoordinates}</strong> from <strong>${nexusId}</strong> has been deployed to <strong>${target}</strong>.
                             </p>
                             </body></html>
                           """
