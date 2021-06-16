@@ -9,7 +9,7 @@ def nexusUrl = snapshotVersion
     ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots'
     : 'https://nexus.luxhub.local:9443/repository/maven-releases'
 def actualLocation = ''
-def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml --no-transfer-progress'
+def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml -B' // TODO replace -B by --no-transfer-progress on Maven 3.6.1+
 
 pipeline {
 

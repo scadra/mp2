@@ -9,7 +9,7 @@ def mavenRepositories =
 def sshCmd = "ssh -o StrictHostKeyChecking=no"
 def sshOrig = "jenk2adm@${env.JENKINS_URL.contains('prd') ? 'jump-prd.luxhub.local' : 'jump-dev.luxhub.local'}"
 def sshDest = "jenk2adm@${target}"
-def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml --no-transfer-progress'
+def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml -B' // TODO replace -B by --no-transfer-progress on Maven 3.6.1+
 
 pipeline {
 
