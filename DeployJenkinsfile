@@ -9,6 +9,7 @@ def mavenRepositories =
 def sshCmd = "ssh -o StrictHostKeyChecking=no"
 def sshOrig = "jenk2adm@${env.JENKINS_URL.contains('prd') ? 'jump-prd.luxhub.local' : 'jump-dev.luxhub.local'}"
 def sshDest = "jenk2adm@${target}"
+def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml --no-transfer-progress'
 
 pipeline {
 
@@ -39,9 +40,11 @@ pipeline {
                     echo packageJson.version
                     echo packageJson.description
                     // Get artifact into local repo
-                    sh "mvn -s /opt/jenkins/home/maven-settings.xml dependency:get -DremoteRepositories=${mavenRepositories} -Dartifact=${mvnCoordinates}"
+                    sh "${mvnCmd} dependency:get -DremoteRepositories=${mavenRepositories} -Dartifact=${mvnCoordinates}"
                     // Copy artifact from local repo to current directory
-                    sh "mvn -s /opt/jenkins/home/maven-settings.xml dependency:copy -Dartifact=${mvnCoordinates} -DoutputDirectory=."
+                    sh "${mvnCmd} mvn dependency:copy -Dartifact=${mvnCoordinates} -DoutputDirectory=."
+                    sh "ll"
+                    sh "ll ${artifactFile}"
                 }
             }
         }
@@ -51,6 +54,7 @@ pipeline {
                 echo "Copy ${artifactFile} to ${params.target}"
                 sshagent(['5bf76f15-b91a-4eb5-ae97-4f7481b6d06c']) {
                     sh "${sshCmd} ${sshOrig} 'scp ${artifactFile} ${sshDest}:/tmp/${artifactFile}'"
+                    sh "${sshCmd} ${sshDest} 'll /tmp/${artifactFile}'"
                     sh "${sshCmd} ${sshDest} 'chmod 666 /tmp/${artifactFile}'"
                 }
             }
