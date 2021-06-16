@@ -85,14 +85,14 @@ pipeline {
                         body: """
                             <html><body>
                             <h1>${shortJobName} is ${currentBuild.currentResult}</h1>
+                            <h2>Suggested action</h2>
+                            <p><a href="${env.BUILD_URL}console">Check job execution log</a> and fix build issues.</p>
                             <h2>Execution</h2>
-                            <p>This is the build <strong>#${env.BUILD_NUMBER}</strong> on branch
-                                <strong>${env.BRANCH_NAME}</strong> run by the job <strong>${env.JOB_NAME}</strong>.</p>
-                            <h2>Outcome</h2>
-                            <p>${currentBuild.currentResult == 'UNSTABLE' ? 'Web app archived anyway: <a href="' + env.BUILD_URL + '/artifact/' + archivedArtifact + '">' + archivedArtifact + '</a>.' : 'Build failed entirely.'}</p>
-                            <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
-                            <p>Commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>: </p>
+                            <p>Build <strong>#${env.BUILD_NUMBER}</strong> on branch <strong>${env.BRANCH_NAME}</strong> run by the job <strong>${env.JOB_NAME}</strong>.</p>
+                            <p>Triggered by commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>: </p>
                             <pre>${commitMessage}</pre>
+                            <h2>Outcome</h2>
+                            <p>${currentBuild.currentResult == 'UNSTABLE' ? 'Web app archived: <a href="' + env.BUILD_URL + '/artifact/' + archivedArtifact + '">' + archivedArtifact + '</a>.' : 'Build failed entirely.'}</p>
                             </body></html>
                           """
             }

@@ -114,13 +114,15 @@ pipeline {
 
     post {
         success {
-            mail subject: "${artifactFile} published to Nexus",
+            mail subject: "${artifactFile} published to ${nexusId}",
                     from: 'Jenkins <jenkins@luxhub.com>',
                     to: 'patrice.jacquot@luxhub.com',
                     mimeType: 'text/html',
                     body: """
                         <html><body>
                         <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
+                        <h2>Suggested action</h2>
+                        <p>None, this message if for information only.</p>
                         <h2>Execution</h2>
                         <p>
                             <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>
@@ -128,7 +130,7 @@ pipeline {
                         </p>
                         <h2>Outcome</h2>
                         <p>
-                            Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> has been published to <strong>${nexusId}</strong>.
+                            Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> has been published to <a href="${nexusUrl}">${nexusId}</a>.
                         </p>
                         </body></html>
                       """
