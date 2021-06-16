@@ -50,9 +50,13 @@ pipeline {
                 nodejs "nodejs-14.15.0"
             }
             steps {
+                echo 'Dependency check for vulnerabilities'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh 'npm audit --audit-level=high' // Dependency check for vulnerabilities
-                    sh 'npm lint' // Source code check
+                    sh 'npm audit --audit-level=high'
+                }
+                echo 'Source code quality check'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh 'npm lint'
                 }
             }
         }
