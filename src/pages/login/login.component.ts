@@ -69,9 +69,7 @@ export default class Login extends Vue {
   async signIn() {
     this.user.recaptcha = this.recaptchaValid
     debugger;
-    console.log(this.returnIsAuth)
     await this.login(this.user);
-    console.log(this.returnIsAuth)
     if(this.returnIsAuth) {
       this.$router.push('/')
     }

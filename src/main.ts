@@ -26,15 +26,11 @@ export default function (Vue: any, {
   isClient,
   appOptions
 }: any) {
-  
-  // Load dependency injection
-  buildDependencyContainer();
-  // Create defaut component
+    // Create defaut component
   Vue.component('Layout', RootLayout);
   Vue.component('Logo', Logo);
 
   // Load dependency only for the client
-  // #PJA: commented the condition to allow "npm run build"
   if (isClient) {
     // Add dependencies inside de vue instance
     Vue.use(Buefy)

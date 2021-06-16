@@ -36,18 +36,13 @@ export default class AuthenticationStore extends StoreBase {
 
   @Action
   async login(user: UserLogin): Promise<void> {
-    console.log(user)
-    debugger;
     this.context.commit(StoreEnum.SETISLOADING, true);
     try {
-      console.log(user)
-      console.log(this.authenticationService)
         await this.authenticationService.login(user);
         
         this.context.commit(StoreEnum.SETERRORMESSAGE, null);
         this.context.commit('setIsAuth', true);
     } catch(error) {
-        console.log(error)
         this.context.commit(StoreEnum.SETERRORMESSAGE, "Username and password do not match or you do not have an account yet.");
     } finally {
         this.context.commit(StoreEnum.SETISLOADING, false);
