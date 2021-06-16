@@ -87,11 +87,11 @@ pipeline {
             steps {
                 echo 'Waiting some time...'
                 sleep 1
-                echo "Verify deployed web application on https://${destinationServer}:441"
+                echo "Verify deployed web application on https://${target}:441"
                 script {
                     sshagent(sshCredentials) {
                         def statusCode = sh (
-                                script: """${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'curl -k -L -s -o /dev/null -w '%{http_code}' https://${destinationServer}:441'" """,
+                                script: """${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'curl -k -L -s -o /dev/null -w '%{http_code}' https://${target}:441'" """,
                                 returnStdout: true
                         ).trim()
                         if (statusCode != '200') {
