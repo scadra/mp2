@@ -1,6 +1,4 @@
 def archivedArtifact = 'marketplace-front-SNAPSHOT-bin.zip'
-def securityAuditFile = 'securityAudit.txt'
-def codeLintReportFile = 'codeLintReport.txt'
 
 pipeline {
 
@@ -101,8 +99,6 @@ pipeline {
             // Don't delete 'node_modules' to speed-up builds
             sh "rm -f ${archivedArtifact} || true"
             sh "rm -rf dist || true"
-            sh "rm -f ${securityAuditFile} || true"
-            sh "rm -f ${codeLintReportFile} || true"
         }
     }
 }
