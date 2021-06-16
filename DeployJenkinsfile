@@ -28,6 +28,9 @@ pipeline {
 
     stages {
         stage('Download') {
+            tools {
+                maven 'maven-3.6.0'
+            }
             steps {
                 echo "Downloading ${mvnCoordinates} to ${artifactFile}"
                 script {
