@@ -16,9 +16,14 @@ pipeline {
         label 'master'
     }
 
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
     parameters {
         string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: 'Version to deploy')
-        choice(name: 'target', choice: ['port1-dev.luxhub.local'], description: 'Server where to deploy')
+        choices(name: 'target', choice: ['port1-dev.luxhub.local'], description: 'Server where to deploy')
     }
 
     stages {
