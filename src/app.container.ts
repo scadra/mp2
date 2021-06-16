@@ -13,7 +13,8 @@ import AuthenticationService from 'Services/api/authentication.service';
  * Container for services
  * @void
  */
-export default function buildDependencyContainer(): void {
+export function buildDependencyContainer(): void {
+    console.log('building')
     container.addSingleton<ICamundaService>(CamundaService);
     container.addSingleton<IConfigurationService>(ConfigurationService)
     container.addSingleton<IAuthenticationService>(AuthenticationService);
