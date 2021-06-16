@@ -59,8 +59,8 @@ pipeline {
                         ${sshCmd} ${sshOrig} 'scp /tmp/${artifactFile} ${sshDest}:/tmp/${artifactFile}'
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'ls -l /tmp/${artifactFile}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'chmod 666 /tmp/${artifactFile}'"
-                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip /tmp/${artifactFile} -d ${deploymentPath}'"
-                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} -lha ${deploymentPath}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip -u /tmp/${artifactFile} -d ${deploymentPath}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'rm -rf /tmp/${artifactFile}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'chmod -R 750 ${deploymentPath}'"
                     """
