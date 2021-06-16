@@ -69,7 +69,9 @@ pipeline {
         }
 
         stage('Verify') {
-
+            steps {
+                echo "TODO"
+            }
         }
     }
 
