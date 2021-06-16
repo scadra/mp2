@@ -84,12 +84,12 @@ pipeline {
                         mimeType: 'text/html',
                         body: """
                             <html><body>
-                            <h1>${shortJobName} is ${currentBuild.currentResult}</h1>
+                            <h1>Branch ${env.BRANCH_NAME} is ${currentBuild.currentResult}</h1>
                             <h2>Suggested action</h2>
                             <p><a href="${env.BUILD_URL}console">Check job execution log</a> and fix build issues.</p>
                             <h2>Execution</h2>
-                            <p>Build <strong>#${env.BUILD_NUMBER}</strong> on branch <strong>${env.BRANCH_NAME}</strong> run by the job <strong>${env.JOB_NAME}</strong>.</p>
-                            <p>Triggered by commit <strong>${commitHash}</strong> from <strong>${commitAuthor}</strong>: </p>
+                            <p>Build <strong>#${env.BUILD_NUMBER}</strong> run by the job <strong>${env.JOB_NAME}</strong> was
+                            triggered by commit <strong>${commitHash}</strong> from <strong>${commitAuthor}</strong>: </p>
                             <pre>${commitMessage}</pre>
                             <h2>Outcome</h2>
                             <p>${currentBuild.currentResult == 'UNSTABLE' ? 'Web app archived here: <a href="' + env.BUILD_URL + '/artifact/' + archivedArtifact + '">' + archivedArtifact + '</a>.' : 'Build failed entirely.'}</p>
