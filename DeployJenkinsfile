@@ -1,6 +1,6 @@
 def groupId = 'com.luxhub.agora'
 def groupPath = groupId.replace('.', '/')
-def artifactId = 'agora-front'
+def artifactId = 'marketplace-front'
 def version = params['release.version']
 def mvnCoordinates = "${groupId}:${artifactId}:${version}"
 def artifactFile = "${artifactId}-${version}-bin.zip"

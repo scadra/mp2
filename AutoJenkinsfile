@@ -1,3 +1,5 @@
+def filename = 'marketplace-front-AUTO-SNAPSHOT-bin.zip'
+
 pipeline {
 
     agent any
@@ -36,7 +38,7 @@ pipeline {
             }
             steps {
                 sh 'npm run build'
-                zip dir: 'dist', zipFile: 'agora-front-AUTO-SNAPSHOT-bin.zip', archive: true
+                zip dir: 'dist', zipFile: filename, archive: true
             }
         }
     }
@@ -68,7 +70,7 @@ pipeline {
         }
         always {
             // Don't delete the whole workspace to speed-up builds
-            sh 'rm -f agora-front-AUTO-SNAPSHOT-bin.zip'
+            sh "rm -f ${filename}"
         }
     }
 }
