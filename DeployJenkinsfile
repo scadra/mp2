@@ -43,8 +43,9 @@ pipeline {
                     sh "${mvnCmd} dependency:get -DremoteRepositories=${mavenRepositories} -Dartifact=${mvnCoordinates}"
                     // Copy artifact from local repo to current directory
                     sh "${mvnCmd} dependency:copy -Dartifact=${mvnCoordinates} -DoutputDirectory=. -Dmdep.useBaseVersion"
-                    sh "ls -l"
+                    sh 'pwd'
                     sh "ls -l ${artifactFile}"
+                    sh "ls -l ${env.WORKSPACE}/${artifactFile}"
                 }
             }
         }
@@ -53,7 +54,7 @@ pipeline {
             steps {
                 echo "Copy ${artifactFile} to ${params.target}"
                 sshagent(['5bf76f15-b91a-4eb5-ae97-4f7481b6d06c']) {
-                    sh "${sshCmd} ${sshOrig} 'scp ${artifactFile} ${sshDest}:/tmp/${artifactFile}'"
+                    sh "${sshCmd} ${sshOrig} 'scp ${env.WORKSPACE}/${artifactFile} ${sshDest}:/tmp/${artifactFile}'"
                     sh "${sshCmd} ${sshDest} 'ls -l /tmp/${artifactFile}'"
                     sh "${sshCmd} ${sshDest} 'chmod 666 /tmp/${artifactFile}'"
                 }
