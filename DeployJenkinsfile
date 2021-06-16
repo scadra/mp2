@@ -17,7 +17,9 @@ def sshDest = "jenk2adm@${target}"
 def sshCredentials = ['5bf76f15-b91a-4eb5-ae97-4f7481b6d06c']
 def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml -B' // TODO replace -B by --no-transfer-progress on Maven 3.6.1+
 def execAsApache = "sudo -u apache"
-def deploymentPath= "/opt/luxhub/htdocs/dix/marketplace-front"
+def deploymentPath = "/opt/luxhub/htdocs/dix/marketplace-front"
+def applicationPort = '441'
+def deploymentServer = 'port-perf.luxhub.local' // FIXME
 
 pipeline {
 
@@ -78,6 +80,7 @@ pipeline {
                             """
                         }
                     }
+
                     echo "Unzip to ${deploymentPath}"
                     sh """
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip -uo /tmp/${artifactFile} -d ${deploymentPath}'"
@@ -92,11 +95,11 @@ pipeline {
             steps {
                 echo 'Waiting some time...'
                 sleep 1
-                echo "Verify deployed web application on https://${target}:441"
+                echo "Verify deployed web application on https://${target}:${applicationPort}"
                 script {
                     sshagent(sshCredentials) {
                         def statusCode = sh (
-                                script: """${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'curl -k -L -s -o /dev/null -w '%{http_code}' https://${target}:441'" """,
+                                script: """${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'curl -k -L -s -o /dev/null -w '%{http_code}' https://${target}:${applicationPort}'" """,
                                 returnStdout: true
                         ).trim()
                         if (statusCode != '200') {
@@ -124,7 +127,7 @@ pipeline {
                             <html><body>
                             <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
                             <h2>Suggested action</h2>
-                            <p>Test the new features of the application: <a href="https://${target}:441">https://${target}:441</a>.</p>
+                            <p>Test the new features of the application: <a href="https://${deploymentServer}:${applicationPort}">https://${deploymentServer}:${applicationPort}</a>.</p>
                             <h2>Execution</h2>
                             <p>
                                 <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>
