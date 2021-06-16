@@ -75,15 +75,16 @@ pipeline {
                 def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
                 def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
                 def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
+                def jobNameParts = env.JOB_NAME.tokenize('/') as String[]
+                def shortJobName = jobNameParts.length < 2 ? env.JOB_NAME : jobNameParts[jobNameParts.length - 2]
 
-                mail subject: "${currentBuild.currentResult}: ${env.JOB_BASE_NAME}",
+                mail subject: "${currentBuild.currentResult}: ${shortJobName}",
                         from: 'Jenkins <jenkins@luxhub.com>',
                         to: commitEmail,
                         mimeType: 'text/html',
                         body: """
                             <html><body>
-                            <h1>${env.JOB_BASE_NAME} is ${currentBuild.currentResult}</h1>
-                            <h1>Job ${env.JOB_BASE_NAME}: ${currentBuild.currentResult}</h1>
+                            <h1>${shortJobName} is ${currentBuild.currentResult}</h1>
                             <h2>Execution</h2>
                             <p>This is the build <strong>#${env.BUILD_NUMBER}</strong> on branch
                                 <strong>${env.BRANCH_NAME}</strong> run by the job <strong>${env.JOB_NAME}</strong>.</p>
