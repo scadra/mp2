@@ -131,7 +131,7 @@ pipeline {
                         <html><body>
                         <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
                         <h2>Suggested action</h2>
-                        <p>None, this message if for information only.</p>
+                        <p>${currentBuild.currentResult == 'SUCCESS' ? 'None, this message is for information only.' : '<a href="' + env.BUILD_URL + 'console">Check job execution log</a> and fix build issues.'}</p>
                         <h2>Execution</h2>
                         <p>
                             <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>

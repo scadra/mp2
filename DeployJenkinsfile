@@ -63,13 +63,15 @@ pipeline {
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'ls -l /tmp/${artifactFile}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'chmod 666 /tmp/${artifactFile}'"
                     """
-                    if (params.cleanup) {
-                        echo 'Cleanup deployment directory'
-                        sh """
-                            ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
-                            ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} rm -rf ${deploymentPath}'"
-                            ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
-                        """
+                    script {
+                        if (params.cleanup) {
+                            echo 'Cleaning deployment directory'
+                            sh """
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} rm -rf ${deploymentPath}'"
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
+                            """
+                        }
                     }
                     echo "Unzip to ${deploymentPath}"
                     sh """
