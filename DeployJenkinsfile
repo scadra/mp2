@@ -10,6 +10,8 @@ def sshCmd = "ssh -o StrictHostKeyChecking=no"
 def sshOrig = "jenk2adm@${env.JENKINS_URL.contains('prd') ? 'jump-prd.luxhub.local' : 'jump-dev.luxhub.local'}"
 def sshDest = "jenk2adm@${target}"
 def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml -B' // TODO replace -B by --no-transfer-progress on Maven 3.6.1+
+def execAsApache = "sudo -u apache"
+def deploymentPath= "/opt/luxhub/htdocs/dix/marketplace-front"
 
 pipeline {
 
@@ -49,34 +51,40 @@ pipeline {
             }
         }
 
-        stage('Copy') {
+        stage('Deploy') {
             steps {
-                echo "Copy ${artifactFile} to ${params.target}"
+                echo "Deploying ${artifactFile} to ${params.target}"
                 sshagent(['5bf76f15-b91a-4eb5-ae97-4f7481b6d06c']) {
                     sh """
                         ${sshCmd} ${sshOrig} 'scp /tmp/${artifactFile} ${sshDest}:/tmp/${artifactFile}'
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'ls -l /tmp/${artifactFile}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'chmod 666 /tmp/${artifactFile}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip /tmp/${artifactFile} -d ${deploymentPath}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} -lha ${deploymentPath}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'rm -rf /tmp/${artifactFile}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'chmod -R 750 ${deploymentPath}'"
                     """
                 }
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo "Deploying ${artifactFile} to ${params.target}"
+        stage('Verify') {
 
-            }
         }
     }
 
     post {
         success {
-            mail subject: "Deployed '${artifactFile}' published to ${target}",
-                    from: 'Jenkins <jenkins@luxhub.com>',
-                    to: 'patrice.jacquot@luxhub.com',
-                    mimeType: 'text/html',
-                    body: """
+            script {
+                def actualVersion = version.endsWith('-SNAPSHOT')
+                        ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
+                        : version;
+                def actualLocation = "${nexusUrl}/${groupPath}/${artifactId}/${version}/${artifactId}-${actualVersion}-bin.zip"
+                mail subject: "Deployed '${artifactFile}' published to ${target}",
+                        from: 'Jenkins <jenkins@luxhub.com>',
+                        to: 'patrice.jacquot@luxhub.com',
+                        mimeType: 'text/html',
+                        body: """
                         <html><body>
                         <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
                         <p>
@@ -84,10 +92,11 @@ pipeline {
                             ran on the branch <strong>${params['git.branch']}</strong>.
                         </p>
                         <p>
-                            Artifact <a href="${actualLocation}"><strong>${mvnCoordinates}</a></strong> from <strong>${nexusId}</strong> has been deployed to ${target}.
+                            Artifact <strong>${mvnCoordinates}</strong> from <strong>${nexusId}</strong> has been deployed to ${target}.
                         </p>
                         </body></html>
                       """
+            }
         }
         always {
             deleteDir()
