@@ -80,7 +80,7 @@ pipeline {
                     }
                     echo "Unzip to ${deploymentPath}"
                     sh """
-                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip -u /tmp/${artifactFile} -d ${deploymentPath}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip -uo /tmp/${artifactFile} -d ${deploymentPath}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'rm -rf /tmp/${artifactFile}' || true"
                     """
