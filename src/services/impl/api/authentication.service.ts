@@ -11,7 +11,7 @@ axios.defaults.withCredentials = true;
 
 @injectable()
 export default class AuthenticationService implements IAuthenticationService {
-  private path: string = "api";
+  private path = "api";
 
   /**
    * login
@@ -30,7 +30,7 @@ export default class AuthenticationService implements IAuthenticationService {
 
   async logout(): Promise<void> {
     // TODO logout on SSO
-    return new Promise<void>((resolve, reject) => resolve());
+    return new Promise<void>((resolve) => resolve());
   }
 
   /**
@@ -44,11 +44,11 @@ export default class AuthenticationService implements IAuthenticationService {
 
   /**
    * resetPassword
-   * @String email of the user who wants to reset the password
-   * @String response from reCaptcha
+   * @string email of the user who wants to reset the password
+   * @string response from reCaptcha
    * @return Promise function with type void
    */
-  async resetPassword(email: String, recaptchaResponse: String): Promise<void> {
+  async resetPassword(email: string, recaptchaResponse: string): Promise<void> {
     const options = this.initHeaderWithCaptcha(recaptchaResponse);
     try {
       return axios.post(
@@ -77,10 +77,10 @@ export default class AuthenticationService implements IAuthenticationService {
 
   /**
    * initHeaderWithCaptcha
-   * @ResetPassStringword recaptcha
+   * @ResetPassstringword recaptcha
    * @return Promise function with type void
    */
-  private initHeaderWithCaptcha(recaptcha: String) {
+  private initHeaderWithCaptcha(recaptcha: string) {
     return recaptcha != null
       ? {
           headers: { captchaCode: recaptcha },

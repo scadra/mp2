@@ -1,27 +1,27 @@
-import { VuexModule, Mutation, Action } from "vuex-module-decorators";
+import { VuexModule, Mutation } from "vuex-module-decorators";
 
 export default class StoreBase extends VuexModule {
 
-  protected isLoading: boolean = false;
-  protected errorMessage: String | null = null;
+  protected isLoading = false;
+  protected errorMessage: string | null = null;
 
   //getters
-  get returnIsLoading() {
+  get returnIsLoading(): boolean {
     return this.isLoading;
   }
 
-  get returnErrorMessage() {
+  get returnErrorMessage():  string | null {
     return this.errorMessage;
   }
 
   //Mutations
   @Mutation
-  setIsLoading(response: boolean) {
+  setIsLoading(response: boolean): void {
     this.isLoading = response;
   }
 
   @Mutation
-  setErrorMessage(response: String | null) {
+  setErrorMessage(response: string | null): void {
     this.errorMessage = response;
   }
 

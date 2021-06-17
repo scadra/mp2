@@ -36,7 +36,7 @@ const camundaStore = namespace("CamundaStore");
 })
 export default class ApiRegister extends Vue {
   steps: Step[] = this.initSteps();
-  currentStep: number = 0;
+  currentStep = 0;
   api = new ApiCreation();
 
   // Action of vuex to start process
@@ -92,7 +92,7 @@ export default class ApiRegister extends Vue {
    * @void
    */
   confirm(): void {
-    let request = {
+    const request = {
       variables: this.api,
     } as CamundaRequest;
     this.start(request);

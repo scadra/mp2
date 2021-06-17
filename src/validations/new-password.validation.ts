@@ -10,7 +10,7 @@ export const NewPasswordValidation = {
     },
     password: {
       required,
-      valid: function(value: string) {
+      valid: function(value: string): boolean {
         const containsUppercase = /[A-Z]/.test(value);
         const containsLowercase = /[a-z]/.test(value);
         const containsNumber = /[0-9]/.test(value);

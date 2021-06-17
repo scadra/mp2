@@ -18,8 +18,8 @@ const AuthenticationStore = namespace("AuthenticationStore");
   },
 })
 export default class ResetPasswordForm extends Vue {
-  @Prop() email!: String;
-  @Prop() validator!: String;
+  @Prop() email!: string;
+  @Prop() validator!: string;
 
   @AuthenticationStore.Action
   changePassword!: (resetPassword: ResetPassword) => Promise<void>;
@@ -31,20 +31,20 @@ export default class ResetPasswordForm extends Vue {
   returnIsLoading!: () => boolean;
 
   @AuthenticationStore.Getter
-  returnErrorMessage!: () => String | null;
+  returnErrorMessage!: () => string | null;
 
   resetPassword: ResetPassword = new ResetPassword(
     this.$route.query.email as string,
     this.$route.query.validator as string
   );
 
-  beforeMount() {
+  beforeMount(): void {
     this.reinitMessage();
   }
 
   @Validations() validation = NewPasswordValidation;
 
-  async sendPassword() {
+  async sendPassword(): Promise<void> {
     await this.changePassword(this.resetPassword);
     if (this.returnErrorMessage === null) {
       this.$router.push("/login?passwordUpdated=true");

@@ -17,7 +17,7 @@ export const ValidationApiModel = {
     },
     swagger: {
       required,
-      fileFormat(api: any) {
+      fileFormat(api: File): boolean {
         return (
           api !== undefined && Checker.allowedFormat(api.name, ["json", "yaml"])
         );
@@ -25,13 +25,13 @@ export const ValidationApiModel = {
     },
     overview: {
       required,
-      fileFormat(api: any) {
+      fileFormat(api: File): boolean {
         return api !== undefined && Checker.allowedFormat(api.name, ["zip", "rar", "7z"]);
       },
     },
     documentation: {
       required,
-      fileFormat(api: any) {
+      fileFormat(api: File): boolean {
         return api !== undefined && Checker.allowedFormat(api.name, ["zip", "rar", "7z"]);
       },
     },
@@ -53,5 +53,3 @@ export const ValidationApiModel = {
   },
 };
 
-
-export const Giuseppe = "Sicilian"

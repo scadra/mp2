@@ -41,14 +41,14 @@ export default class Login extends Vue {
   returnIsLoading!: () => boolean;
 
   @AuthenticationStore.Getter
-  returnErrorMessage!: () => String | null;
+  returnErrorMessage!: () => string | null;
 
   @AuthenticationStore.Getter
   returnIsAuth!: () => boolean
 
-  errorClick: number = 0;
+  errorClick = 0;
 
-  recaptchaValid: String = null;
+  recaptchaValid: string = null;
 
   user: UserLogin = {
     username: "",
@@ -56,17 +56,17 @@ export default class Login extends Vue {
     recaptcha: null,
   };
 
-  keyRecaptcha: String = process.env.GRIDSOME_RECAPTCHA
+  keyRecaptcha: string = process.env.GRIDSOME_RECAPTCHA
 
   // Validation for the form
   @Validations() validations = ValidationLoginModel;
 
   // Hook
-  beforeMount() {
+  beforeMount(): void {
     this.reinitMessage()
   }
 
-  async signIn() {
+  async signIn(): Promise<void> {
     this.user.recaptcha = this.recaptchaValid
     await this.login(this.user);
     if(this.returnIsAuth) {
@@ -75,19 +75,19 @@ export default class Login extends Vue {
     this.errorClick ++;
   }
 
-  onCaptchaVerify(response: string) {
+  onCaptchaVerify(response: string): void {
     this.recaptchaValid = response;
   }
 
-  onCaptchaExpired() {
+  onCaptchaExpired(): void {
     this.recaptchaValid = null;
   }
 
-  disableButton() {
+  disableButton(): boolean {
     return this.$v.$invalid || this.errorClick >= 3 && this.recaptchaValid == null
   }
 
-  redirectMessage() {
+  redirectMessage(): string {
     let message = '';
     if(this.$route.query.resetSent) {
       message = 'You requested a password reset. You should receive an email with instructions on how to reset your password.';

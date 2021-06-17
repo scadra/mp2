@@ -15,22 +15,22 @@ export default class AuthenticationStore extends StoreBase {
 
   @Inject()
   private authenticationService!: IAuthenticationService;
-  private resetMessageError: String = 'You requested a password reset but an error occurred. Please try again or contact Luxhub support (TDB).';
+  private resetMessageError = 'You requested a password reset but an error occurred. Please try again or contact Luxhub support (TDB).';
 
   /**
    * States
    * @StepResponse step: The actual step
    * @string | @null errorMsg: The error message to display
    */
-  private isAuth: boolean = false;
+  private isAuth = false;
 
   //getters
-  get returnIsAuth() {
+  get returnIsAuth(): boolean {
     return this.isAuth;
   }
 
   @Mutation
-  setIsAuth(response: boolean) {
+  setIsAuth(response: boolean): void {
     this.isAuth = response;
   }
 
@@ -50,7 +50,7 @@ export default class AuthenticationStore extends StoreBase {
   }
 
   @Action
-  async resetPassword(email: String, recaptchaResponse: String): Promise<void> {
+  async resetPassword(email: string, recaptchaResponse: string): Promise<void> {
     this.context.commit(StoreEnum.SETISLOADING, true);
     try {
       await this.authenticationService.resetPassword(email, recaptchaResponse);
@@ -76,7 +76,7 @@ export default class AuthenticationStore extends StoreBase {
   }
 
   @Action
-  async reinitMessage() {
+  reinitMessage(): void {
     this.context.commit(StoreEnum.SETERRORMESSAGE, null);
   }
 }

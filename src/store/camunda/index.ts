@@ -30,22 +30,22 @@ class CamundaStore extends VuexModule {
   private errorMsg: string | null = null;
 
   //Getters
-  get returnNextStep() {
+  get returnNextStep(): StepResponse {
     return this.step;
   }
 
-  get returnErrorMsg() {
+  get returnErrorMsg(): string | null {
     return this.errorMsg;
   }
 
   //Mutations
   @Mutation
-  setStep(step: any) {
+  setStep(step: StepResponse): void {
     this.step = step;
   }
 
   @Mutation
-  setErrorMsg(error: string) {
+  setErrorMsg(error: string): void {
     this.errorMsg = error;
   }
 
@@ -54,7 +54,7 @@ class CamundaStore extends VuexModule {
    * @CamundaRequest request: the variables
    */
   @Action
-  public async next(request: CamundaRequest) {
+  public async next(request: CamundaRequest): Promise<void> {
     try {
       this.context.commit("setErrorMsg", null);
       const response =  await this.camundaService.next(request);
@@ -69,7 +69,7 @@ class CamundaStore extends VuexModule {
    * @CamundaRequest request: the variables
    */
   @Action
-  public async start(request: CamundaRequest) {
+  public async start(request: CamundaRequest): Promise<void> {
     try {
       this.context.commit("setErrorMsg", null);
       const response =  await this.camundaService.start(request); 
