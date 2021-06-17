@@ -37,20 +37,31 @@ Built with VueJS, Typescript, Gridsome, Bulma.
 
 | Pipeline | Purpose | State |
 | -------- | ------- | ------ |
-| [Marketplace-Frontend-BuildRelease](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/) | Build or release in nexus <br> (zip with static web files) | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-BuildRelease) |
 | [Marketplace-Frontend-Auto](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/) | Automatic trigger on each push | (multi-branch) |
+| [Marketplace-Frontend-BuildRelease](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/) | Build or release in nexus <br> (zip with static web files) | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-BuildRelease) |
+| [Marketplace-Frontend-Deploy](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/) | Deploy webapp | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-Deploy) |
 
 ### Quality
 
-TODO...
+Non-blocking `QA` checks stage are present on [AutoJenkinsfile](AutoJenkinsfile) and [BuildJenkinsfile](AutoJenkinsfile).
+In case of failure, the whole build is not set to failed but instead set as `UNSTABLE`.
+
+_Pipelines execute these 3 checks:_
+1. `npm audit --audit-level=high`
+2. `npm run lint`
+3. `npm run test`
 
 - [Sonar report](https://sonar.kube-dev.luxhub.local/dashboard?id=com.luxhub.agora%3Amarketplace-front)
+
+TODO configure Sonar
 
 | Indicators | Sizing | Ratings | Issues |
 | ---------- | -------| ------- | ------ |
 | ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=alert_status) <br> ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=coverage) <br> ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=sqale_index) | ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=ncloc) <br> ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=duplicated_lines_density) | ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=security_rating) <br> ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=reliability_rating) <br> ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=sqale_rating) | ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=bugs) <br> ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=code_smells) <br> ![](https://sonar.kube-dev.luxhub.local/api/project_badges/measure?project=com.luxhub.agora%3Amarketplace-front&metric=vulnerabilities) |
 
 - [Anchore report](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/lastCompletedBuild/anchore-results/)
+
+TODO configure Anchore
 
 ### Deployment
 
