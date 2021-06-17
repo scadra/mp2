@@ -1,4 +1,4 @@
 export enum StoreEnum {
-    SETISLOADING = 'setIsLoading',
-    SETERRORMESSAGE = 'setErrorMessage',
+  SETISLOADING = "setIsLoading",
+  SETERRORMESSAGE = "setErrorMessage",
 }

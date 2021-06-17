@@ -1,6 +1,6 @@
 // Dependencies
 import axios from "axios";
-import { serialize } from 'object-to-formdata'; 
+import { serialize } from "object-to-formdata";
 import { injectable } from "inversify-props";
 // Service interface
 import ICamundaService from "Interfaces/api/camunda.interface";
@@ -10,14 +10,14 @@ import { StepResponse } from "Models/step/step-response";
 
 @injectable()
 export default class CamundaService implements ICamundaService {
-  private path ="api/bpm";
+  private path = "api/bpm";
 
-  private headers = { 
-    auth: { 
-      username: process.env.GRIDSOME_CAMUNDA_USER, 
-      password:  process.env.GRIDSOME_CAMUNDA_PASSWORD 
-    } 
-  } 
+  private headers = {
+    auth: {
+      username: process.env.GRIDSOME_CAMUNDA_USER,
+      password: process.env.GRIDSOME_CAMUNDA_PASSWORD,
+    },
+  };
 
   /**
    * start

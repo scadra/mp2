@@ -3,23 +3,23 @@
  * @class
  */
 export class ApiCreation {
-    productName: string;
-    organization: string;
-    swagger: File;
-    documentation: File;
-    overview: File;
-    host: string;
-    authorizationModel: string;
-    authorizationTokenUrl: string;
-    authorizationUrl: string;
-    requirePkce = false;
-    requireMtls = false;
-    defaultCliendId!: string;
-    defaultClientSecret!: string;
-    consumerInformation = false;
-    
-    constructor() {
-        this.productName = null;
-        this.organization = null;
-    }
+  productName: string;
+  organization: string;
+  swagger: File;
+  documentation: File;
+  overview: File;
+  host: string;
+  authorizationModel: string;
+  authorizationTokenUrl: string;
+  authorizationUrl: string;
+  requirePkce = false;
+  requireMtls = false;
+  defaultCliendId!: string;
+  defaultClientSecret!: string;
+  consumerInformation = false;
+
+  constructor() {
+    this.productName = null;
+    this.organization = null;
+  }
 }

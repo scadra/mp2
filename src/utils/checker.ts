@@ -3,7 +3,6 @@
  * @class
  */
 export class Checker {
-
   /**
    * Check if the filename extension is allowed
    * @string filename: as all extensions files are not supported, we check the extension in the filename
@@ -15,7 +14,6 @@ export class Checker {
     const extension = filename.split(".");
     return formats.includes(extension[extension.length - 1]);
   }
-
 
   /**
    * Check if string are equals

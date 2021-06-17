@@ -8,7 +8,8 @@
     "develop": "gridsome develop",
     "explore": "gridsome explore",
     "test": "jest",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@vue/cli": "^4.5.13",
@@ -16,6 +17,7 @@
     "basic-authorization-header": "^0.2.7",
     "buefy": "^0.9.6",
     "bulma-o-steps": "^1.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "gridsome": "^0.7.23",
     "gridsome-plugin-typescript": "^0.4.0",
     "http-proxy-middleware": "^1.0.6",
@@ -24,6 +26,7 @@
     "inversify-props": "^2.2.6",
     "lint": "^0.7.0",
     "object-to-formdata": "^4.1.0",
+    "prettier": "^2.3.1",
     "reflect-metadata": "^0.1.13",
     "sass": "^1.32.11",
     "sass-loader": "^10.0.5",

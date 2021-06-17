@@ -3,7 +3,6 @@
  * @class
  */
 export class MessageDisplay {
-    
   /**
    * Display the filename or No file uploaded by default
    * @File file: the file uploaded

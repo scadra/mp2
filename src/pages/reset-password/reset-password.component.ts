@@ -11,7 +11,7 @@ const AuthenticationStore = namespace("AuthenticationStore");
 
 @Component({
   metaInfo: {
-    title: "Reset password" 
+    title: "Reset password",
   },
   components: {
     ResetForm,

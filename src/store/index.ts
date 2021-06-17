@@ -1,9 +1,9 @@
 // Dependencies
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 // Modules
-import CamundaStore from 'Store/camunda';
-import AuthenticationStore from 'Store/authentication';
+import CamundaStore from "Store/camunda";
+import AuthenticationStore from "Store/authentication";
 
 Vue.use(Vuex);
 
@@ -14,9 +14,8 @@ Vue.use(Vuex);
 const store = {
   modules: {
     CamundaStore,
-    AuthenticationStore
-  }
+    AuthenticationStore,
+  },
 };
 
-export default store
-
+export default store;

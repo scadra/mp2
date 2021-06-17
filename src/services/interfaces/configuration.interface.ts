@@ -1,3 +1,3 @@
 export default interface IConfigurationService {
-    getConfig(key: string): Promise<string> 
+  getConfig(key: string): Promise<string>;
 }
