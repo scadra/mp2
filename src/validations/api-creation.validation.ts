@@ -52,3 +52,6 @@ export const ValidationApiModel = {
     },
   },
 };
+
+
+export const Giuseppe = "Sicilian"

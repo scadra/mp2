@@ -3,6 +3,7 @@
  * @class
  */
 export class ApiCreation {
+    [key: string]: any
     productName: String;
     organization: String;
     swagger: File;
@@ -16,6 +17,7 @@ export class ApiCreation {
     requireMtls: boolean = false;
     defaultCliendId!: String;
     defaultClientSecret!: String;
+    consumerInformation: boolean = false;
     
     constructor() {
         this.productName = null;

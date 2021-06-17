@@ -34,12 +34,18 @@ body {
     border: 1px solid $light-color;
     border-radius: 10px;
     background: $light-color;
+    margin: auto !important;
     .button-container {
         width: 100%;
         text-align: center;
+    }
+    h3 {
+        text-align: center;
+        margin: 3% 0;
     }
 }
 
 .page-content {
     min-height: 89vh;
 }
+

@@ -7,7 +7,7 @@ import { ResetPasswordValidation } from "Validations/reset-password.validation";
 import { namespace } from "vuex-class";
 import VueRecaptcha from "vue-recaptcha";
 
-const authenticationStore = namespace("AuthenticationStore");
+const AuthenticationStore = namespace("AuthenticationStore");
 
 @Component({
   metaInfo: "Reset password",
@@ -24,13 +24,13 @@ export default class ResetPassword extends Vue {
 
   @Validations() validation = ResetPasswordValidation;
 
-  @authenticationStore.Action
+  @AuthenticationStore.Action
   resetPassword!: (email: String, recaptchaResponse: String) => Promise<void>;
 
-  @authenticationStore.Action
+  @AuthenticationStore.Action
   reinitMessage!: () => void;
 
-  @authenticationStore.Getter
+  @AuthenticationStore.Getter
   returnIsLoading!: () => boolean;
 
   beforeMount() {

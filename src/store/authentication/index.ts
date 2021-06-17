@@ -1,7 +1,7 @@
 import { ResetPassword } from 'Models/user/reset-password';
 import IAuthenticationService from 'Interfaces/api/authentication.interface';
 import { UserLogin } from 'Models/user/user-login';
-import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators";
+import { Module, Mutation, Action } from "vuex-module-decorators";
 import { Inject } from 'inversify-props';
 import StoreBase from '../store-base';
 import { StoreEnum } from 'Models/enum/store.enum';

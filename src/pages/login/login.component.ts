@@ -13,7 +13,7 @@ import { ValidationLoginModel } from 'Validations/login.validation';
 import Notification from 'Components/shared/notification/notification.vue';
 import VueRecaptcha from 'vue-recaptcha';
 
-const authenticationStore = namespace("AuthenticationStore");
+const AuthenticationStore = namespace("AuthenticationStore");
 
 /**
  * The home page
@@ -31,19 +31,19 @@ const authenticationStore = namespace("AuthenticationStore");
 })
 export default class Login extends Vue {
 
-  @authenticationStore.Action
+  @AuthenticationStore.Action
   login!: (user: UserLogin) => void;
 
-  @authenticationStore.Action
+  @AuthenticationStore.Action
   reinitMessage!: () => void;
 
-  @authenticationStore.Getter
+  @AuthenticationStore.Getter
   returnIsLoading!: () => boolean;
 
-  @authenticationStore.Getter
+  @AuthenticationStore.Getter
   returnErrorMessage!: () => String | null;
 
-  @authenticationStore.Getter
+  @AuthenticationStore.Getter
   returnIsAuth!: () => boolean
 
   errorClick: number = 0;
@@ -68,7 +68,6 @@ export default class Login extends Vue {
 
   async signIn() {
     this.user.recaptcha = this.recaptchaValid
-    debugger;
     await this.login(this.user);
     if(this.returnIsAuth) {
       this.$router.push('/')

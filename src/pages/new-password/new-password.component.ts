@@ -7,7 +7,7 @@ import { NewPasswordValidation } from "Validations/new-password.validation";
 import { namespace } from "vuex-class";
 import Notification from "Components/shared/notification/notification.vue";
 
-const authenticationStore = namespace("AuthenticationStore");
+const AuthenticationStore = namespace("AuthenticationStore");
 
 @Component({
   metaInfo: "Reset password",
@@ -20,16 +20,16 @@ export default class ResetPasswordForm extends Vue {
   @Prop() email!: String;
   @Prop() validator!: String;
 
-  @authenticationStore.Action
+  @AuthenticationStore.Action
   changePassword!: (resetPassword: ResetPassword) => Promise<void>;
 
-  @authenticationStore.Action
+  @AuthenticationStore.Action
   reinitMessage!: () => void;
 
-  @authenticationStore.Getter
+  @AuthenticationStore.Getter
   returnIsLoading!: () => boolean;
 
-  @authenticationStore.Getter
+  @AuthenticationStore.Getter
   returnErrorMessage!: () => String | null;
 
   resetPassword: ResetPassword = new ResetPassword(
