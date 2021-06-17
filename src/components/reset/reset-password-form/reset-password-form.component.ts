@@ -5,10 +5,7 @@ import { ResetPasswordValidation } from "Validations/reset-password.validation";
 
 @Component
 export default class ResetForm extends Vue {
-  @PropSync("email") emailSync!: String;
-
-  beforeMount() {
-  }
+  @PropSync("email") emailSync!: string;
 
   @Validations() validation = ResetPasswordValidation;
 }

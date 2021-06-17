@@ -18,7 +18,7 @@ export default class Navbar extends Vue{
     @AuthenticationStore.Action
     logout!: () => void;
 
-    signOut() {
+    signOut(): void {
         this.logout();
     }
 }

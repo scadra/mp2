@@ -14,6 +14,7 @@
         "resolveJsonModule": true,
         "strictNullChecks": false,
         "baseUrl": ".",
+        "strictFunctionTypes": false,
         "types": [
             "reflect-metadata",
             "node",
