@@ -51,10 +51,7 @@
                 <strong>require MTLS:</strong>
             </div>
             <div class="column is-8">
-                <div class="buttons has-addons">
-                    <button class="button" :class="{'is-danger is-selected': !syncApi.requireMtls}" @click="setRequireMTLS(false)">No</button>
-                    <button class="button" :class="{'is-success is-selected': syncApi.requireMtls}" @click="setRequireMTLS(true)">Yes</button>
-                </div>
+                <check-box :model.sync="syncApi.requireMtls"></check-box>
             </div>
         </div>
     </div>

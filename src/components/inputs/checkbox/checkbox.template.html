@@ -1,0 +1,6 @@
+<div class="buttons has-addons">
+    <button class="button" :class="{'is-danger is-selected': !modelSync}"
+        @click="setCheckbox(false)">No</button>
+    <button class="button" :class="{'is-success is-selected': modelSync}"
+        @click="setCheckbox(true)">Yes</button>
+</div>

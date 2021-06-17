@@ -83,18 +83,23 @@
             </div>
         </div>
     </div>
+    <div class="column is-10 is-offset-1">
+        <div class="columns">
+            <div class="column is-3 label-form dark-text">
+                <strong>Send consumer information:</strong>
+            </div>
+            <div class="column is-8">
+                <check-box :model.sync="syncApi.consumerInformation"></check-box>
+            </div>
+        </div>
+    </div>
     <div class="column is-10 is-offset-1" v-if="api.authorizationModel === 'Authorization code'">
         <div class="columns">
             <div class="column is-3 label-form dark-text">
                 <strong>require PKCE:</strong>
             </div>
             <div class="column is-8">
-                <div class="buttons has-addons">
-                    <button class="button" :class="{'is-danger is-selected': !syncApi.requirePkce}"
-                        @click="setRequirePKCE(false)">No</button>
-                    <button class="button" :class="{'is-success is-selected': syncApi.requirePkce}"
-                        @click="setRequirePKCE(true)">Yes</button>
-                </div>
+                <check-box :model.sync="syncApi.requirePkce"></check-box>
             </div>
         </div>
     </div>

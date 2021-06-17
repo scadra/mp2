@@ -1,19 +1,25 @@
 // Models
 import { ApiCreation } from "Models/api/api-creation";
 // Dependencies
-import { Component, PropSync, Ref } from "vue-property-decorator";
+import { Component, PropSync } from "vue-property-decorator";
 import Vue from "vue";
 import { Validations } from "vuelidate-property-decorators";
 // Validation
 import { ValidationApiModel } from "Validations/api-creation.validation";
 //Utils
 import { MessageDisplay } from "Utils/message-display";
+//Components
+import CheckBox from 'Components/inputs/checkbox/checkbox.vue';
 
 /**
  * api informations of the step wizard
  * @Component
  */
-@Component
+@Component({
+  components: {
+    CheckBox
+  }
+})
 export default class ApiInformationWizard extends Vue {
   @PropSync("api") syncApi!: ApiCreation;
   @Validations() validations = ValidationApiModel;
@@ -24,14 +30,5 @@ export default class ApiInformationWizard extends Vue {
    */
   getFileName(file: File): string {
     return MessageDisplay.getFileName(file);
-  }
-
-  /**
-   * Set MTLS
-   * @boolean : value
-   */
-  setRequireMTLS(value: boolean) {
-    this.syncApi.requireMtls = value;
-    this.$forceUpdate();
   }
 }

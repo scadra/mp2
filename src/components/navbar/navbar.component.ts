@@ -2,10 +2,8 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-import {UserLogin} from "Models/user/user-login";
 
-
-const authenticationStore = namespace("AuthenticationStore");
+const AuthenticationStore = namespace("AuthenticationStore");
 
 /**
  * Controller of navbar
@@ -14,10 +12,10 @@ const authenticationStore = namespace("AuthenticationStore");
 @Component
 export default class Navbar extends Vue{
 
-    @authenticationStore.Getter
+    @AuthenticationStore.Getter
     returnIsAuth!: () => boolean
 
-    @authenticationStore.Action
+    @AuthenticationStore.Action
     logout!: () => void;
 
     signOut() {

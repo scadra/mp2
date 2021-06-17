@@ -26,6 +26,7 @@ export default function (Vue: any, {
   isClient,
   appOptions
 }: any) {
+  buildDependencyContainer()
     // Create defaut component
   Vue.component('Layout', RootLayout);
   Vue.component('Logo', Logo);
