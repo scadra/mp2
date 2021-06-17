@@ -4,20 +4,20 @@
  */
 export class ApiCreation {
     [key: string]: any
-    productName: String;
-    organization: String;
+    productName: string;
+    organization: string;
     swagger: File;
     documentation: File;
     overview: File;
-    host: String;
-    authorizationModel: String;
-    authorizationTokenUrl: String;
-    authorizationUrl: String;
-    requirePkce: boolean = false;
-    requireMtls: boolean = false;
-    defaultCliendId!: String;
-    defaultClientSecret!: String;
-    consumerInformation: boolean = false;
+    host: string;
+    authorizationModel: string;
+    authorizationTokenUrl: string;
+    authorizationUrl: string;
+    requirePkce = false;
+    requireMtls = false;
+    defaultCliendId!: string;
+    defaultClientSecret!: string;
+    consumerInformation = false;
     
     constructor() {
         this.productName = null;

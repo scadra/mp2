@@ -4,8 +4,8 @@ import { Prop } from 'vue-property-decorator';
 
 @Component
 export default class Notification extends Vue{
-    @Prop() text!:String;
-    @Prop() className!: String;
+    @Prop() text!:string;
+    @Prop() className!: string;
 
     private display = true;
 }
