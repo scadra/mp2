@@ -1,7 +1,7 @@
 import Vue from "vue";
 
 import VueRouter, { Route } from "vue-router";
-import Home from "Pages/Index.vue";
+import Home from "Pages/index.vue";
 import ResetPasswordForm from "Pages/new-password/new-password.vue";
 
 Vue.use(VueRouter);

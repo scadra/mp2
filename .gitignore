@@ -11,3 +11,5 @@ package-lock.json
 .idea
 *.iml
 .vscode/
+/.scannerwork/
+/report/audit-report.*

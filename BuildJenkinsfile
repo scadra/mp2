@@ -69,7 +69,9 @@ pipeline {
             steps {
                 echo 'Dependency check for vulnerabilities'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh 'npm audit --audit-level=critical' // TODO is "critical" acceptable ?
+                    sh 'npm audit --audit-level=critical --json > report/audit-report.json' // TODO is "critical" acceptable ?
+                    sh 'npm-audit-html --output report/audit-report.html < report/audit-report.json'
+                    archiveArtifacts 'report/*.*'
                 }
                 echo 'Source code quality check'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
@@ -80,6 +82,22 @@ pipeline {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     sh 'npm run test'
                 }*/
+            }
+        }
+
+        stage('Sonar') {
+            options {
+                timeout(time: 10, unit: 'MINUTES')
+            }
+            tools {
+                nodejs "nodejs-14.15.0"
+            }
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Scan and send to Sonar (incl. vulnerabilities report, only master branch)'
+                sh 'sonar-scanner'
             }
         }
 

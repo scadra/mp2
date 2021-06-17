@@ -17,6 +17,7 @@ module.exports = {
   siteDescription: packageJson.description,
   metadata: {
     siteVersion: packageJson.version,
+    siteTimestamp: new Date().toISOString()
   },
   icon: {
     favicon: "./src/favicon.png",
