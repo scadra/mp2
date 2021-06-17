@@ -10,7 +10,9 @@ import VueRecaptcha from "vue-recaptcha";
 const AuthenticationStore = namespace("AuthenticationStore");
 
 @Component({
-  metaInfo: "Reset password",
+  metaInfo: {
+    title: "Reset password" 
+  },
   components: {
     ResetForm,
     VueRecaptcha,

@@ -12,7 +12,7 @@ import { Step } from "Models/wizard/step.model";
 export default class WizardFooter extends Vue {
   @Prop() steps: Step[];
   @PropSync("currentStep") syncCurrentStep!: number;
-  @Prop() validation!: Function;
+  @Prop() validation!: () => {};
 
   /**
    * Go to next step by incrementing the @syncCurrentStep

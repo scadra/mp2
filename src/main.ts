@@ -19,13 +19,14 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 //Internal dependencies
 import store from 'Store/index'
+import { ClientApiConstructor } from 'Models/main';
 
-export default function (Vue: any, {
+const client: any = function (Vue: any, {
   router,
   head,
   isClient,
   appOptions
-}: any) {
+}: any): void {
   buildDependencyContainer()
     // Create defaut component
   Vue.component('Layout', RootLayout);
@@ -44,3 +45,5 @@ export default function (Vue: any, {
   appOptions.store = new Vuex.Store(store)
   appOptions.router = router
 }
+
+export default client;

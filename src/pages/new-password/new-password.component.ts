@@ -10,7 +10,8 @@ import Notification from "Components/shared/notification/notification.vue";
 const AuthenticationStore = namespace("AuthenticationStore");
 
 @Component({
-  metaInfo: "Reset password",
+  metaInfo: {
+    title: "Reset password" },
   components: {
     NewPasswordForm,
     Notification,

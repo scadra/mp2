@@ -10,7 +10,7 @@ export default class CheckBox extends Vue {
    * Set model of checkbox
    * @boolean : value
    */
-  setCheckbox(value: boolean) {
+  setCheckbox(value: boolean): void {
     this.modelSync = value;
     this.$forceUpdate();
   }

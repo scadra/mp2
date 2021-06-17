@@ -8,8 +8,6 @@ import { Validations } from 'vuelidate-property-decorators';
 export default class NewPasswordForm extends Vue {
   @PropSync("resetPassword") resetPasswordSync!: ResetPassword;
 
-  beforeMount() {}
-
   @Validations() validation = NewPasswordValidation;
 
 }

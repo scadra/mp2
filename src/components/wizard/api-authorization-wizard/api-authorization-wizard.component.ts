@@ -1,7 +1,7 @@
 // Models
 import { ApiCreation } from "Models/api/api-creation";
 // Dependencies
-import { Component, PropSync, Ref } from "vue-property-decorator";
+import { Component, PropSync } from "vue-property-decorator";
 import Vue from "vue";
 import { Validations } from "vuelidate-property-decorators";
 // Validation
@@ -22,14 +22,14 @@ export default class ApiAuthorizationWizard extends Vue {
   @PropSync("api") syncApi!: ApiCreation;
   @Validations() validations = ValidationApiModel;
 
-  authorizationModels: String[] = [
+  authorizationModels: string[] = [
     "Client credentials",
     "Authorization code",
     "Basic",
   ];
 
   // Hooks
-  beforeMount() {
+  beforeMount(): void {
     this.syncApi.authorizationModel = this.authorizationModels[0];
   }
 
