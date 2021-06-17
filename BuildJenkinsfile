@@ -69,16 +69,17 @@ pipeline {
             steps {
                 echo 'Dependency check for vulnerabilities'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh 'npm audit --audit-level=high'
+                    sh 'npm audit --audit-level=critical' // TODO is "critical" acceptable ?
                 }
                 echo 'Source code quality check'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     sh 'npm run lint'
                 }
+                /* FIXME re-enable on first tests added to the project
                 echo 'Unit tests with Jest'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     sh 'npm run test'
-                }
+                }*/
             }
         }
 
