@@ -2,7 +2,6 @@
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
 
-
 /**
  * The home page
  * @class
@@ -11,9 +10,6 @@ import Vue from "vue";
   metaInfo: {
     title: "home",
   },
-  components: {
-  },
+  components: {},
 })
-export default class Home extends Vue {
-
-}
+export default class Home extends Vue {}

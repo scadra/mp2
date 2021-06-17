@@ -1,4 +1,4 @@
-import { ResetPassword } from 'Models/user/reset-password';
+import { ResetPassword } from "Models/user/reset-password";
 import { UserLogin } from "Models/user/user-login";
 //Default interface authentication
 export default interface IAuthenticationService {

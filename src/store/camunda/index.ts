@@ -1,12 +1,12 @@
-import IConfigurationService from 'Interfaces/configuration.interface';
+import IConfigurationService from "Interfaces/configuration.interface";
 // Dependencies
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import { Inject } from 'inversify-props';
+import { Inject } from "inversify-props";
 // Models
 import { CamundaRequest } from "Models/api/camunda-request";
 import { StepResponse } from "Models/step/step-response";
 // Services
-import ICamundaService from 'Interfaces/api/camunda.interface';
+import ICamundaService from "Interfaces/api/camunda.interface";
 
 /**
  * Define the camunda module
@@ -14,13 +14,12 @@ import ICamundaService from 'Interfaces/api/camunda.interface';
  */
 @Module({ namespaced: true })
 class CamundaStore extends VuexModule {
-
   @Inject()
   private camundaService!: ICamundaService;
- 
+
   @Inject()
   private configurationService!: IConfigurationService;
-  
+
   /**
    * States
    * @StepResponse step: The actual step
@@ -57,7 +56,7 @@ class CamundaStore extends VuexModule {
   public async next(request: CamundaRequest): Promise<void> {
     try {
       this.context.commit("setErrorMsg", null);
-      const response =  await this.camundaService.next(request);
+      const response = await this.camundaService.next(request);
       this.context.commit("setStep", response);
     } catch (err) {
       this.context.commit("setErrorMsg", err.response.data.msgDetail);
@@ -72,7 +71,7 @@ class CamundaStore extends VuexModule {
   public async start(request: CamundaRequest): Promise<void> {
     try {
       this.context.commit("setErrorMsg", null);
-      const response =  await this.camundaService.start(request); 
+      const response = await this.camundaService.start(request);
       this.context.commit("setStep", response);
     } catch (err) {
       this.context.commit("setErrorMsg", err.response.data.msgDetail);

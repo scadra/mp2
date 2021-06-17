@@ -26,13 +26,19 @@ export const ValidationApiModel = {
     overview: {
       required,
       fileFormat(api: File): boolean {
-        return api !== undefined && Checker.allowedFormat(api.name, ["zip", "rar", "7z"]);
+        return (
+          api !== undefined &&
+          Checker.allowedFormat(api.name, ["zip", "rar", "7z"])
+        );
       },
     },
     documentation: {
       required,
       fileFormat(api: File): boolean {
-        return api !== undefined && Checker.allowedFormat(api.name, ["zip", "rar", "7z"]);
+        return (
+          api !== undefined &&
+          Checker.allowedFormat(api.name, ["zip", "rar", "7z"])
+        );
       },
     },
     host: {
@@ -52,4 +58,3 @@ export const ValidationApiModel = {
     },
   },
 };
-

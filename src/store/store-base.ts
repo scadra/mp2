@@ -1,7 +1,6 @@
 import { VuexModule, Mutation } from "vuex-module-decorators";
 
 export default class StoreBase extends VuexModule {
-
   protected isLoading = false;
   protected errorMessage: string | null = null;
 
@@ -10,7 +9,7 @@ export default class StoreBase extends VuexModule {
     return this.isLoading;
   }
 
-  get returnErrorMessage():  string | null {
+  get returnErrorMessage(): string | null {
     return this.errorMessage;
   }
 
@@ -24,5 +23,4 @@ export default class StoreBase extends VuexModule {
   setErrorMessage(response: string | null): void {
     this.errorMessage = response;
   }
-
 }

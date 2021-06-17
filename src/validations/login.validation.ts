@@ -6,12 +6,13 @@ import { required, email } from "vuelidate/lib/validators";
  * @const
  */
 export const ValidationLoginModel = {
-    user : {
-        username : {
-            required, email
-        },
-        password: {
-            required
-        }
-    }
-}
+  user: {
+    username: {
+      required,
+      email,
+    },
+    password: {
+      required,
+    },
+  },
+};

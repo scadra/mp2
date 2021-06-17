@@ -1,10 +1,10 @@
-import { ResetPassword } from 'Models/user/reset-password';
-import IAuthenticationService from 'Interfaces/api/authentication.interface';
-import { UserLogin } from 'Models/user/user-login';
+import { ResetPassword } from "Models/user/reset-password";
+import IAuthenticationService from "Interfaces/api/authentication.interface";
+import { UserLogin } from "Models/user/user-login";
 import { Module, Mutation, Action } from "vuex-module-decorators";
-import { Inject } from 'inversify-props';
-import StoreBase from '../store-base';
-import { StoreEnum } from 'Models/enum/store.enum';
+import { Inject } from "inversify-props";
+import StoreBase from "../store-base";
+import { StoreEnum } from "Models/enum/store.enum";
 
 /**
  * Define the authentication module
@@ -12,10 +12,10 @@ import { StoreEnum } from 'Models/enum/store.enum';
  */
 @Module({ namespaced: true })
 export default class AuthenticationStore extends StoreBase {
-
   @Inject()
   private authenticationService!: IAuthenticationService;
-  private resetMessageError = 'You requested a password reset but an error occurred. Please try again or contact Luxhub support (TDB).';
+  private resetMessageError =
+    "You requested a password reset but an error occurred. Please try again or contact Luxhub support (TDB).";
 
   /**
    * States
@@ -38,14 +38,17 @@ export default class AuthenticationStore extends StoreBase {
   async login(user: UserLogin): Promise<void> {
     this.context.commit(StoreEnum.SETISLOADING, true);
     try {
-        await this.authenticationService.login(user);
-        
-        this.context.commit(StoreEnum.SETERRORMESSAGE, null);
-        this.context.commit('setIsAuth', true);
-    } catch(error) {
-        this.context.commit(StoreEnum.SETERRORMESSAGE, "Username and password do not match or you do not have an account yet.");
+      await this.authenticationService.login(user);
+
+      this.context.commit(StoreEnum.SETERRORMESSAGE, null);
+      this.context.commit("setIsAuth", true);
+    } catch (error) {
+      this.context.commit(
+        StoreEnum.SETERRORMESSAGE,
+        "Username and password do not match or you do not have an account yet."
+      );
     } finally {
-        this.context.commit(StoreEnum.SETISLOADING, false);
+      this.context.commit(StoreEnum.SETISLOADING, false);
     }
   }
 
@@ -55,7 +58,7 @@ export default class AuthenticationStore extends StoreBase {
     try {
       await this.authenticationService.resetPassword(email, recaptchaResponse);
       this.context.commit(StoreEnum.SETERRORMESSAGE, null);
-    } catch(error) {
+    } catch (error) {
       this.context.commit(StoreEnum.SETERRORMESSAGE, this.resetMessageError);
     } finally {
       this.context.commit(StoreEnum.SETISLOADING, false);
@@ -64,11 +67,11 @@ export default class AuthenticationStore extends StoreBase {
 
   @Action
   async changePassword(resetPassword: ResetPassword): Promise<void> {
-    this.context.commit(StoreEnum.SETISLOADING, true)
+    this.context.commit(StoreEnum.SETISLOADING, true);
     try {
       await this.authenticationService.changePassword(resetPassword);
       this.context.commit(StoreEnum.SETERRORMESSAGE, null);
-    } catch(error) {
+    } catch (error) {
       this.context.commit(StoreEnum.SETERRORMESSAGE, this.resetMessageError);
     } finally {
       this.context.commit(StoreEnum.SETISLOADING, false);

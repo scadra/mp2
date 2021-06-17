@@ -1,4 +1,4 @@
-import { namespace } from 'vuex-class';
+import { namespace } from "vuex-class";
 // Dependencies
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
@@ -7,11 +7,11 @@ import Vue from "vue";
 import LoginForm from "Components/login/login-form/login-form.vue";
 
 //Models
-import { UserLogin } from 'Models/user/user-login';
-import { Validations } from 'vuelidate-property-decorators';
-import { ValidationLoginModel } from 'Validations/login.validation';
-import Notification from 'Components/shared/notification/notification.vue';
-import VueRecaptcha from 'vue-recaptcha';
+import { UserLogin } from "Models/user/user-login";
+import { Validations } from "vuelidate-property-decorators";
+import { ValidationLoginModel } from "Validations/login.validation";
+import Notification from "Components/shared/notification/notification.vue";
+import VueRecaptcha from "vue-recaptcha";
 
 const AuthenticationStore = namespace("AuthenticationStore");
 
@@ -26,11 +26,10 @@ const AuthenticationStore = namespace("AuthenticationStore");
   components: {
     LoginForm,
     Notification,
-    VueRecaptcha
+    VueRecaptcha,
   },
 })
 export default class Login extends Vue {
-
   @AuthenticationStore.Action
   login!: (user: UserLogin) => void;
 
@@ -44,7 +43,7 @@ export default class Login extends Vue {
   returnErrorMessage!: () => string | null;
 
   @AuthenticationStore.Getter
-  returnIsAuth!: () => boolean
+  returnIsAuth!: () => boolean;
 
   errorClick = 0;
 
@@ -56,23 +55,23 @@ export default class Login extends Vue {
     recaptcha: null,
   };
 
-  keyRecaptcha: string = process.env.GRIDSOME_RECAPTCHA
+  keyRecaptcha: string = process.env.GRIDSOME_RECAPTCHA;
 
   // Validation for the form
   @Validations() validations = ValidationLoginModel;
 
   // Hook
   beforeMount(): void {
-    this.reinitMessage()
+    this.reinitMessage();
   }
 
   async signIn(): Promise<void> {
-    this.user.recaptcha = this.recaptchaValid
+    this.user.recaptcha = this.recaptchaValid;
     await this.login(this.user);
-    if(this.returnIsAuth) {
-      this.$router.push('/')
+    if (this.returnIsAuth) {
+      this.$router.push("/");
     }
-    this.errorClick ++;
+    this.errorClick++;
   }
 
   onCaptchaVerify(response: string): void {
@@ -84,17 +83,19 @@ export default class Login extends Vue {
   }
 
   disableButton(): boolean {
-    return this.$v.$invalid || this.errorClick >= 3 && this.recaptchaValid == null
+    return (
+      this.$v.$invalid || (this.errorClick >= 3 && this.recaptchaValid == null)
+    );
   }
 
   redirectMessage(): string {
-    let message = '';
-    if(this.$route.query.resetSent) {
-      message = 'You requested a password reset. You should receive an email with instructions on how to reset your password.';
+    let message = "";
+    if (this.$route.query.resetSent) {
+      message =
+        "You requested a password reset. You should receive an email with instructions on how to reset your password.";
     } else if (this.$route.query.passwordUpdated) {
-      message = 'You password has been successfully updated';
+      message = "You password has been successfully updated";
     }
     return message;
   }
-  
 }

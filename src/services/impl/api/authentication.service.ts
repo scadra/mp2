@@ -70,7 +70,9 @@ export default class AuthenticationService implements IAuthenticationService {
   async changePassword(resetPassword: ResetPassword): Promise<void> {
     delete resetPassword.repeatPassword;
     return await axios.post(
-      `${window.location.protocol + "//" + window.location.host}/${this.path}/update-forgotten-password`,
+      `${window.location.protocol + "//" + window.location.host}/${
+        this.path
+      }/update-forgotten-password`,
       resetPassword
     );
   }

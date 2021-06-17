@@ -1,11 +1,11 @@
 // Models
 import { UserLogin } from "Models/user/user-login";
 // Validations
-import { ValidationLoginModel } from '@/validations/login.validation';
+import { ValidationLoginModel } from "@/validations/login.validation";
 // Add dependencies
 import Vue from "vue";
 import { Component, ModelSync } from "vue-property-decorator";
-import { Validations } from 'vuelidate-property-decorators';
+import { Validations } from "vuelidate-property-decorators";
 
 /**
  * Controller for Login-form
