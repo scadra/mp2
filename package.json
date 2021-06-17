@@ -1,6 +1,6 @@
 {
   "name": "marketplace-front",
-  "version": "0.0.1",
+  "version": "0.0.1-SNAPSHOT",
   "description": "Frontend (static web files) for the new Marketplace v2. Built with VueJS, Typescript, Gridsome, Bulma.",
   "private": true,
   "scripts": {

@@ -1,5 +1,19 @@
 <Layout>
     <div class="columns is-centered">
-        <h1 class="title is-1">Marketplace v2</h1>
+        <div class="card">
+            <div class="card-content">
+                <p class="title" v-html="$static.metadata.siteName"></p>
+                <p class="subtitle" v-html="$static.metadata.siteVersion"></p>
+                <p v-html="$static.metadata.siteDescription"></p>
+            </div>
+            <footer class="card-footer">
+                <p class="card-footer-item">
+                    <span>View on <a href="https://gitlab.luxhub.local/dev-luxhub/marketplace-front">Gitlab</a></span>
+                </p>
+                <p class="card-footer-item">
+                    <span>See on <a href="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/">Jenkins</a></span>
+                </p>
+            </footer>
+        </div>
     </div>
 </Layout>
