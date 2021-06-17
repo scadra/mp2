@@ -12,7 +12,7 @@ export class Checker {
    * @returns boolean
    */
   static allowedFormat(filename: string, formats: Array<string>): boolean {
-    let extension = filename.split(".");
+    const extension = filename.split(".");
     return formats.includes(extension[extension.length - 1]);
   }
 

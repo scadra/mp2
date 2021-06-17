@@ -1,5 +1,5 @@
 export class UserLogin {
-    username: String;
-    password: String;
-    recaptcha: String;
+    username: string;
+    password: string;
+    recaptcha: string;
 }

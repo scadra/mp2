@@ -10,7 +10,7 @@ import { StepResponse } from "Models/step/step-response";
 
 @injectable()
 export default class CamundaService implements ICamundaService {
-  private path: string = "api/bpm";
+  private path ="api/bpm";
 
   private headers = { 
     auth: { 

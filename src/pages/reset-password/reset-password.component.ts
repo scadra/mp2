@@ -19,15 +19,15 @@ const AuthenticationStore = namespace("AuthenticationStore");
   },
 })
 export default class ResetPassword extends Vue {
-  email: String = "";
-  keyRecaptcha: String = process.env.GRIDSOME_RECAPTCHA;
-  recaptchaChecked: boolean = false;
-  recaptchaResponse: String;
+  email = "";
+  keyRecaptcha: string = process.env.GRIDSOME_RECAPTCHA;
+  recaptchaChecked = false;
+  recaptchaResponse: string;
 
   @Validations() validation = ResetPasswordValidation;
 
   @AuthenticationStore.Action
-  resetPassword!: (email: String, recaptchaResponse: String) => Promise<void>;
+  resetPassword!: (email: string, recaptchaResponse: string) => Promise<void>;
 
   @AuthenticationStore.Action
   reinitMessage!: () => void;
@@ -35,20 +35,20 @@ export default class ResetPassword extends Vue {
   @AuthenticationStore.Getter
   returnIsLoading!: () => boolean;
 
-  beforeMount() {
+  beforeMount(): void {
     this.reinitMessage();
   }
 
-  async reset() {
+  async reset(): Promise<void> {
     await this.resetPassword(this.email, this.recaptchaResponse);
     this.$router.push("/login?resetSent=true");
   }
 
-  onCaptchaExpired() {
+  onCaptchaExpired(): void {
     this.recaptchaChecked = false;
   }
 
-  onVerify(response: String) {
+  onVerify(response: string): void {
     if (response) {
       this.recaptchaChecked = true;
       this.recaptchaResponse = response;

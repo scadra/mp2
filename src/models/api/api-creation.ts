@@ -3,7 +3,6 @@
  * @class
  */
 export class ApiCreation {
-    [key: string]: any
     productName: string;
     organization: string;
     swagger: File;

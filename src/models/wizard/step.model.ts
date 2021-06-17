@@ -3,7 +3,7 @@
  * @interface
  */
 export interface Step {
-  icon: String;
-  title: String;
-  validation: Function;
+  icon: string;
+  title: string;
+  validation: () => boolean;
 }
