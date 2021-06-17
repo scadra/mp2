@@ -4,13 +4,24 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 const path = require('path');
+const fs = require('fs')
+
+const packageJson = JSON.parse(fs.readFileSync('./package.json', {encoding: "utf-8"}))
 
 module.exports = {
-  siteName: 'Gridsome',
+  siteName: packageJson.name,
+  siteDescription: packageJson.description,
+  metadata: {
+    siteVersion: packageJson.version
+  },
+  icon: {
+    favicon: './src/favicon.png',
+    touchicon: './src/favicon.png'
+  },
   plugins: [
     {
       use: 'gridsome-plugin-typescript', //Need to be the last : if not ts-loader will be by passed ! -,
-    }
+    },
   ],
   chainWebpack: (config) => {
     devServer = {

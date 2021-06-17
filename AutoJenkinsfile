@@ -1,3 +1,5 @@
+def archivedArtifact = 'marketplace-front-SNAPSHOT-bin.zip'
+
 pipeline {
 
     agent any
@@ -36,7 +38,31 @@ pipeline {
             }
             steps {
                 sh 'npm run build'
-                zip dir: 'dist', zipFile: 'agora-front-AUTO-SNAPSHOT-bin.zip', archive: true
+                zip dir: 'dist', zipFile: archivedArtifact, archive: true
+            }
+        }
+
+        stage('QA') {
+            options {
+                timeout(time: 15, unit: 'MINUTES')
+            }
+            tools {
+                nodejs "nodejs-14.15.0"
+            }
+            steps {
+                echo 'Dependency check for vulnerabilities'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh 'npm audit --audit-level=critical' // TODO is "critical" acceptable ?
+                }
+                echo 'Source code quality check'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh 'npm run lint'
+                }
+                /* FIXME re-enable on first tests added to the project
+                echo 'Unit tests with Jest'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh 'npm run test'
+                }*/
             }
         }
     }
@@ -48,27 +74,32 @@ pipeline {
                 def commitAuthor = sh (script: 'git log -1 --pretty=%aN', returnStdout: true).trim()
                 def commitEmail = sh (script: 'git log -1 --pretty=%aE', returnStdout: true).trim()
                 def commitHash = sh (script: 'git log -1 --pretty=%h', returnStdout: true).trim()
+                def jobNameParts = env.JOB_NAME.tokenize('/') as String[]
+                def shortJobName = jobNameParts.length < 2 ? env.JOB_NAME : jobNameParts[jobNameParts.length - 2]
 
-                mail subject: "${currentBuild.currentResult}: ${env.JOB_BASE_NAME}/${env.BRANCH_NAME}#${env.BUILD_NUMBER}",
+                mail subject: "${currentBuild.currentResult}: ${shortJobName}",
                         from: 'Jenkins <jenkins@luxhub.com>',
                         to: commitEmail,
                         mimeType: 'text/html',
                         body: """
                             <html><body>
-                            <h1>Job ${env.JOB_BASE_NAME}: ${currentBuild.currentResult}</h1>
-                            <p>This is the build <strong>#${env.BUILD_NUMBER}</strong> on branch
-                                <strong>${env.BRANCH_NAME}</strong> run by the job <strong>${env.JOB_NAME}</strong>.</p>
-                            <p>Please <a href="${env.BUILD_URL}console">check the job execution log here</a>.</p>
-                            <hr/>
-                            <p>Commit <strong>${commitHash}</strong> by <strong>${commitAuthor}</strong>: </p>
+                            <h1>Branch ${env.BRANCH_NAME} is ${currentBuild.currentResult}</h1>
+                            <h2>Suggested action</h2>
+                            <p><a href="${env.BUILD_URL}console">Check job execution log</a> and fix build issues.</p>
+                            <h2>Execution</h2>
+                            <p>Build <strong>#${env.BUILD_NUMBER}</strong> run by the job <strong>${env.JOB_NAME}</strong> was
+                            triggered by commit <strong>${commitHash}</strong> from <strong>${commitAuthor}</strong>: </p>
                             <pre>${commitMessage}</pre>
+                            <h2>Outcome</h2>
+                            <p>${currentBuild.currentResult == 'UNSTABLE' ? 'Web app archived here: <a href="' + env.BUILD_URL + '/artifact/' + archivedArtifact + '">' + archivedArtifact + '</a>.' : 'Build failed entirely.'}</p>
                             </body></html>
                           """
             }
         }
         always {
-            // Don't delete the whole workspace to speed-up builds
-            sh 'rm -f agora-front-AUTO-SNAPSHOT-bin.zip'
+            // Don't delete 'node_modules' to speed-up builds
+            sh "rm -f ${archivedArtifact} || true"
+            sh "rm -rf dist || true"
         }
     }
 }

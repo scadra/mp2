@@ -1,6 +1,6 @@
 {
-  "name": "agora-front",
-  "version": "0.0.1",
+  "name": "marketplace-front",
+  "version": "0.0.1-SNAPSHOT",
   "description": "Frontend (static web files) for the new Marketplace v2. Built with VueJS, Typescript, Gridsome, Bulma.",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "develop": "gridsome develop",
     "explore": "gridsome explore",
     "test": "jest",
-    "lint": "lint"
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
     "@vue/cli": "^4.5.13",
@@ -46,10 +46,13 @@
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@types/jest": "^26.0.23",
     "@types/vuelidate": "^0.7.14",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
     "@vue/cli-plugin-unit-jest": "^4.5.13",
     "@vue/test-utils": "^1.1.4",
     "axios-mock-adapter": "^1.19.0",
     "babel-core": "^6.26.3",
-    "babel-jest": "^26.6.3"
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.28.0"
   }
 }
