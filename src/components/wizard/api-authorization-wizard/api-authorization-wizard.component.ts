@@ -8,6 +8,7 @@ import { Validations } from "vuelidate-property-decorators";
 import { ValidationApiModel } from "Validations/api-creation.validation";
 //Components
 import CheckBox from "Components/inputs/checkbox/checkbox.vue";
+import UserInput from "Components/inputs/user-input/user-input.vue";
 
 /**
  * api auth of the step wizard
@@ -16,6 +17,7 @@ import CheckBox from "Components/inputs/checkbox/checkbox.vue";
 @Component({
   components: {
     CheckBox,
+    UserInput
   },
 })
 export default class ApiAuthorizationWizard extends Vue {

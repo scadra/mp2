@@ -1,6 +1,29 @@
-$primary-color: #123d6b;
-$secondary-color: #ffa900;
-$complementary-color: #39b54a;
+$primary-color: #5273ff;
+$secondary-color: #ff8a3b;
+$complementary-color: #88ff9c;
+
+$primary-color-high: rgba($primary-color,60%);
+$secondary-color-high: rgba($secondary-color,60%);
+$complementary-color-high: rgba($complementary-color,60%);
+
+$primary-color-medium: rgba($primary-color,30%);
+$secondary-color-medium: rgba($secondary-color,30%);
+$complementary-color-medium: rgba($complementary-color,30%);
+
+$primary-color-light: rgba($primary-color,5%);
+$secondary-color-light: rgba($secondary-color,5%);
+$complementary-color-light: rgba($complementary-color,5%);
+
+
 $base-color: #E8E8E8;
 $error-color: #f14668;
 $light-color: white;
+
+
+.light-text {
+    color: darkgrey;
+} 
+
+.dark-text {
+    color: #373737;
+}
