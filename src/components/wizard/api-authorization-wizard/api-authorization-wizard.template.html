@@ -25,9 +25,7 @@
                 <strong>Url:</strong>
             </div>
             <div class="column is-8">
-                <input class="input" type="text" v-model="api.authorizationUrl"
-                    :class="{'is-danger': $v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty}"
-                    @blur="$v.api.authorizationUrl.$touch()">
+                <user-input type="text" :model.sync="api.authorizationUrl" :validatorField="$v.api.authorizationUrl"></user-input>
                 <p class="help is-danger"
                     v-if="$v.api.authorizationUrl.$invalid && $v.api.authorizationUrl.$dirty && !$v.api.authorizationUrl.required">
                     This field
@@ -46,9 +44,7 @@
                 <strong>Token url:</strong>
             </div>
             <div class="column is-8">
-                <input class="input" type="text" v-model="api.authorizationTokenUrl"
-                    :class="{'is-danger': $v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty}"
-                    @blur="$v.api.authorizationTokenUrl.$touch()">
+                <user-input type="text" :model.sync="api.authorizationTokenUrl" :validatorField="$v.api.authorizationTokenUrl"></user-input>
                 <p class="help is-danger"
                     v-if="$v.api.authorizationTokenUrl.$invalid && $v.api.authorizationTokenUrl.$dirty && !$v.api.authorizationTokenUrl.required">
                     This field
@@ -68,7 +64,7 @@
             </div>
             <div class="column is-8">
                 <div class="buttons has-addons">
-                    <input class="input" type="text" v-model="api.defaultClientId"/>
+                    <user-input type="text" :model.sync="api.defaultClientId"></user-input>
                 </div>
             </div>
         </div>
@@ -78,7 +74,7 @@
             </div>
             <div class="column is-8">
                 <div class="buttons has-addons">
-                    <input class="input" type="text" v-model="api.defaultClientSecret"/>
+                    <user-input type="text" :model.sync="api.defaultClientSecret"></user-input>
                 </div>
             </div>
         </div>

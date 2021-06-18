@@ -1,9 +1,71 @@
-@import "Styles/colors.scss";
+//Fonts Families
+$font-family-regular: "Arial";
+$font-family-light: "Arial";
+$font-family-regular-extended: "Arial";
+$font-family-light-extended: "Arial";
 
-.light-text {
-    color: darkgrey;
-} 
+//Fonts sizes
+$font-size-h1: 44px;
+$font-size-h2: 16px;
+$font-size-h3: 14px;
+$font-size-h4: 12px;
+$font-size-paragraph: 12px;
+$font-size-caption: 12px;
+$font-size-quote: 44px;
 
-.dark-text {
-    color: #373737;
+//Fonts line height
+$font-line-height-h1: 52px;
+$font-line-height-h2: 20px;
+$font-line-height-h3: 16px;
+$font-line-height-h4: 14px;
+$font-line-height-paragraph: 14px;
+$font-line-height-quote: 52px;
+
+
+//Define elements styles
+body, html{
+    font-family: $font-family-light;
+    font-size: $font-size-paragraph;
+}
+
+h2, h3, h4{
+    font-family: $font-family-light-extended;
+}
+
+
+h1{
+    font-size: $font-size-h1;
+    font-family: $font-family-regular-extended;
+    line-height: $font-line-height-h1;
+}
+
+h2{
+    font-size: $font-size-h2;
+    line-height: $font-line-height-h2;
+}
+
+h3{
+    font-size: $font-size-h3;
+    line-height: $font-line-height-h3;
+}
+
+h4{
+    font-size: $font-size-h4;
+    line-height: $font-line-height-h4;
+}
+
+.text-uppercase{
+    text-transform: uppercase
+}
+
+.caption{
+    font-family: $font-family-light-extended;
+    text-transform: uppercase;
+    font-size: $font-size-caption;
+}
+
+.quote{
+    font-family: $font-family-light;
+    font-size: $font-size-quote;
+    line-height: $font-line-height-quote;
 }

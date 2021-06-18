@@ -1,0 +1,3 @@
+<input class="input" :type="type" 
+:class="{'is-danger': validatorField && validatorField.$invalid && validatorField.$dirty}"
+@blur="onBlur()" v-model="modelSync"/>

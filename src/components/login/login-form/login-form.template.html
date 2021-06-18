@@ -3,9 +3,7 @@
         <strong>Username:</strong>
     </div>
     <div class="column is-9">
-        <input class="input" type="text" v-model="syncUser.username"
-            :class="{'is-danger': $v.user.username.$invalid && $v.user.username.$dirty}"
-            @blur="$v.user.username.$touch()" />
+        <user-input type="text" :model.sync="syncUser.username" :validatorField="$v.user.username"></user-input>
         <p class="help is-danger"
             v-if="$v.user.username.$invalid && $v.user.username.$dirty && !$v.user.username.required">
             This field
@@ -19,9 +17,7 @@
         <strong>Password:</strong>
     </div>
     <div class="column is-9">
-        <input class="input" type="password" v-model="syncUser.password"
-            :class="{'is-danger': $v.user.password.$invalid && $v.user.password.$dirty}"
-            @blur="$v.user.password.$touch()" />
+        <user-input type="password" :model.sync="syncUser.password" :validatorField="$v.user.password"></user-input>
         <p class="help is-danger"
             v-if="$v.user.password.$invalid && $v.user.password.$dirty && !$v.user.password.required">
             This field

@@ -5,9 +5,7 @@
                 <strong>Product name:</strong>
             </div>
             <div class="column is-8">
-                <input class="input" type="text" v-model="syncApi.productName"
-                    :class="{'is-danger': $v.api.productName.$invalid && $v.api.productName.$dirty}"
-                    @blur="$v.api.productName.$touch()">
+                <user-input type="text" :model.sync="syncApi.productName" :validatorField="$v.api.productName"></user-input>
                 <p class="help is-danger" v-if="$v.api.productName.$invalid && $v.api.productName.$dirty">This field is
                     required</p>
             </div>
@@ -19,9 +17,7 @@
                 <strong>Organization name:</strong>
             </div>
             <div class="column is-8">
-                <input class="input" type="text" v-model="api.organization"
-                    :class="{'is-danger': $v.api.organization.$invalid && $v.api.organization.$dirty}"
-                    @blur="$v.api.organization.$touch()">
+                <user-input type="text" :model.sync="api.organization" :validatorField="$v.api.organization"></user-input>
                 <p class="help is-danger" v-if="$v.api.organization.$invalid && $v.api.organization.$dirty">This field
                     is
                     required</p>
@@ -34,9 +30,7 @@
                 <strong>Host:</strong>
             </div>
             <div class="column is-8">
-                <input class="input" type="text" v-model="api.host"
-                    :class="{'is-danger': $v.api.host.$invalid && $v.api.host.$dirty}"
-                    @blur="$v.api.host.$touch()">
+                <user-input type="text" :model.sync="api.host" :validatorField="$v.api.host"></user-input>
                 <p class="help is-danger" v-if="$v.api.host.$invalid && $v.api.host.$dirty && !$v.api.host.required">This field
                     is
                     required</p>
