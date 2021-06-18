@@ -69,7 +69,7 @@ pipeline {
             steps {
                 echo 'Dependency check for vulnerabilities'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh 'npm audit --audit-level=critical --json > report/audit-report.json' // TODO is "critical" acceptable ?
+                    sh 'npm audit --audit-level=critical --json > report/audit-report.json'
                     sh 'npm-audit-html --output report/audit-report.html < report/audit-report.json'
                     archiveArtifacts 'report/*.*'
                 }
@@ -78,6 +78,7 @@ pipeline {
                     sh 'npm run lint'
                 }
                 /* FIXME re-enable on first tests added to the project
+                    + ensure that test results and coverage are published to Sonar
                 echo 'Unit tests with Jest'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     sh 'npm run test'
@@ -93,7 +94,7 @@ pipeline {
                 nodejs "nodejs-14.15.0"
             }
             when {
-                branch 'master'
+                branch 'origin/master'
             }
             steps {
                 echo 'Scan and send to Sonar (incl. vulnerabilities report, only master branch)'
