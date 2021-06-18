@@ -52,7 +52,7 @@ pipeline {
             steps {
                 echo 'Dependency check for vulnerabilities'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh 'npm audit --audit-level=critical' // TODO is "critical" acceptable ?
+                    sh 'npm audit --production --audit-level=critical'
                 }
                 echo 'Source code quality check'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
