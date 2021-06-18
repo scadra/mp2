@@ -1,20 +1,19 @@
 import Vue from "vue";
 import { Component, PropSync, Prop } from "vue-property-decorator";
+import { Validation } from "vuelidate/vuelidate";
 
 @Component
 export default class UserInput extends Vue {
-    @Prop() validatorField!: any;
-    @Prop() type!: String;
-    @PropSync("model") modelSync!: String;
-  
-  
+  @Prop() validatorField!: Validation;
+  @Prop() type!: string;
+  @PropSync("model") modelSync!: string;
+
   /**
    * Set eventually errors on the field
    */
-  onBlur() {
-    if(this.validatorField){
-        this.validatorField.$touch();
+  onBlur(): void {
+    if (this.validatorField) {
+      this.validatorField.$touch();
     }
-    
   }
 }

@@ -7,8 +7,8 @@ import UserInput from "Components/inputs/user-input/user-input.vue";
 
 @Component({
   components: {
-    UserInput
-  }
+    UserInput,
+  },
 })
 export default class ResetForm extends Vue {
   @PropSync("email") emailSync!: string;

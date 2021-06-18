@@ -15,8 +15,8 @@ import UserInput from "Components/inputs/user-input/user-input.vue";
  */
 @Component({
   components: {
-    UserInput
-  }
+    UserInput,
+  },
 })
 export default class LoginForm extends Vue {
   @ModelSync("user") syncUser!: UserLogin;

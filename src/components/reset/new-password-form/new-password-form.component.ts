@@ -8,8 +8,8 @@ import UserInput from "Components/inputs/user-input/user-input.vue";
 
 @Component({
   components: {
-    UserInput
-  }
+    UserInput,
+  },
 })
 export default class NewPasswordForm extends Vue {
   @PropSync("resetPassword") resetPasswordSync!: ResetPassword;
