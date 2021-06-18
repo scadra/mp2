@@ -69,7 +69,7 @@ pipeline {
             steps {
                 echo 'Dependency check for vulnerabilities'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh 'npm audit --audit-level=critical --json > report/audit-report.json'
+                    sh 'npm audit --audit-level=critical --production --json > report/audit-report.json'
                     sh 'npm-audit-html --output report/audit-report.html < report/audit-report.json'
                     archiveArtifacts 'report/*.*'
                 }
