@@ -101,7 +101,8 @@ pipeline {
             }
             steps {
                 echo 'Scan and send to Sonar (incl. vulnerabilities report, only master branch)'
-                sh 'sonar-scanner'
+                // Using this path instead of directly "sonar-scanner" prevents "command not found" on Jenkins
+                sh 'node node_modules/sonar-scanner/index.js'
             }
         }
 
