@@ -19,7 +19,7 @@ import UserInput from "Components/inputs/user-input/user-input.vue";
 @Component({
   components: {
     CheckBox,
-    UserInput
+    UserInput,
   },
 })
 export default class ApiInformationWizard extends Vue {

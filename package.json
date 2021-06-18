@@ -45,12 +45,12 @@
     "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
-    "@vue/cli": "^4.5.13",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@types/jest": "^26.0.23",
     "@types/vuelidate": "^0.7.14",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
+    "@vue/cli": "^4.5.13",
     "@vue/cli-plugin-unit-jest": "^4.5.13",
     "@vue/test-utils": "^1.1.4",
     "axios-mock-adapter": "^1.19.0",

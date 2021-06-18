@@ -9,7 +9,9 @@ const path = require("path");
 const fs = require("fs");
 
 const packageJson = JSON.parse(
-  fs.readFileSync("./package.json", { encoding: "utf-8" })
+  fs.readFileSync("./package.json", {
+    encoding: "utf-8",
+  })
 );
 
 module.exports = {
@@ -17,7 +19,7 @@ module.exports = {
   siteDescription: packageJson.description,
   metadata: {
     siteVersion: packageJson.version,
-    siteTimestamp: new Date().toISOString()
+    siteTimestamp: new Date().toISOString(),
   },
   icon: {
     favicon: "./src/favicon.png",
