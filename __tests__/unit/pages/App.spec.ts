@@ -1,5 +1,5 @@
 /*import { shallowMount } from '@vue/test-utils'
-import Index from '../../../src/pages/Index.vue'
+import Index from '../../../src/pages/index.vue'
 
 describe('Home ', () => {
   it('renders props.msg when passed', () => {

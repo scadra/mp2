@@ -10,6 +10,7 @@ import { ValidationApiModel } from "Validations/api-creation.validation";
 import { MessageDisplay } from "Utils/message-display";
 //Components
 import CheckBox from "Components/inputs/checkbox/checkbox.vue";
+import UserInput from "Components/inputs/user-input/user-input.vue";
 
 /**
  * api informations of the step wizard
@@ -18,6 +19,7 @@ import CheckBox from "Components/inputs/checkbox/checkbox.vue";
 @Component({
   components: {
     CheckBox,
+    UserInput
   },
 })
 export default class ApiInformationWizard extends Vue {

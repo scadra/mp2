@@ -1,7 +1,7 @@
 {
     "exclude": ["node_modules"],
     "compilerOptions": {
-        "target": "ES2019",
+        "target": "es2018",
         "module": "ESnext",
         "strict": true,
         "jsx": "preserve",
@@ -62,7 +62,7 @@
             ],
         },
         "lib": [
-            "ES2019",
+            "es2018",
             "dom",
             "dom.iterable",
             "scripthost"

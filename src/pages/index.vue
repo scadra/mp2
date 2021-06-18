@@ -6,7 +6,8 @@ query {
   metadata {
     siteName,
     siteDescription,
-    siteVersion
+    siteVersion,
+    siteTimestamp,
   }
 }
 </static-query>
