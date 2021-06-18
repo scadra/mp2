@@ -70,7 +70,7 @@ pipeline {
                 echo 'Dependency check for vulnerabilities'
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     sh 'npm audit --audit-level=critical --production --json > report/audit-report.json'
-                    // Using "node ./node_modules/npm-audit-html/index.js" instead of "npm-audit-html" prevents "command not found" on Jenkins
+                    // Using this path instead of directly "npm-audit-html" prevents "command not found" on Jenkins
                     sh 'node ./node_modules/npm-audit-html/index.js --output report/audit-report.html < report/audit-report.json'
                     archiveArtifacts 'report/*.*'
                 }
@@ -95,7 +95,9 @@ pipeline {
                 nodejs "nodejs-14.15.0"
             }
             when {
-                branch 'origin/master'
+                expression {
+                    env.GIT_BRANCH == 'master' || env.GIT_BRANCH ==~ /\/master/
+                }
             }
             steps {
                 echo 'Scan and send to Sonar (incl. vulnerabilities report, only master branch)'
