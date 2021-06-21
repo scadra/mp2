@@ -65,9 +65,9 @@ export default class Login extends Vue {
     this.reinitMessage();
   }
 
-  async signIn(): Promise<void> {
+  signIn(): void {
     this.user.recaptcha = this.recaptchaValid;
-    await this.login(this.user);
+    this.login(this.user);
     if (this.returnIsAuth) {
       this.$router.push("/");
     }

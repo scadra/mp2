@@ -1,22 +1,32 @@
 <div>
-    <p class="buttons">
-        <button class="button is-link" @click="back()"  v-if="currentStep > 0">
-          <span class="icon is-small">
-            <i class="fas fa-step-backward"></i>
-          </span>
-          <span>Back</span>
-        </button>
-        <button class="button is-primary is-outlined" @click="next()" v-if="currentStep < (steps ? steps.length - 1 : -1)" :disabled="isValid()">
-          <span>Next</span>
-          <span class="icon is-small">
-            <i class="fas fa-step-forward"></i>
-          </span>
-        </button>
-        <button class="button is-primary is-outlined" @click="confirm()" v-if="currentStep === (steps ? steps.length - 1 : -1)" :disabled="isValid()">
-            <span>Confirm</span>
-            <span class="icon is-small">
-              <i class="fas fa-step-forward"></i>
-            </span>
-          </button>
-      </p>
+  <p class="buttons">
+    <button class="button is-link" @click="back()" v-if="currentStep > 0">
+      <span class="icon is-small">
+        <em class="fas fa-step-backward"></em>
+      </span>
+      <span>Back</span>
+    </button>
+    <button
+      class="button is-primary is-outlined"
+      @click="next()"
+      v-if="currentStep < (steps ? steps.length - 1 : -1)"
+      :disabled="isValid()"
+    >
+      <span>Next</span>
+      <span class="icon is-small">
+        <em class="fas fa-step-forward"></em>
+      </span>
+    </button>
+    <button
+      class="button is-primary is-outlined"
+      @click="confirm()"
+      v-if="currentStep === (steps ? steps.length - 1 : -1)"
+      :disabled="isValid()"
+    >
+      <span>Confirm</span>
+      <span class="icon is-small">
+        <em class="fas fa-step-forward"></em>
+      </span>
+    </button>
+  </p>
 </div>
