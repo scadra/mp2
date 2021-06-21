@@ -51,7 +51,7 @@ export default class AuthenticationService implements IAuthenticationService {
   async resetPassword(email: string, recaptchaResponse: string): Promise<void> {
     const options = this.initHeaderWithCaptcha(recaptchaResponse);
     try {
-      return axios.post(
+      return await axios.post(
         `${this.path}/reset-password`,
         { email: email },
         options
