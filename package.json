@@ -9,7 +9,8 @@
     "explore": "gridsome explore",
     "test": "jest",
     "lint": "eslint . --ext .ts",
-    "lint-fix": "npm run lint -- --fix"
+    "lint-fix": "npm run lint -- --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -57,6 +58,7 @@
     "babel-core": "^6.26.3",
     "babel-jest": "^26.6.3",
     "eslint": "^7.28.0",
+    "husky": "^6.0.0",
     "npm-audit-html": "^1.5.0",
     "sonar-scanner": "^3.1.0"
   }
