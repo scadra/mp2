@@ -26,6 +26,7 @@ pipeline {
                 sh 'node -v'
                 sh 'npm --version'
                 sh 'npm install'
+                sh 'gridsome info'
             }
         }
 
