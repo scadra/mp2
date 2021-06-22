@@ -35,6 +35,7 @@ const client: any = function (
     Vue.use(Buefy);
     Vue.use(Vuex);
     Vue.use(VueRouter);
+    Vue.use(require("vue-moment"));
   }
   // Define globale use for ts
   Vue.use(Vuelidate);

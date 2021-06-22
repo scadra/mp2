@@ -1,81 +1,50 @@
 @import "Styles/colors.scss";
+@import "Styles/card.scss";
 
-.api-card {
-    min-height: 250px;
-    display: flex;
+.card {
+  @extend .card;
+  display: flex;
 
-    .api-card-content {
-        .media {
-            .media-left {
-                margin-right: 10px;
-
-            }
-
-            .title {
-                font-size: 15px;
-            }
-
-            .image {
-                width: 35px;
-                height: 35px;
-
-                img {
-                    border-radius: 50%;
-                }
-            }
+  .card-content {
+    .media {
+      .image {
+        width: 35px;
+        height: 35px;
+        img {
+          border-radius: 50%;
         }
-
-        .content::v-deep {
-            font-size: 14px;
-            line-height: 16px;
-
-            h1,
-            h2,
-            h3,
-            h4 {
-                font-size: 14px;
-            }
-
-            p {
-                margin-bottom: 20px;
-            }
-
-        }
-
-        .tags {
-            margin-bottom: 20px;
-
-            .tag {
-                margin-bottom: 10px;
-
-            }
-        }
-
-        .api-card-footer {
-            font-size: 10px;
-
-            .environments {
-                font-weight: bold;
-                color: $secondary-color;
-
-                span {
-                    display: inline-block;
-
-                    &:not(:last-of-type) {
-                        margin-right: 10px;
-                    }
-
-                    &.prd {
-                        color: $complementary-color;
-                    }
-                }
-            }
-        }
+      }
     }
 
-    .tagItem {
-        padding: 10px;
-        background-color: $secondary-color;
+    .tags {
+      margin-bottom: 20px;
+
+      .tag {
+        margin-bottom: 10px;
+      }
     }
 
+    .card-footer {
+      .environments {
+        font-weight: bold;
+        color: $secondary-color;
+        span {
+          display: inline-block;
+
+          &:not(:last-of-type) {
+            margin-right: 10px;
+          }
+
+          &.prd {
+            color: $complementary-color;
+          }
+        }
+      }
+    }
+  }
+
+  .tagItem {
+    padding: 10px;
+    background-color: $secondary-color;
+  }
 }

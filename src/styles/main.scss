@@ -4,50 +4,51 @@
 @import "Styles/buttons.scss";
 
 .box {
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    border-radius: 10px;
-    border: 1px solid $base-color;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding: 0rem !important;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  border-radius: 10px;
+  border: 1px solid $base-color;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding: 0rem !important;
 
-    hr {
-        background-color: $base-color;
-        height: 1px;
-        margin-bottom: 1%;
-    }
+  hr {
+    background-color: $base-color;
+    height: 1px;
+    margin-bottom: 1%;
+  }
 }
 
 .label-form {
-    margin-top: auto;
-    margin-bottom: auto;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 body {
-    background: $primary-color !important;
-    min-height: 100vh;
+  background: $light-color !important;
+  min-height: 100vh;
 }
 
 .container {
-    border: 1px solid $primary-color;
-    border-radius: 10px;
-    background: $light-color;
-    margin: auto !important;
+  border: 1px solid $primary-color;
+  border-radius: 10px;
+  background: $light-color;
+  margin: auto !important;
 
-    .button-container {
-        width: 100%;
-        text-align: center;
-    }
+  .button-container {
+    width: 100%;
+    text-align: center;
+  }
 
-    h3 {
-        text-align: center;
-        margin: 3% 0;
-    }
+  h3 {
+    text-align: center;
+    margin: 3% 0;
+  }
 }
 
 .page-content {
-    min-height: 89vh;
+  min-height: 89vh;
 }

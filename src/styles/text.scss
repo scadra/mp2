@@ -21,51 +21,61 @@ $font-line-height-h4: 14px;
 $font-line-height-paragraph: 14px;
 $font-line-height-quote: 52px;
 
+//Card
+$font-size-title-card: $font-size-h2;
+$font-size-h1-card: $font-size-h3;
+$font-size-h2-card: $font-size-h3;
+$font-size-h3-card: $font-size-h3;
+$font-size-h4-card: $font-size-h3;
+$font-size-text-card: $font-size-h3;
+$font-size-text-footer-card: 10px;
 
 //Define elements styles
-body, html{
-    font-family: $font-family-light;
-    font-size: $font-size-paragraph;
+body,
+html {
+  font-family: $font-family-light;
+  font-size: $font-size-paragraph;
 }
 
-h2, h3, h4{
-    font-family: $font-family-light-extended;
+h2,
+h3,
+h4 {
+  font-family: $font-family-light-extended;
 }
 
-
-h1{
-    font-size: $font-size-h1;
-    font-family: $font-family-regular-extended;
-    line-height: $font-line-height-h1;
+h1 {
+  font-size: $font-size-h1;
+  font-family: $font-family-regular-extended;
+  line-height: $font-line-height-h1;
 }
 
-h2{
-    font-size: $font-size-h2;
-    line-height: $font-line-height-h2;
+h2 {
+  font-size: $font-size-h2;
+  line-height: $font-line-height-h2;
 }
 
-h3{
-    font-size: $font-size-h3;
-    line-height: $font-line-height-h3;
+h3 {
+  font-size: $font-size-h3;
+  line-height: $font-line-height-h3;
 }
 
-h4{
-    font-size: $font-size-h4;
-    line-height: $font-line-height-h4;
+h4 {
+  font-size: $font-size-h4;
+  line-height: $font-line-height-h4;
 }
 
-.text-uppercase{
-    text-transform: uppercase
+.text-uppercase {
+  text-transform: uppercase;
 }
 
-.caption{
-    font-family: $font-family-light-extended;
-    text-transform: uppercase;
-    font-size: $font-size-caption;
+.caption {
+  font-family: $font-family-light-extended;
+  text-transform: uppercase;
+  font-size: $font-size-caption;
 }
 
-.quote{
-    font-family: $font-family-light;
-    font-size: $font-size-quote;
-    line-height: $font-line-height-quote;
+.quote {
+  font-family: $font-family-light;
+  font-size: $font-size-quote;
+  line-height: $font-line-height-quote;
 }
