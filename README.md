@@ -63,17 +63,17 @@ _Pipelines execute these 3 checks:_
 
 ### Deployment
 
-#### Environments
+#### Application environments
 
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=port2-dev.luxhub.local:446">](https://marketplace-din-unstable.luxhub.local/)
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=port1-dev.luxhub.local:446">](https://marketplace-din-stable.luxhub.local/)
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=port2-dev.luxhub.local:447">](https://marketplace-stg-unstable.luxhub.local/)
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=port1-dev.luxhub.local:447">](https://marketplace-stg-stable.luxhub.local/)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=deploy&build=lastCompleted:${params.target=1.%20DEV%20Unstable%20-%20https://marketplace-din-unstable.luxhub.local/%20-%20port2-dev.luxhub.local:446%20-%20htdoc_mktp_dindix}">](https://marketplace-din-unstable.luxhub.local/)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=deploy&build=lastCompleted:${params.target=2.%20DEV%20Stable%20-%20https://marketplace-din-stable.luxhub.local/%20-%20port1-dev.luxhub.local:446%20-%20htdoc_mktp_dindix}">](https://marketplace-din-stable.luxhub.local/)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=deploy&build=lastCompleted:${params.target=3.%20STG%20Unstable%20-%20https://marketplace-stg-unstable.luxhub.local/%20-%20port2-dev.luxhub.local:447%20-%20htdoc_mktp_stgstx}">](https://marketplace-stg-unstable.luxhub.local/)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=deploy&build=lastCompleted:${params.target=4.%20STG%20Stable%20-%20https://marketplace-stg-stable.luxhub.local/%20-%20port1-dev.luxhub.local:447%20-%20htdoc_mktp_stgstx}">](https://marketplace-stg-stable.luxhub.local/)
 
-#### Artifacts
+#### Published artifacts
 
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/badge/icon?config=last-snapshot-version">](https://nexus.luxhub.local:9443/#browse/browse:maven-snapshots:com%2Fluxhub%2Fagora%2Fmarketplace-front)
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/badge/icon?config=last-release-version">](https://nexus.luxhub.local:9443/#browse/browse:maven-releases:com%2Fluxhub%2Fagora%2Fmarketplace-front)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=publish&build=lastCompleted:${params.snapshot=true}">](https://nexus.luxhub.local:9443/#browse/browse:maven-snapshots:com%2Fluxhub%2Fagora%2Fmarketplace-front)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=publish&build=lastCompleted:${params.snapshot=false}">](https://nexus.luxhub.local:9443/#browse/browse:maven-releases:com%2Fluxhub%2Fagora%2Fmarketplace-front)
 
 #### Details
 

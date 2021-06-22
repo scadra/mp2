@@ -3,9 +3,9 @@ def groupPath = groupId.replace('.', '/')
 def artifactId = 'marketplace-front'
 def mvnCoordinates = "${groupId}:${artifactId}:${version}:bin:zip"
 def artifactFile = "${artifactId}-${version}-bin.zip"
-def snapshotVersion = params.version.endsWith('-SNAPSHOT')
-def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
-def nexusUrl = snapshotVersion
+params.snapshot = params.version.endsWith('-SNAPSHOT')
+def nexusId = params.snapshot ? 'nexus-snapshots' : 'nexus-releases'
+def nexusUrl = params.snapshot
     ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots'
     : 'https://nexus.luxhub.local:9443/repository/maven-releases'
 def actualLocation = ''
@@ -126,7 +126,7 @@ pipeline {
                     echo packageJson.version
                     echo packageJson.description
                     sh "${mvnCmd} deploy:deploy-file -Dfile=${artifactFile} -DrepositoryId=${nexusId} -Durl=${nexusUrl} -DgroupId=${groupId} -DartifactId=${artifactId} -Dclassifier=bin -Dversion=${version} -Ddescription='${packageJson.description}'"
-                    def actualVersion = snapshotVersion
+                    def actualVersion = params.snapshot
                             ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
                             : version;
                     actualLocation = "${nexusUrl}/${groupPath}/${artifactId}/${version}/${artifactId}-${actualVersion}-bin.zip"
@@ -136,8 +136,8 @@ pipeline {
             post {
                 success {
                     addEmbeddableBadgeConfiguration(
-                            id: "last-${snapshotVersion ? 'snapshot' : 'release'}-version",
-                            subject: "Last ${snapshotVersion ? 'Snapshot' : 'Release'} Version",
+                            id: 'publish',
+                            subject: "Last ${params.snapshot ? 'Snapshot' : 'Release'} Version",
                             status: params.version
                     )
                 }
