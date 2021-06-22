@@ -26,6 +26,8 @@ pipeline {
                 sh 'node -v'
                 sh 'npm --version'
                 sh 'npm install'
+                // Using this path instead of directly "gridsome info" prevents "command not found" on Jenkins
+                sh 'node ./node_modules/gridsome/bin/gridsome.js info'
             }
         }
 

@@ -1,24 +1,19 @@
 def groupId = 'com.luxhub.agora'
-def groupPath = groupId.replace('.', '/')
 def artifactId = 'marketplace-front'
 def mvnCoordinates = "${groupId}:${artifactId}:${params.version}:zip:bin"
 def artifactFile = "${artifactId}-${params.version}-bin.zip"
-def mavenRepositories =
-        'nexus-snapshots::default::https://nexus.luxhub.local:9443/repository/maven-snapshots,' +
-        'nexus-releases::default::https://nexus.luxhub.local:9443/repository/maven-releases'
-def snapshotVersion = params.version.endsWith('-SNAPSHOT')
-def nexusId = snapshotVersion ? 'nexus-snapshots' : 'nexus-releases'
-def nexusUrl = snapshotVersion
-        ? 'https://nexus.luxhub.local:9443/repository/maven-snapshots'
-        : 'https://nexus.luxhub.local:9443/repository/maven-releases'
+def repo = params.version.endsWith('-SNAPSHOT')
+        ? [nexusId: 'nexus-snapshots', layout: 'default', nexusUrl: 'https://nexus.luxhub.local:9443/repository/maven-snapshots']
+        : [nexusId: 'nexus-releases', layout: 'default', nexusUrl: 'https://nexus.luxhub.local:9443/repository/maven-releases']
+def sshCredentials = ['5bf76f15-b91a-4eb5-ae97-4f7481b6d06c']
+def execAsApache = 'sudo -u apache'
+def targetComponents = (params.target as String).split('-')
+def targetUrl = targetComponents[0].trim()
+def targetServer = targetComponents[1].trim()
+def targetPath = "/opt/axway/apiportal/${targetComponents[2].trim()}"
 def sshCmd = "ssh -o StrictHostKeyChecking=no"
 def sshOrig = "jenk2adm@${env.JENKINS_URL.contains('prd') ? 'jump-prd.luxhub.local' : 'jump-dev.luxhub.local'}"
-def sshDest = "jenk2adm@${target}"
-def sshCredentials = ['5bf76f15-b91a-4eb5-ae97-4f7481b6d06c']
-def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml -B' // TODO replace -B by --no-transfer-progress on Maven 3.6.1+
-def execAsApache = "sudo -u apache"
-def deploymentPath = "/opt/luxhub/htdocs/dix/marketplace-front"
-def applicationPort = '441'
+def sshDest = "jenk2adm@${(targetServer as String).split(':')[0]}"
 
 pipeline {
 
@@ -33,7 +28,12 @@ pipeline {
 
     parameters {
         string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: 'Version to deploy')
-        choice(name: 'target', choices: ['port1-dev.luxhub.local'], description: 'Server where to deploy')
+        choice(name: 'target', choices: [
+            'https://marketplace-din-unstable.luxhub.local/ - port2-dev.luxhub.local:446 - htdoc_mktp_dindix',
+            'https://marketplace-din-stable.luxhub.local/ - port1-dev.luxhub.local:446 - htdoc_mktp_dindix',
+            'https://marketplace-stg-unstable.luxhub.local/ - port2-dev.luxhub.local:447 - htdoc_mktp_stgstx',
+            'https://marketplace-stg-stable.luxhub.local/ - port1-dev.luxhub.local:447 - htdoc_mktp_stgstx'
+        ], description: 'Server where to deploy')
         booleanParam(name: 'cleanup', defaultValue: false, description: 'Cleanup deployment directory of its existing files')
     }
 
@@ -49,8 +49,9 @@ pipeline {
                     echo packageJson.name
                     echo packageJson.version
                     echo packageJson.description
+                    def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml -B' // TODO replace -B by --no-transfer-progress on Maven 3.6.1+
                     // Get artifact into local repo
-                    sh "${mvnCmd} dependency:get -DremoteRepositories=${mavenRepositories} -Dartifact=${mvnCoordinates}"
+                    sh "${mvnCmd} dependency:get -DremoteRepositories=${repo.nexusId}::${repo.layout}::${repo.nexusUrl} -Dartifact=${mvnCoordinates}"
                     // Copy artifact from local repo to current directory
                     sh "${mvnCmd} dependency:copy -Dartifact=${mvnCoordinates} -DoutputDirectory=/tmp -Dmdep.useBaseVersion -Dmdep.overIfNewer"
                     sh "chmod 666 /tmp/${artifactFile}"
@@ -61,7 +62,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploying ${artifactFile} to ${params.target}"
+                echo "Deploying ${artifactFile} to ${targetUrl}"
                 sshagent(sshCredentials) {
                     echo "Copy file to '${sshDest}:/tmp/${artifactFile}'"
                     sh """
@@ -73,17 +74,17 @@ pipeline {
                         if (params.cleanup) {
                             echo 'Cleaning deployment directory'
                             sh """
-                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}' || true"
-                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} rm -rf ${deploymentPath}' || true"
-                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}' || true"
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${targetPath}' || true"
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} rm -rf ${targetPath}' || true"
+                                ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${targetPath}' || true"
                             """
                         }
                     }
 
-                    echo "Unzip to ${deploymentPath}"
+                    echo "Unzip to ${targetPath}"
                     sh """
-                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip -uo /tmp/${artifactFile} -d ${deploymentPath}'"
-                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${deploymentPath}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} unzip -uo /tmp/${artifactFile} -d ${targetPath}'"
+                        ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} '${execAsApache} ls -lha ${targetPath}'"
                         ${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'rm -rf /tmp/${artifactFile}' || true"
                     """
                 }
@@ -92,13 +93,13 @@ pipeline {
 
         stage('Verify') {
             steps {
-                echo 'Waiting some time...'
+                echo 'Waiting 1 second...'
                 sleep 1
-                echo "Verify deployed web application on https://${target}:${applicationPort}"
+                echo "Verify deployed web application on ${targetUrl}"
                 script {
                     sshagent(sshCredentials) {
                         def statusCode = sh (
-                                script: """${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'curl -k -L -s -o /dev/null -w '%{http_code}' https://${target}:${applicationPort}'" """,
+                                script: """${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'curl -k -L -s -o /dev/null -w '%{http_code}' ${targetUrl}'" """,
                                 returnStdout: true
                         ).trim()
                         if (statusCode != '200') {
@@ -113,10 +114,11 @@ pipeline {
     post {
         success {
             script {
+                def groupPath = groupId.replace('.', '/')
                 def actualVersion = version.endsWith('-SNAPSHOT')
-                        ? sh (script: "curl -k ${nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
+                        ? sh (script: "curl -k ${repo.nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
                         : version;
-                def actualLocation = "${nexusUrl}/${groupPath}/${artifactId}/${version}/${artifactId}-${actualVersion}-bin.zip"
+                def actualLocation = "${repo.nexusUrl}/${groupPath}/${artifactId}/${version}/${artifactId}-${actualVersion}-bin.zip"
 
                 mail subject: "${artifactFile} DEPLOYED to ${target}",
                         from: 'Jenkins <jenkins@luxhub.com>',
@@ -126,7 +128,7 @@ pipeline {
                             <html><body>
                             <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
                             <h2>Suggested action</h2>
-                            <p>Test the new features of the application: <a href="https://${target}:${applicationPort}">https://${target}:${applicationPort}</a>.</p>
+                            <p>Test the new features of the application: <a href="${targeUrl}">${targeUrl}</a> (<a href="https://${targetServer}/">https://${targetServer}/</a>).</p>
                             <h2>Execution</h2>
                             <p>
                                 <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>
@@ -134,7 +136,7 @@ pipeline {
                             </p>
                             <h2>Outcome</h2>
                             <p>
-                                Artifact <strong>${mvnCoordinates}</strong> from <strong>${nexusId}</strong> has been deployed to <strong>${target}</strong>.
+                                Artifact <strong>${mvnCoordinates}</strong> from <strong>${repo.nexusId}</strong> has been deployed to <strong>${targetServer}</strong>.
                             </p>
                             </body></html>
                           """
