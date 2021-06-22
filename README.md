@@ -72,8 +72,8 @@ _Pipelines execute these 3 checks:_
 
 #### Published artifacts
 
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=publish&build=lastCompleted:${params.snapshot=true}">](https://nexus.luxhub.local:9443/#browse/browse:maven-snapshots:com%2Fluxhub%2Fagora%2Fmarketplace-front)
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=publish&build=lastCompleted:${params.snapshot=false}">](https://nexus.luxhub.local:9443/#browse/browse:maven-releases:com%2Fluxhub%2Fagora%2Fmarketplace-front)
+- [Snapshots](https://nexus.luxhub.local:9443/#browse/browse:maven-snapshots:com%2Fluxhub%2Fagora%2Fmarketplace-front)
+- [Releases](https://nexus.luxhub.local:9443/#browse/browse:maven-releases:com%2Fluxhub%2Fagora%2Fmarketplace-front)
 
 #### Details
 
