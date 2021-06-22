@@ -23,7 +23,7 @@
           <div v-show="api.description" v-html="api.description"></div>
         </div>
         <div class="tags" v-if="api.tags && api.tags.length">
-          <div class="tag" v-for="tag in formatApis()">{{tag}}</div>
+          <div class="tag" v-for="tag in formatApis">{{tag}}</div>
         </div>
       </div>
       <footer class="card-footer is-flex is-justify-content-space-between">
