@@ -29,10 +29,10 @@ pipeline {
     parameters {
         string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: 'Version to deploy')
         choice(name: 'target', choices: [
-            'https://marketplace-din-unstable.luxhub.local/ - port2-dev.luxhub.local:446 - htdoc_mktp_dindix)',
-            'https://marketplace-din-stable.luxhub.local/ - port1-dev.luxhub.local:446 - htdoc_mktp_dindix)',
-            'https://marketplace-stg-unstable.luxhub.local/ - port2-dev.luxhub.local:447 - htdoc_mktp_stgstx)',
-            'https://marketplace-stg-stable.luxhub.local/ - port1-dev.luxhub.local:447 - htdoc_mktp_stgstx)'
+            'https://marketplace-din-unstable.luxhub.local/ - port2-dev.luxhub.local:446 - htdoc_mktp_dindix',
+            'https://marketplace-din-stable.luxhub.local/ - port1-dev.luxhub.local:446 - htdoc_mktp_dindix',
+            'https://marketplace-stg-unstable.luxhub.local/ - port2-dev.luxhub.local:447 - htdoc_mktp_stgstx',
+            'https://marketplace-stg-stable.luxhub.local/ - port1-dev.luxhub.local:447 - htdoc_mktp_stgstx'
         ], description: 'Server where to deploy')
         booleanParam(name: 'cleanup', defaultValue: false, description: 'Cleanup deployment directory of its existing files')
     }
