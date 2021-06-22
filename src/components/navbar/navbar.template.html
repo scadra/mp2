@@ -18,7 +18,9 @@
     <div class="navbar-item">
       <g-link class="nav__link navbar-item" to="/api-register/" v-if="returnIsAuth">Register an API</g-link>
     </div>
-
+    <div class="navbar-item">
+      <g-link class="nav__link navbar-item" to="/api-products/">Api Products</g-link>
+    </div>
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item" v-if="!returnIsAuth">
@@ -28,9 +30,7 @@
         <div class="navbar-item" v-if="!returnIsAuth">
           <g-link class="navbar-item" to="/login">Log In</g-link>
         </div>
-        <div class="navbar-item">
-          <g-link class="nav__link navbar-item" to="/api-products/">Api Products</g-link>
-        </div>
+
         <div class="navbar-item">
           <g-link class="nav__link navbar-item" to="/api-register/" v-if="returnIsAuth">Register an API</g-link>
         </div>

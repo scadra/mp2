@@ -1,24 +1,39 @@
-<div class="api-card card">
-  <div class="api-card-content card-content">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img :src="api.logo" alt="Api Logo">
-        </figure>
-      </div>
-      <div class="media-content">
-        <p class="title is-4 is-spaced">{{ api.title }}</p>
-        <p class="subtitle is-6"><strong>Version: </strong>{{ api.version }}</p>
-        <p class="subtitle is-6"><strong>Status: </strong>{{ api.status }}</p>
-        <time datetime="api.publish_date"><strong>Publish:
-          </strong>{{ api.publish_date.getDate() + "-" + api.publish_date.getMonth() + "-" + api.publish_date.getFullYear()  }}</time>
-      </div>
-    </div>
+<div class="api-card-outer">
+  <div class="api-card card">
+    <div class="api-card-content card-content is-flex is-flex-direction-column is-justify-content-space-between p-4">
+      <div class="api-card-top">
+        <div class="media is-flex is-align-items-center">
+          <div class="media-left">
+            <figure class="image">
+              <img :src="api.logo ? api.logo : ''" alt="Api Logo">
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4 is-spaced">{{ api.name }}</p>
+          </div>
+        </div>
 
-    <div class="content">
-      <div>
-        {{ api.description }}
+        <div class="content">
+          <div v-show="api.description" v-html="api.description">
+          </div>
+        </div>
+        <div class="tags" v-if="api.tags && api.tags.length">
+          <div class="tag" v-for="tag in api.tags.split(',')">{{tag.trim()}}</div>
+        </div>
       </div>
+      <footer class="api-card-footer is-flex is-justify-content-space-between">
+        <div class="environments">
+          <span v-for="environment in getEnvironments()"
+            :class="environments[environment].toLowerCase()">{{environments[environment]}}</span>
+
+        </div>
+        <div>
+          {{ api.published_date | parseDate  }}
+          |
+          {{ api.version }}
+
+        </div>
+      </footer>
     </div>
   </div>
 </div>
