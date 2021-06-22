@@ -7,7 +7,7 @@ def repo = params.version.endsWith('-SNAPSHOT')
         : [nexusId: 'nexus-releases', layout: 'default', nexusUrl: 'https://nexus.luxhub.local:9443/repository/maven-releases']
 def sshCredentials = ['5bf76f15-b91a-4eb5-ae97-4f7481b6d06c']
 def execAsApache = 'sudo -u apache'
-def targetComponents = (params.target as String).split('-')
+def targetComponents = (params.target as String).split(' - ')
 def targetUrl = targetComponents[0].trim()
 def targetServer = targetComponents[1].trim()
 def targetPath = "/opt/axway/apiportal/${targetComponents[2].trim()}"
