@@ -63,17 +63,41 @@ _Pipelines execute these 3 checks:_
 
 ### Deployment
 
-> marketplace-front DIX is currently accessible on https://port-perf.luxhub.local:441/
+#### Environments
+
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=port2-dev.luxhub.local:446">](https://marketplace-din-unstable.luxhub.local/)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=port1-dev.luxhub.local:446">](https://marketplace-din-stable.luxhub.local/)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=port2-dev.luxhub.local:447">](https://marketplace-stg-unstable.luxhub.local/)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=port1-dev.luxhub.local:447">](https://marketplace-stg-stable.luxhub.local/)
+
+#### Artifacts
+
+- ![<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/badge/icon?config=last-snapshot-version">](https://nexus.luxhub.local:9443/#browse/browse:maven-snapshots:com%2Fluxhub%2Fagora%2Fmarketplace-front)
+- ![<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/badge/icon?config=last-release-version">](https://nexus.luxhub.local:9443/#browse/browse:maven-releases:com%2Fluxhub%2Fagora%2Fmarketplace-front)
+
+#### Details
 
 Static web files are archived into a zip file published on Nexus by [Marketplace-Frontend-Auto](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/).
 On deployment, they are exploded and stored in a frontend server (not in the cluster) and served by an Apache `httpd` properly configured sur such a rich JavaScript application (including deeplink support).
+
+> Marketplace Front is deployed into `port1-dev.luxhub.local` and `port2-dev.luxhub.local`
+> (accessible using ssh through `jump-dev.luxhub.local`).
+
+_There are currently 4 instances:_
+
+| Environment  | Marketplace-front URL                          | Alternate URL                       | Actual files location                            |
+| ------------ | ---------------------------------------------- | ----------------------------------- | ------------------------------------------------ |
+| DEV Unstable | https://marketplace-din-unstable.luxhub.local/ | https://port2-dev.luxhub.local:446/ | port2-dev:/opt/axway/apiportal/htdoc_mktp_dindix |
+| DEV Stable   | https://marketplace-din-stable.luxhub.local/   | https://port1-dev.luxhub.local:446/ | port1-dev:/opt/axway/apiportal/htdoc_mktp_dindix |
+| STG Unstable | https://marketplace-stg-unstable.luxhub.local/ | https://port2-dev.luxhub.local:447/ | port2-dev:/opt/axway/apiportal/htdoc_mktp_stgstx |
+| STG Stable   | https://marketplace-stg-stable.luxhub.local/   | https://port1-dev.luxhub.local:447/ | port1-dev:/opt/axway/apiportal/htdoc_mktp_stgstx |
 
 _Useful commands:_
 
 - Get httpd service status:
   `systemctl status httpd24-httpd.service`
-- View static files deployed for marketplace-front as apache:
-  `sudo -u apache ls -l /opt/luxhub/htdocs/dix/marketplace-front`
+- View static files deployed for marketplace-front as apache, for example:
+  `sudo -u apache ls -l /opt/axway/apiportal/htdoc_mktp_dindix`
 - View service configuration:
   `vi /usr/lib/systemd/system/httpd24-httpd.service`
 - View and modify httpd configuration as apg2adm:
@@ -83,38 +107,34 @@ _Useful commands:_
 - Check general httpd logs:
   `sudo -u apg2adm vi /opt/rh/httpd24/root/etc/httpd/logs/error_log`
 
-> Web server `port1-dev.luxhub.local` is accessible through `jump-dev.luxhub.local`
-
-_Configuration for marketplace-front:_
+_Configuration for marketplace-front (DEV Stable on port1-dev):_
 
 ```
-<VirtualHost *:441>
-    ServerName  port-perf.luxhub.local
+<VirtualHost *:446>
     SSLEngine on
     SSLCertificateFile "/etc/pki/tls/certs/luxhub/luxhub_local.crt"
-    SSLCertificateChainFile  "/etc/pki/tls/certs/luxhub/luxhub_local_chain.crt"
+    SSLCertificateChainFile "/etc/pki/tls/certs/luxhub/luxhub_local_chain.crt"
     SSLCertificateKeyFile "/etc/pki/tls/private/luxhub/luxhub_local.key"
     SSLProtocol -all +TLSv1.2
+    SSLCipherSuite EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH+aRSA+RC4:EECDH:EDH+aRSA:HIGH:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS
+
+    SSLHonorCipherOrder on
+    Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
     Header always append X-Frame-Options SAMEORIGIN
     Header set X-XSS-Protection "1; mode=block"
     Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains;"
     Header set X-Content-Type-Options nosniff
-    CustomLog "logs/marketplace-front_access_dindix_log" marketplace-front
-    ErrorLog "logs/marketplace-front_error_dindix_log"
-    DocumentRoot "/opt/luxhub/htdocs/dix/marketplace-front"
-        <Directory "/opt/luxhub/htdocs/dix/marketplace-front">
+
+    CustomLog "logs/marketplace_stable_access_dindix_log" portal
+    ErrorLog "logs/marketplace_stable_error_dindix_log"
+
+    DocumentRoot "/opt/axway/apiportal/htdoc_mktp_dindix"
+    <Directory "/opt/axway/apiportal/htdoc_mktp_dindix">
                 Options Indexes FollowSymLinks
                 AllowOverride All
                 Require all granted
-                RewriteEngine On
-                RewriteBase "/"
-                RewriteRule ^index\.html$ - [L]
-                RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteCond %{REQUEST_FILENAME} !-d
-                RewriteRule . /index.html [L]
         </Directory>
     RewriteEngine On
-    #RewriteRule "^/api/(.*)$" "http://localhost:8090/api/$1" [P]
 </VirtualHost>
 ```
 
