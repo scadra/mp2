@@ -72,8 +72,8 @@ _Pipelines execute these 3 checks:_
 
 #### Artifacts
 
-- ![<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/badge/icon?config=last-snapshot-version">](https://nexus.luxhub.local:9443/#browse/browse:maven-snapshots:com%2Fluxhub%2Fagora%2Fmarketplace-front)
-- ![<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/badge/icon?config=last-release-version">](https://nexus.luxhub.local:9443/#browse/browse:maven-releases:com%2Fluxhub%2Fagora%2Fmarketplace-front)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/badge/icon?config=last-snapshot-version">](https://nexus.luxhub.local:9443/#browse/browse:maven-snapshots:com%2Fluxhub%2Fagora%2Fmarketplace-front)
+- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/badge/icon?config=last-release-version">](https://nexus.luxhub.local:9443/#browse/browse:maven-releases:com%2Fluxhub%2Fagora%2Fmarketplace-front)
 
 #### Details
 
