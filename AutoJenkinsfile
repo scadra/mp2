@@ -35,10 +35,6 @@ pipeline {
                         sh "rm -rf node_modules || true"
                         sh "rm -rf dist || true"
                         sh "rm -rf package-lock.json || true"
-                        def message = '<strong>Workspace cleaned-up</strong> (node_modules, dist & package-lock.json were deleted)'
-                        addBadge(icon: 'delete.gif', text: message)
-                        def summary = createSummary('delete.gif')
-                        summary.appendText(text, message)
                     }
                 }
                 sh 'npm install'
