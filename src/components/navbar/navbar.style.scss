@@ -1,7 +1,7 @@
 @import 'Styles/colors.scss';
 
 .navbar {
-    background: transparent;
+    background: $primary-color;
     padding: 1% 5%;
     .navbar-brand {
         width: 13%;
@@ -12,7 +12,7 @@
     }
     .navbar-item {
         padding: 0.5rem 0.55rem;
-        color: white;
+        color: $light-color;
         font-weight: 400;
         &:hover {
             background: transparent;

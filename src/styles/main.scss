@@ -26,12 +26,12 @@
     margin-bottom: auto;
 }
 body {
-    background: $primary-color !important;
+    background: $light-color !important;
     min-height: 100vh;
 }
 
 .container {
-    border: 1px solid $light-color;
+    border: 1px solid $primary-color;
     border-radius: 10px;
     background: $light-color;
     margin: auto !important;
