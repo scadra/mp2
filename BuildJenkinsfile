@@ -133,15 +133,6 @@ pipeline {
                 }
                 echo "Artifact ${mvnCoordinates} published to ${actualLocation}"
             }
-            post {
-                success {
-                    addEmbeddableBadgeConfiguration(
-                            id: "last-${snapshotVersion ? 'snapshot' : 'release'}-version",
-                            subject: "Last ${snapshotVersion ? 'Snapshot' : 'Release'} Version",
-                            status: params.version
-                    )
-                }
-            }
         }
 
         stage('Deploy') {
