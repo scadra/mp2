@@ -14,7 +14,7 @@ def targetPath = "/opt/axway/apiportal/${targetComponents[3].trim()}"
 def sshCmd = "ssh -o StrictHostKeyChecking=no"
 def sshOrig = "jenk2adm@${env.JENKINS_URL.contains('prd') ? 'jump-prd.luxhub.local' : 'jump-dev.luxhub.local'}"
 def sshDest = "jenk2adm@${(targetServer as String).split(':')[0]}"
-def deployBadge = addEmbeddableBadgeConfiguration(id: targetServer, subject: targetComponents[0].trim(), link: targetUrl, status: 'running')
+def deployBadge = addEmbeddableBadgeConfiguration(id: targetServer, subject: targetComponents[0].trim(), status: 'running')
 
 pipeline {
 

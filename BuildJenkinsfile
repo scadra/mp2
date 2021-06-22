@@ -138,7 +138,6 @@ pipeline {
                     addEmbeddableBadgeConfiguration(
                             id: "last-${snapshotVersion ? 'snapshot' : 'release'}-version",
                             subject: "Last ${snapshotVersion ? 'Snapshot' : 'Release'} Version",
-                            link: actualLocation,
                             status: params.version
                     )
                 }
