@@ -13,6 +13,10 @@ pipeline {
         gitlab(triggerOnPush: true, branchFilterType: 'All')
     }
 
+    parameters {
+        booleanParam(name: 'cleanup', defaultValue: false, description: 'Cleanup workspace before build')
+    }
+
     stages {
         stage('Dependencies') {
             options {
@@ -25,6 +29,14 @@ pipeline {
                 sh 'git status'
                 sh 'node -v'
                 sh 'npm --version'
+                script {
+                    if (params.cleanup) {
+                        echo 'Cleaning node_modules, dist & package-lock.json'
+                        sh "rm -rf node_modules || true"
+                        sh "rm -rf dist || true"
+                        sh "rm -rf package-lock.json || true"
+                    }
+                }
                 sh 'npm install'
                 // Using this path instead of directly "gridsome info" prevents "command not found" on Jenkins
                 sh 'node ./node_modules/gridsome/bin/gridsome.js info'
