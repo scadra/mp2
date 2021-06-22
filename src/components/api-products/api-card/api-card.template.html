@@ -1,0 +1,43 @@
+<div class="card-outer">
+  <div class="card card">
+    <div
+      class="
+        card-content card-content
+        is-flex is-flex-direction-column is-justify-content-space-between
+        p-4
+      "
+    >
+      <div class="card-top">
+        <div class="media is-flex is-align-items-center">
+          <div class="media-left">
+            <figure class="image">
+              <img :src="api.logo ? api.logo : ''" alt="Api Logo" />
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4 is-spaced">{{ api.name }}</p>
+          </div>
+        </div>
+
+        <div class="content">
+          <div v-show="api.description" v-html="api.description"></div>
+        </div>
+        <div class="tags" v-if="api.tags && api.tags.length">
+          <div class="tag" v-for="tag in formatApis">{{tag}}</div>
+        </div>
+      </div>
+      <footer class="card-footer is-flex is-justify-content-space-between">
+        <div class="environments">
+          <span
+            v-for="environment in formatEnvironments"
+            :class="environments[environment].toLowerCase()"
+            >{{environments[environment]}}</span
+          >
+        </div>
+        <div>
+          {{ api.published_date | moment("DD/MM/YYYY") }} | {{ api.version }}
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>

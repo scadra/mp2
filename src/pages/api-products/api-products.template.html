@@ -1,4 +1,15 @@
 <Layout>
-    <div class="columns is-centered page-content">
+  <div class="columns is-centered page-content">
+    <div class="container is-12 columns">
+      <div class="is-3 column"></div>
+      <div class="is-9 column columns is-multiline m-0">
+        <api-card
+          v-for="api in apiProducts"
+          :api="api"
+          :key="api.id"
+          class="is-one-third column"
+        ></api-card>
+      </div>
     </div>
+  </div>
 </Layout>
