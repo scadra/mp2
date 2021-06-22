@@ -95,15 +95,15 @@ pipeline {
             steps {
                 echo 'Waiting 1 second...'
                 sleep 1
-                echo "Verify deployed web application on ${targetUrl}"
+                echo "Verify deployed web application on '${targetUrl}'"
                 script {
                     sshagent(sshCredentials) {
                         def statusCode = sh (
-                                script: """${sshCmd} ${sshOrig} "${sshCmd} ${sshDest} 'curl -k -L -s -o /dev/null -w '%{http_code}' ${targetUrl}'" """,
+                                script: "curl -k -L -s -o /dev/null -w '%{http_code}' ${targetUrl}",
                                 returnStdout: true
                         ).trim()
                         if (statusCode != '200') {
-                            error "Failed with status: ${statusCode}"
+                            error "Call to '${targetUrl}' failed with status: ${statusCode}"
                         }
                     }
                 }
