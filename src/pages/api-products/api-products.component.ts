@@ -1,8 +1,8 @@
 // Dependencies
-import { Component, Inject } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import Vue from "vue";
 //Models
-import { Api } from "Models/api/api.model";
+//import { Api } from "Models/api/api.model";
 //import DATA from "./mock.json";
 //Components
 import ApiCard from "Components/api-products/api-card/api-card.vue";
