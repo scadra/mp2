@@ -7,6 +7,7 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
+const { default: axios } = require("axios");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (api) {
@@ -25,5 +26,23 @@ module.exports = function (api) {
       path: "/component/apiportal/reset",
       component: "./src/pages/new-password.vue",
     });
+  });
+
+  api.loadSource(async (actions) => {
+    const apis = await axios.get(
+      `${process.env.GRIDSOME_BACK_URL}/api/api-cards`
+    );
+    const apisCollection = actions.addCollection({
+      typeName: "Apis",
+    });
+
+    const titi = "toto";
+
+    for (const item of apis.data) {
+      apisCollection.addNode({
+        content: item.content,
+        title: item.title,
+      });
+    }
   });
 };
