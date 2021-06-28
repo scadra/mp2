@@ -1,8 +1,8 @@
 // Add dependencies
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 //Components
-import ApiCard from "Components/api-products/api-card/api-card.component";
+import ApiCard from "Components/api-products/api-card/api-card.vue";
 //Models
 import { Api } from "Models/api/api.model";
 import DATA from "Pages/api-products/mock.json";

@@ -1,14 +1,6 @@
 <div>
-  <perfect-scrollbar
-    class="is-12 column columns is-multiline"
-    style="position: absolute; top: 0; left: 0; bottom: 0"
-  >
-    <api-card
-      v-for="api in apiProducts"
-      :api="api"
-      :key="api.id"
-      class="is-one-third column"
-    >
+  <perfect-scrollbar class="is-12 column columns is-multiline api-list-container">
+    <api-card v-for="api in apiProducts" :api="api" :key="api.id" class="is-4 column">
     </api-card>
   </perfect-scrollbar>
 </div>

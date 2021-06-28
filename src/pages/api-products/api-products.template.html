@@ -1,24 +1,10 @@
 <Layout>
     <div class="columns mt-0">
-        <div class="container is-12 columns" style="min-height: calc( 100vh - 96px );">
+        <div class="container is-12 columns">
             <div class="is-3 column"></div>
-            <div class="is-9 column columns is-multiline m-0">
-                <div class="is-12 column columns">
-                    <div class="is-6 column">
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input is-small" type="text" placeholder="Search">
-                            <span class="icon is-left">
-                                <i class="fas fa-search"></i>
-                            </span>
-                            <span class="icon is-right">
-                                <i class="fas fa-times"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="is-6 column"></div>
-                </div>
-                <div class="is-12 column" style="position:relative;">
-                    <ApiListContainer></ApiListContainer>
+            <div class="is-9 column is-multiline m-0">
+                <div class="is-12 column">
+                    <api-list-container></api-list-container>
                 </div>
             </div>
         </div>

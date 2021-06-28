@@ -1,8 +1,6 @@
 // Dependencies
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
-//Models
-import { Api } from "Models/api/api.model";
 
 //Components
 import ApiListContainer from "Components/api-products/api-list-container/api-list-container.vue";
