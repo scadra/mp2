@@ -1,11 +1,9 @@
 // Dependencies
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
-//Models
-import { Api } from "Models/api/api.model";
-import DATA from "./mock.json";
+
 //Components
-import ApiCard from "Components/api-products/api-card/api-card.vue";
+import ApiListContainer from "Components/api-products/api-list-container/api-list-container.vue";
 
 /**
  * The api-products page
@@ -16,12 +14,7 @@ import ApiCard from "Components/api-products/api-card/api-card.vue";
     title: "api-products",
   },
   components: {
-    ApiCard,
+    ApiListContainer,
   },
 })
-export default class ApiProducts extends Vue {
-  //@Inject()
-  //private apiProductsService!: IApiProductsService;
-
-  apiProducts: Api[] = DATA;
-}
+export default class ApiProducts extends Vue {}
