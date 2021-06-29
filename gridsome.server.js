@@ -28,20 +28,27 @@ module.exports = function (api) {
     });
   });
 
+  // load apis from backend
   api.loadSource(async (actions) => {
     const apis = await axios.get(
       `${process.env.GRIDSOME_BACK_URL}/api/api-cards`
     );
     const apisCollection = actions.addCollection({
-      typeName: "Apis",
+      typeName: "Api",
     });
 
-    const titi = "toto";
-
+    // These are data needed for API Cards only. We need to add all API data later
     for (const item of apis.data) {
       apisCollection.addNode({
-        content: item.content,
-        title: item.title,
+        id: item.id,
+        logo: item.logo,
+        name: item.name,
+        description: item.description,
+        version: item.version,
+        provider: item.provider,
+        environments: item.environments,
+        categories: item.categories,
+        published_date: item.published_date,
       });
     }
   });
