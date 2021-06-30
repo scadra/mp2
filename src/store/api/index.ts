@@ -1,4 +1,4 @@
-import { Module, Action, Mutation } from "vuex-module-decorators";
+import { Module, Action } from "vuex-module-decorators";
 import { Inject } from "inversify-props";
 import StoreBase from "../store-base";
 import IApiService from "@/services/interfaces/api/api.interface";
@@ -17,16 +17,6 @@ export default class ApiStore extends StoreBase {
    * @[Api] apis: the list of APIs
    */
   private apis: [Api];
-
-  // getters
-  get returnApis(): [Api] {
-    return this.apis;
-  }
-
-  @Mutation
-  setApiProducts(apis: [Api]): void {
-    this.apis = apis;
-  }
 
   @Action
   async getApiCards(): Promise<void> {
