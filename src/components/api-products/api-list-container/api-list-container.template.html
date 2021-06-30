@@ -1,39 +1,6 @@
 <div>
   <perfect-scrollbar class="is-12 column columns is-multiline api-list-container">
-    <api-card v-for="api in apiProducts" :api="api" :key="api.id" class="is-4 column">
+    <api-card v-for="api in $static.apis.edges" :api="api.node" :key="api.id"class="is-4 column">
     </api-card>
-<!--    <div v-for="edge in $static.apis.edges" :key="edge.node.id">
-      <h2>{{ edge.node.name }}</h2>
-    </div>-->
-    <div class="post" v-for="api in apis" :key="api.node.id">
-      <h4>{{api.node.name}}</h4>
-    </div>
-
   </perfect-scrollbar>
 </div>
-
-<static-query>
-query {
-  apis: allApi {
-    edges {
-      node {
-<!--        logo
-        id-->
-        name
-<!--        description
-        version
-        provider
-        environments
-        categories
-        published_date-->
-      }
-    }
-  }
-}
-</static-query>
-
-<script>
-  export default {
-    props: ['apis']
-  }
-  </script>
