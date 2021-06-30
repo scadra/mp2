@@ -1,10 +1,14 @@
 <Layout>
     <div class="columns mt-0">
         <div class="container is-12 columns">
-            <div class="is-3 column"></div>
+            <div class="is-3 column">
+                <api-filter :filterList="apiProviders" label="Providers" placeholder="Filter by Provider" icon="search"
+                    @filterChange="filterApis($event)">
+                </api-filter>
+            </div>
             <div class="is-9 column is-multiline m-0">
                 <div class="is-12 column">
-                    <api-list-container></api-list-container>
+                    <api-list-container :filterProvider="filterProvider"></api-list-container>
                 </div>
             </div>
         </div>
