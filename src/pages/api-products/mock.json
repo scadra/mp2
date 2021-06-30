@@ -1,90 +1,89 @@
-[
-  {
+[{
     "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3414",
     "logo": "https://via.placeholder.com/150",
-    "name": "Awesome API",
+    "name": "Awesome API And Bank",
     "description": "<h1>Our Awesome API!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
     "version": "1.0.0",
     "environments": "PRODUCTION",
     "published_date": "2021-06-21T15:30:13.400+00:00",
-    "provider": "Provider",
+    "provider": "And Bank",
     "tags": "Digital Identity"
   },
   {
     "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3415",
     "logo": "https://via.placeholder.com/150",
-    "name": "Awesome API",
+    "name": "Awesome API Banco Safra",
     "description": "<h1>Our Awesome API!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
     "version": "1.0.0",
     "environments": "SANDBOX,PRODUCTION",
     "published_date": "2021-06-21T15:30:13.400+00:00",
-    "provider": "Provider",
+    "provider": "Banco Safra",
     "tags": "Digital Identity"
   },
   {
     "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3416",
     "logo": "https://via.placeholder.com/150",
-    "name": "Awesome API",
+    "name": "Awesome API And Bank",
     "description": "<h1>Our Awesome API!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
     "version": "1.0.0",
     "environments": "PRODUCTION",
     "published_date": "2021-06-21T15:30:13.400+00:00",
-    "provider": "Provider",
+    "provider": "And Bank",
     "tags": "Digital Identity, Tag"
   },
   {
     "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3417",
     "logo": "https://via.placeholder.com/150",
-    "name": "Awesome API",
+    "name": "Awesome API Bankinter Luxembourg",
     "description": "<h1>Our Awesome API!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
     "version": "1.0.0",
     "environments": "SANDBOX,PRODUCTION",
     "published_date": "2021-06-21T15:30:13.400+00:00",
-    "provider": "Provider",
+    "provider": "Bankinter Luxembourg",
     "tags": "Digital Identity, Tag"
   },
   {
     "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3418",
     "logo": "https://via.placeholder.com/150",
-    "name": "Awesome API",
+    "name": "Awesome API COVR",
     "description": "<h1>Our Awesome API!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
     "version": "1.0.0",
     "environments": "SANDBOX,PRODUCTION",
     "published_date": "2021-06-21T15:30:13.400+00:00",
-    "provider": "Provider",
+    "provider": "COVR",
     "tags": "Digital Identity"
   },
   {
     "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3419",
     "logo": "https://via.placeholder.com/150",
-    "name": "Awesome API",
+    "name": "Awesome API Bankinter Luxembourg",
     "description": "<h1>Our Awesome API!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
     "version": "1.0.0",
     "environments": "SANDBOX",
     "published_date": "2021-06-21T15:30:13.400+00:00",
-    "provider": "Provider",
+    "provider": "Bankinter Luxembourg",
     "tags": "Digital Identity, Tag"
   },
   {
     "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3420",
     "logo": "https://via.placeholder.com/150",
-    "name": "Awesome API",
+    "name": "Awesome API Banque de Luxembourg",
     "description": "<h1>Our Awesome API!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
     "version": "1.0.0",
     "environments": "SANDBOX,PRODUCTION",
     "published_date": "2021-06-21T15:30:13.400+00:00",
-    "provider": "Provider",
+    "provider": "Banque de Luxembourg",
     "tags": "Digital Identity"
   },
   {
     "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3421",
     "logo": "https://via.placeholder.com/150",
-    "name": "Awesome API",
+    "name": "Awesome API Banque de Luxembourg",
     "description": "<h1>Our Awesome API!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
     "version": "1.0.0",
     "environments": "SANDBOX",
     "published_date": "2021-06-21T15:30:13.400+00:00",
-    "provider": "Provider",
+    "provider": "Banque de Luxembourg",
     "tags": "Digital Identity"
   }
 ]
