@@ -1,7 +1,7 @@
 import { Module, Action } from "vuex-module-decorators";
 import { Inject } from "inversify-props";
 import StoreBase from "../store-base";
-import IApiService from "Services/interfaces/api/api.interface";
+import IApiService from "Interfaces/api/api.interface";
 import { StoreEnum } from "Models/enum/store.enum";
 import { Api } from "Models/api/api.model";
 
