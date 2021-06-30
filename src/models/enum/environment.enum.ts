@@ -1,4 +1,4 @@
-export enum EnvironementsEnum {
+export enum EnvironmentsEnum {
   SANDBOX = "SBX",
   PRODUCTION = "PRD",
 }

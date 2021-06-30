@@ -7,6 +7,7 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
+const { default: axios } = require("axios");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (api) {
@@ -25,5 +26,30 @@ module.exports = function (api) {
       path: "/component/apiportal/reset",
       component: "./src/pages/new-password.vue",
     });
+  });
+
+  // load apis from backend
+  api.loadSource(async (actions) => {
+    const apis = await axios.get(
+      `${process.env.GRIDSOME_BACK_URL}/api/api-cards`
+    );
+    const apisCollection = actions.addCollection({
+      typeName: "Api",
+    });
+
+    // These are data needed for API Cards only. We need to add all API data later
+    for (const item of apis.data) {
+      apisCollection.addNode({
+        id: item.id,
+        logo: item.logo,
+        name: item.name,
+        description: item.description,
+        version: item.version,
+        provider: item.provider,
+        environments: item.environments,
+        categories: item.categories,
+        published_date: item.published_date,
+      });
+    }
   });
 };
