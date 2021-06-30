@@ -1,9 +1,9 @@
 import { Module, Action } from "vuex-module-decorators";
 import { Inject } from "inversify-props";
 import StoreBase from "../store-base";
-import IApiService from "@/services/interfaces/api/api.interface";
-import { StoreEnum } from "@/models/enum/store.enum";
-import { Api } from "@/models/api/api.model";
+import IApiService from "Services/interfaces/api/api.interface";
+import { StoreEnum } from "Models/enum/store.enum";
+import { Api } from "Models/api/api.model";
 
 @Module({ namespaced: true })
 export default class ApiStore extends StoreBase {
@@ -14,9 +14,9 @@ export default class ApiStore extends StoreBase {
 
   /**
    * States
-   * @[Api] apis: the list of APIs
+   * @Api[] apis: the list of APIs
    */
-  private apis: [Api];
+  private apis: Api[];
 
   @Action
   async getApiCards(): Promise<void> {
