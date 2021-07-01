@@ -37,7 +37,7 @@ pipeline {
     stages {
         stage('Dependencies') {
             tools {
-                nodejs "nodejs-12.16.2"
+                nodejs "nodejs-14.15.0"
             }
             options {
                 timeout(time: 20, unit: 'MINUTES')
@@ -54,7 +54,7 @@ pipeline {
 
         stage('Build') {
             tools {
-                nodejs "nodejs-12.16.2"
+                nodejs "nodejs-14.15.0"
             }
             options {
                 timeout(time: 10, unit: 'MINUTES')
@@ -72,7 +72,7 @@ pipeline {
                 timeout(time: 15, unit: 'MINUTES')
             }
             tools {
-                nodejs "nodejs-12.16.2"
+                nodejs "nodejs-14.15.0"
             }
             steps {
                 echo 'Dependency check for vulnerabilities'
@@ -100,7 +100,7 @@ pipeline {
                 timeout(time: 10, unit: 'MINUTES')
             }
             tools {
-                nodejs "nodejs-12.16.2"
+                nodejs "nodejs-14.15.0"
             }
             when {
                 expression {
