@@ -6,10 +6,6 @@ import Vue from "vue";
 import ApiListContainer from "Components/api-products/api-list-container/api-list-container.vue";
 import ApiFilter from "Components/api-products/api-filter/api-filter.vue";
 
-//Models
-import { Provider } from "@/models/api/provider.model";
-import DATA from "Pages/api-products/api-filter-mock.json";
-
 /**
  * The api-products page
  * @class
@@ -23,11 +19,4 @@ import DATA from "Pages/api-products/api-filter-mock.json";
     ApiFilter,
   },
 })
-export default class ApiProducts extends Vue {
-  apiProviders: Provider[] = DATA;
-  filterProvider: Provider[] = [];
-
-  filterApis(filter: Provider[]): void {
-    this.filterProvider = filter;
-  }
-}
+export default class ApiProducts extends Vue {}

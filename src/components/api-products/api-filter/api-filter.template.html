@@ -1,7 +1,7 @@
 <div>
   <div class="label-container">
     <label for="search">{{ label }}</label>
-    <a href="#" v-if="selectedFilter.length" @click="clearFilters()">Clear filters</a>
+    <a href="#" v-if="selectedFilter.length" @click="clearFilters()" class="clearFilter">Clear filters</a>
   </div>
   <div class="tags-group">
     <b-field class="tags-container">

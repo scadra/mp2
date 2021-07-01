@@ -5,7 +5,7 @@ import { namespace } from "vuex-class";
 //Components
 //Models
 import { Provider } from "Models/api/provider.model";
-const ProviderFilterStore = namespace("ProvidersFilterStore");
+const ProvidersFilterStore = namespace("ProvidersFilterStore");
 
 /**
  * Controller of api-list-container
@@ -15,10 +15,12 @@ const ProviderFilterStore = namespace("ProvidersFilterStore");
   components: {},
 })
 export default class ApiFilter extends Vue {
-  @ProviderFilterStore.Action
+  @ProvidersFilterStore.Action
   setCurrentFilter!: (filter: Provider[]) => void;
+  @ProvidersFilterStore.Getter
+  returnProviderFilter!: Provider[];
 
-  @Prop() filterList: Provider[];
+  filterList: Provider[] = [];
   @Prop() placeholder: string;
   @Prop() label: string;
   @Prop() icon: string;
@@ -28,6 +30,10 @@ export default class ApiFilter extends Vue {
   focus = false;
 
   mounted(): void {
+    this.filterList = this.$static.providers.edges.map((el: any) => {
+      return el.node;
+    });
+
     document.addEventListener("click", (e) => {
       if (
         e.target != this.$el.querySelector("#search") &&
@@ -37,7 +43,19 @@ export default class ApiFilter extends Vue {
       }
     });
 
+    if (this.returnProviderFilter.length) {
+      this.filterListComponent = this.filterList.filter((el) => {
+        return this.returnProviderFilter.indexOf(el);
+      });
+      return;
+    }
     this.filterListComponent = this.filterList;
+  }
+
+  beforeUpdate(): void {
+    if (this.returnProviderFilter.length) {
+      this.selectedFilter = this.returnProviderFilter;
+    }
   }
 
   removeSelectedTag(tag: Provider): void {
