@@ -66,6 +66,7 @@ export default class Login extends Vue {
   }
 
   signIn(): void {
+    console.log("signIn !!!!!");
     this.user.recaptcha = this.recaptchaValid;
     this.login(this.user);
     if (this.returnIsAuth) {
