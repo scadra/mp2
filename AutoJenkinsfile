@@ -37,7 +37,7 @@ pipeline {
                         sh "rm -rf package-lock.json || true"
                     }
                 }
-                sh 'set NODE_EXTRA_CA_CERTS= ./LUXHUB_Root_CA.cer'
+                sh 'set NODE_EXTRA_CA_CERTS=./LUXHUB_Root_CA.cer'
                 sh 'set NODE_EXTRA_CA_CERTS'
                 sh 'npm config set cafile ./LUXHUB_Root_CA.cer & npm config list'
                 sh 'npm install'
