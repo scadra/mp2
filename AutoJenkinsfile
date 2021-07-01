@@ -30,7 +30,7 @@ pipeline {
                 sh 'node -v'
                 sh 'npm --version'
                 sh 'npm config list'
-                sh 'npm config list'
+                sh 'npm config ls -l | grep config'
                 script {
                     if (params.cleanup) {
                         echo 'Cleaning node_modules, dist & package-lock.json'
