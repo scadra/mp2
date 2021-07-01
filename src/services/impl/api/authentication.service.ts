@@ -21,8 +21,11 @@ export default class AuthenticationService implements IAuthenticationService {
   async login(user: UserLogin): Promise<void> {
     const options = this.initHeaderWithCaptcha(user.recaptcha);
     try {
+      console.log("AuthenticationService Before");
       await axios.post(`${this.path}/login`, user, options);
+      console.log("AuthenticationService After");
     } catch (error) {
+      console.log("AuthenticationService Error");
       console.log("Error: " + error + " - " + typeof error);
       throw Error(error);
     }
