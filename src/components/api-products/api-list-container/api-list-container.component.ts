@@ -27,7 +27,7 @@ export default class ApiListContainer extends Vue {
 
   @Prop() filterProvider: Provider[];
 
-  @Watch("filterProvider")
+  @Watch("currentFilter")
   changeFilter(newFilter: Provider[]): void {
     let hasProvider = false;
 

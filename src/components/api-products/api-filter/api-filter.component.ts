@@ -1,9 +1,11 @@
 // Add dependencies
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
+import { namespace } from "vuex-class";
 //Components
 //Models
 import { Provider } from "Models/api/provider.model";
+const ProviderFilterStore = namespace("ProvidersFilterStore");
 
 /**
  * Controller of api-list-container
@@ -13,6 +15,9 @@ import { Provider } from "Models/api/provider.model";
   components: {},
 })
 export default class ApiFilter extends Vue {
+  @ProviderFilterStore.Action
+  setCurrentFilter!: (filter: Provider[]) => void;
+
   @Prop() filterList: Provider[];
   @Prop() placeholder: string;
   @Prop() label: string;
@@ -38,7 +43,8 @@ export default class ApiFilter extends Vue {
   removeSelectedTag(tag: Provider): void {
     this.filterListComponent.push(tag);
     this.selectedFilter = this.selectedFilter.filter((e) => e.id != tag.id);
-    this.$emit("filterChange", this.selectedFilter);
+
+    this.setCurrentFilter(this.selectedFilter);
   }
 
   searchKey(searchKey: string): void {
@@ -50,7 +56,8 @@ export default class ApiFilter extends Vue {
   clearFilters(): void {
     this.filterListComponent = this.filterList;
     this.selectedFilter = [];
-    this.$emit("filterChange", this.selectedFilter);
+
+    this.setCurrentFilter(this.selectedFilter);
   }
 
   addFilterTag(filter: Provider): void {
@@ -58,6 +65,7 @@ export default class ApiFilter extends Vue {
       (e) => e.id != filter.id
     );
     this.selectedFilter.push(filter);
-    this.$emit("filterChange", this.selectedFilter);
+
+    this.setCurrentFilter(this.selectedFilter);
   }
 }
