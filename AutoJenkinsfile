@@ -38,6 +38,7 @@ pipeline {
                     }
                 }
                 sh 'set NODE_EXTRA_CA_CERTS=/LUXHUB_Root_CA.cer'
+                sh 'set NODE_EXTRA_CA_CERTS'
                 sh 'npm install'
                 // Using this path instead of directly "gridsome info" prevents "command not found" on Jenkins
                 sh 'node ./node_modules/gridsome/bin/gridsome.js info'
