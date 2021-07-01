@@ -4,7 +4,7 @@
   "description": "Frontend (static web files) for the new Marketplace v2. Built with VueJS, Typescript, Gridsome, Bulma.",
   "private": true,
   "scripts": {
-    "build": "gridsome build",
+    "build": "SET NODE_EXTRA_CA_CERTS=./LUXHUB_Root_CA.cer & gridsome build",
     "develop": "gridsome develop",
     "explore": "gridsome explore",
     "test": "jest",
