@@ -24,6 +24,7 @@ declare module "vuelidate" {
   module "vue/types/vue" {
     interface Vue {
       $v?: { [x: string]: any };
+      $static?: any;
     }
   }
 
@@ -42,5 +43,5 @@ declare module "vuelidate" {
 
   // these are untested, the Vue.use approach to make it a global mixin
   export function Vuelidate(Vue: vue): void;
-  export default function(Vue: vue): void;
+  export default function (Vue: vue): void;
 }
