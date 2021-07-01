@@ -29,6 +29,7 @@ pipeline {
                 sh 'git status'
                 sh 'node -v'
                 sh 'npm --version'
+                sh 'npm config list'
                 script {
                     if (params.cleanup) {
                         echo 'Cleaning node_modules, dist & package-lock.json'
@@ -37,7 +38,6 @@ pipeline {
                         sh "rm -rf package-lock.json || true"
                     }
                 }
-                sh 'set NODE_EXTRA_CA_CERTS=/LUXHUB_Root_CA.cer'
                 sh 'npm install'
                 // Using this path instead of directly "gridsome info" prevents "command not found" on Jenkins
                 sh 'node ./node_modules/gridsome/bin/gridsome.js info'

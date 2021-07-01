@@ -9,6 +9,8 @@
 
 const { default: axios } = require("axios");
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const https = require("https");
+const fs = require("fs");
 
 module.exports = function (api) {
   // Create middleware for api
@@ -30,8 +32,13 @@ module.exports = function (api) {
 
   // load apis from backend
   api.loadSource(async (actions) => {
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: false, // (NOTE: this will disable client verification)
+      cert: fs.readFileSync("./LUXHUB_Root_CA.cer"),
+    });
     const apis = await axios.get(
-      `${process.env.GRIDSOME_BACK_URL}/api/api-cards`
+      `${process.env.GRIDSOME_BACK_URL}/api/api-cards`,
+      { httpsAgent }
     );
     const apisCollection = actions.addCollection({
       typeName: "Api",
