@@ -7,10 +7,12 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const { default: axios } = require("axios");
-const { createProxyMiddleware } = require("http-proxy-middleware");
-const https = require("https");
-const fs = require("fs");
+const {
+  default: axios
+} = require("axios");
+const {
+  createProxyMiddleware
+} = require("http-proxy-middleware");
 
 module.exports = function (api) {
   // Create middleware for api
@@ -23,7 +25,9 @@ module.exports = function (api) {
     );
   });
 
-  api.createPages(({ createPage }) => {
+  api.createPages(({
+    createPage
+  }) => {
     createPage({
       path: "/component/apiportal/reset",
       component: "./src/pages/new-password.vue",
@@ -37,8 +41,9 @@ module.exports = function (api) {
       cert: fs.readFileSync("./LUXHUB_Root_CA.cer"),
     });
     const apis = await axios.get(
-      `${process.env.GRIDSOME_BACK_URL}/api/api-cards`,
-      { httpsAgent }
+      `${process.env.GRIDSOME_BACK_URL}/api/api-cards`, {
+        httpsAgent
+      }
     );
     const apisCollection = actions.addCollection({
       typeName: "Api",
@@ -58,5 +63,22 @@ module.exports = function (api) {
         published_date: item.published_date,
       });
     }
+
+    const providers = await axios.get(
+      `${process.env.GRIDSOME_BACK_URL}/api/api-providers`
+    );
+    const providersCollection = actions.addCollection({
+      typeName: "Provider",
+    });
+
+    // These are data needed for API Providers only. We need to add all API data later
+    for (const item of providers.data) {
+      providersCollection.addNode({
+        id: item.id,
+        name: item.name,
+      });
+    }
+
+
   });
 };
