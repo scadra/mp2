@@ -1,13 +1,13 @@
 <div>
   <div class="label-container">
     <label for="search">{{ label }}</label>
-    <a href="#" v-if="selectedFilter.length" @click="clearFilters()">Clear filters</a>
+    <a href="#" v-if="selectedFilter.length" @click="clearFilters()" class="clearFilter">Clear filters</a>
   </div>
   <div class="tags-group">
     <b-field class="tags-container">
       <b-tag attached closable aria-close-label="Remove" @close="removeSelectedTag(tag)" v-for="tag in selectedFilter"
         :key="tag.id">
-        {{ tag.name }}
+        {{ tag }}
       </b-tag>
     </b-field>
   </div>
@@ -20,7 +20,7 @@
     </div>
     <ul v-if="filterListComponent.length" class="filterList card" :class="{'show' : focus}">
       <li v-for="ele in filterListComponent" :key="ele.id" @click="addFilterTag(ele)"><span
-          class="filterItem">{{ ele.name }}</span></li>
+          class="filterItem">{{ ele }}</span></li>
     </ul>
 
   </div>

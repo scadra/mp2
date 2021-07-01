@@ -1,11 +1,11 @@
 import { Module, Action } from "vuex-module-decorators";
-import StoreBase from "../store-base";
 import { StoreEnum } from "Models/enum/store.enum";
 import { Api } from "Models/api/api.model";
+import FiltersStore from "Store/filter";
 import ApiService from "Services/api/api.service";
 
 @Module({ namespaced: true })
-export default class ApiStore extends StoreBase {
+export default class ApiStore extends FiltersStore<Api> {
   // Services
   private apiService = new ApiService();
 

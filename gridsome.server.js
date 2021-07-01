@@ -13,6 +13,9 @@ const {
 const {
   createProxyMiddleware
 } = require("http-proxy-middleware");
+const https = require("https");
+const fs = require("fs");
+
 
 module.exports = function (api) {
   // Create middleware for api

@@ -8,9 +8,9 @@ export default class ProvidersFilterStore extends StoreBase {
    * States
    * @Provider[] providers: the list of APIs Providers
    */
-  private currentFilter: Provider[];
+  private currentFilter: Provider[] = [];
 
-  get getProviderFilter(): Provider[] | null {
+  get returnProviderFilter(): Provider[] {
     return this.currentFilter;
   }
 
@@ -19,6 +19,7 @@ export default class ProvidersFilterStore extends StoreBase {
   setProviderFilter(filter: Provider[]): void {
     this.currentFilter = filter;
   }
+
   @Action
   async setCurrentFilter(filter: Provider[]): Promise<void> {
     this.context.commit("setProviderFilter", filter);

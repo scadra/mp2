@@ -2,13 +2,23 @@
     <div class="columns mt-0">
         <div class="container is-12 columns">
             <div class="is-3 column">
-                <api-filter :filterList="apiProviders" label="Providers" placeholder="Filter by Provider" icon="search"
-                    @filterChange="filterApis($event)">
+                <api-filter label="Providers" placeholder="Filter by Provider" icon="search" :filterList="filterList"
+                    v-if="filterList">
                 </api-filter>
             </div>
             <div class="is-9 column is-multiline m-0">
                 <div class="is-12 column">
-                    <api-list-container :filterProvider="filterProvider"></api-list-container>
+                    <div class="is-12 column is-multiline columns">
+                        <div class="is-7 column">
+                            <search :filterList="filterList" v-if="filterList" placeholder="Search APIs"></search>
+                        </div>
+                        <div class="is-5 column is-flex is-align-items-flex-end">
+                            <sort label="Sort by"></sort>
+                        </div>
+                    </div>
+                </div>
+                <div class="is-12 column">
+                    <api-list-container></api-list-container>
                 </div>
             </div>
         </div>

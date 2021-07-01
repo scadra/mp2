@@ -1,13 +1,14 @@
 // Add dependencies
 import Vue from "vue";
-import { Component, Prop, Watch } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
+import { namespace } from "vuex-class";
 //Components
 import ApiCard from "Components/api-products/api-card/api-card.vue";
 //Models
 import { Api } from "Models/api/api.model";
-import DATA from "Pages/api-products/mock.json";
-import { Provider } from "@/models/api/provider.model";
 
+//ApiStore for veux sharing data
+const ApiStore = namespace("ApiStore");
 /**
  * Controller of api-list-container
  * @Component
@@ -18,31 +19,43 @@ import { Provider } from "@/models/api/provider.model";
   },
 })
 export default class ApiListContainer extends Vue {
-  apiProducts: Api[] = DATA;
+  //ApiStore Action
+  @ApiStore.Action
+  addData!: (data: Api[]) => void;
+  @ApiStore.Action
+  sort!: () => void;
+
+  //ApiStore Getter
+  @ApiStore.Getter
+  returnData!: Api[];
+  @ApiStore.Getter
+  returnSortedData!: Api[];
+  @ApiStore.Getter
+  returnFilters!: {
+    callable: (data: Api[], filter: string[]) => Api[];
+    filters: string[];
+    key: string;
+  }[];
+
   apiProductsComponent: Api[] = [];
 
   mounted(): void {
-    this.apiProductsComponent = this.apiProducts;
+    this.addData(
+      this.$static.apis.edges.map((el: any) => {
+        return el.node;
+      })
+    );
+
+    if (this.returnFilters.length) {
+      this.sort();
+      this.apiProductsComponent = this.returnSortedData;
+      return;
+    }
+    this.apiProductsComponent = this.returnData;
   }
 
-  @Prop() filterProvider: Provider[];
-
-  @Watch("currentFilter")
-  changeFilter(newFilter: Provider[]): void {
-    let hasProvider = false;
-
-    this.apiProductsComponent = this.apiProducts.filter((e) => {
-      if (newFilter.length) {
-        for (let i = 0; i < newFilter.length; i++) {
-          hasProvider = newFilter[i].name.includes(e.provider);
-          if (hasProvider) {
-            break;
-          }
-        }
-      } else {
-        return true;
-      }
-      return hasProvider;
-    });
+  @Watch("returnSortedData")
+  changeFilter(): void {
+    this.apiProductsComponent = this.returnSortedData;
   }
 }

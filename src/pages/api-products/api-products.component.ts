@@ -5,10 +5,8 @@ import Vue from "vue";
 //Components
 import ApiListContainer from "Components/api-products/api-list-container/api-list-container.vue";
 import ApiFilter from "Components/api-products/api-filter/api-filter.vue";
-
-//Models
-import { Provider } from "@/models/api/provider.model";
-import DATA from "Pages/api-products/api-filter-mock.json";
+import Search from "Components/inputs/search/search.vue";
+import Sort from "Components/api-products/sort-api/sort-input.vue";
 
 /**
  * The api-products page
@@ -21,13 +19,16 @@ import DATA from "Pages/api-products/api-filter-mock.json";
   components: {
     ApiListContainer,
     ApiFilter,
+    Search,
+    Sort,
   },
 })
 export default class ApiProducts extends Vue {
-  apiProviders: Provider[] = DATA;
-  filterProvider: Provider[] = [];
+  filterList: string[];
 
-  filterApis(filter: Provider[]): void {
-    this.filterProvider = filter;
+  created(): void {
+    this.filterList = this.$static.providers.edges.map((el: any) => {
+      return el.node.name;
+    });
   }
 }
