@@ -29,7 +29,7 @@ pipeline {
                 sh 'git status'
                 sh 'node -v'
                 sh 'npm --version'
-                sh 'npm config list'
+                sh 'npm config set cafile "" & npm config list'
                 script {
                     if (params.cleanup) {
                         echo 'Cleaning node_modules, dist & package-lock.json'
