@@ -29,8 +29,7 @@ pipeline {
                 sh 'git status'
                 sh 'node -v'
                 sh 'npm --version'
-                sh 'npm config set proxy "http://prxo-ppr.luxhub.local:3128/"'
-                sh 'value=`cat /opt/jenkins/home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/nodejs-12.16.2/lib/node_modules/npm/.npmrc` echo "$value"'
+                sh 'npm config list'
                 script {
                     if (params.cleanup) {
                         echo 'Cleaning node_modules, dist & package-lock.json'
