@@ -29,6 +29,7 @@ pipeline {
                 sh 'git status'
                 sh 'node -v'
                 sh 'npm --version'
+                sh 'set NODE_EXTRA_CA_CERTS=./LUXHUB_Root_CA.cer & pwd'
                 script {
                     if (params.cleanup) {
                         echo 'Cleaning node_modules, dist & package-lock.json'
