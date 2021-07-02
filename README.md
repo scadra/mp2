@@ -3,22 +3,40 @@
 Frontend (static web files) for Marketplace v2.
 Built with VueJS, Typescript, Gridsome, Bulma.
 
-> This application requires **marketplace-back** as a runtime backend.
+> This application requires [marketplace-back](https://gitlab.luxhub.local/dev-luxhub/marketplace-back) as a runtime backend.
+
+- [Marketplace Front](#marketplace-front)
+  * [How to start the application](#how-to-start-the-application)
+  * [Dependencies](#dependencies)
+    + [Technologies](#technologies)
+    + [Projects](#projects)
+    + [Runtime](#runtime)
+  * [CI/CD](#ci-cd)
+    + [Jenkins](#jenkins)
+    + [Quality](#quality)
+    + [Deployment](#deployment)
+      - [Application environments](#application-environments)
+      - [Published artifacts](#published-artifacts)
+      - [Details](#details)
+  * [Local development](#local-development)
+    + [NodeJS / NPM](#nodejs---npm)
+    + [Jenkinsfile](#jenkinsfile)
 
 ## How to start the application
 
 1. First you need to execute: `npm install`
 2. Then `npm run prepare`
 3. Then `npm run develop`
-4. Point your browser to `http://localhost:8080`
+4. Point your browser to `http://localhost:8081`
+5. Login with 
 
 ## Dependencies
 
 ### Technologies
 
-- JDK 11
 - NodeJS 14+
 - npm 6+
+- JRE 8+
 
 ### Projects
 
@@ -36,11 +54,11 @@ Built with VueJS, Typescript, Gridsome, Bulma.
 
 ### Jenkins
 
-| Pipeline                                                                                                                 | Purpose                                                    | State                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [Marketplace-Frontend-Auto](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/)                 | Automatic trigger on each push                             | (multi-branch)                                                                                |
-| [Marketplace-Frontend-BuildRelease](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/) | Build or release in nexus <br> (zip with static web files) | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-BuildRelease) |
-| [Marketplace-Frontend-Deploy](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/)             | Deploy webapp                                              | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-Deploy)       |
+| Pipeline                                                                                                                 | Purpose                                                     | State                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [Marketplace-Frontend-Auto](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/)                 | Automatic trigger on each push <br> (mail on failure)       | (multi-branch)                                                                                |
+| [Marketplace-Frontend-BuildRelease](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/) | Build and release in Nexus <br> (zip with static web files) | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-BuildRelease) |
+| [Marketplace-Frontend-Deploy](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/)             | Deploy webapp <br> (use versioned zip from Nexus)           | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-Deploy)       |
 
 ### Quality
 
@@ -65,10 +83,62 @@ _Pipelines execute these 3 checks:_
 
 #### Application environments
 
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=deploy&build=lastCompleted:${params.target=1.%20DEV%20Unstable%20-%20https://marketplace-din-unstable.luxhub.local/%20-%20port2-dev.luxhub.local:446%20-%20htdoc_mktp_dindix}">](https://marketplace-din-unstable.luxhub.local/)
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=deploy&build=lastCompleted:${params.target=2.%20DEV%20Stable%20-%20https://marketplace-din-stable.luxhub.local/%20-%20port1-dev.luxhub.local:446%20-%20htdoc_mktp_dindix}">](https://marketplace-din-stable.luxhub.local/)
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=deploy&build=lastCompleted:${params.target=3.%20STG%20Unstable%20-%20https://marketplace-stg-unstable.luxhub.local/%20-%20port2-dev.luxhub.local:447%20-%20htdoc_mktp_stgstx}">](https://marketplace-stg-unstable.luxhub.local/)
-- [<img src="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/badge/icon?config=deploy&build=lastCompleted:${params.target=4.%20STG%20Stable%20-%20https://marketplace-stg-stable.luxhub.local/%20-%20port1-dev.luxhub.local:447%20-%20htdoc_mktp_stgstx}">](https://marketplace-stg-stable.luxhub.local/)
+_Deployed components diagram: static web files_
+
+**NGINX** first grabs the calls from vhosts then proxies all except `/api/*` to **port1-dev** and **port2-dev** Apache HTTPD servers.
+
+```mermaid
+graph LR
+
+subgraph stable
+FSD(<a href='https://marketplace-din-stable.luxhub.local/'>Marketplace DIN frontend</a>)
+FSS(<a href='https://marketplace-stg-stable.luxhub.local/'>Marketplace STG frontend</a>)
+end
+
+subgraph unstable
+FUD(<a href='https://marketplace-din-unstable.luxhub.local/'>Marketplace DIN frontend</a>)
+FUS(<a href='https://marketplace-stg-unstable.luxhub.local/'>Marketplace STG frontend</a>)
+end
+
+FSD --> |NGINX,Apache| PSD(<a href='https://port1-dev.luxhub.local:446/'>Webserver DIN stable</a>)
+FSS --> |NGINX,Apache| PSS(<a href='https://port1-dev.luxhub.local:447/'>Webserver STG stable</a>)
+FUD --> |NGINX,Apache| PUD(<a href='https://port2-dev.luxhub.local:446/'>Webserver DIN unstable</a>)
+FUS --> |NGINX,Apache| PUS(<a href='https://port2-dev.luxhub.local:447/'>Webserver STG unstable</a>)
+```
+
+_Deployed components diagram: APIs_
+
+**NGINX** first grabs the calls from vhosts then proxies `/api/*` to **Axway API Gateway** witch itself proxies to **Marketplace backend**.
+
+```mermaid
+graph LR
+
+subgraph stable
+    FSD(<a href='https://marketplace-din-stable.luxhub.local/'>Marketplace DIN frontend</a>)
+    FSS(<a href='https://marketplace-stg-stable.luxhub.local/'>Marketplace STG frontend</a>)
+end
+
+subgraph unstable
+    FUD(<a href='https://marketplace-din-unstable.luxhub.local/'>Marketplace DIN frontend</a>)
+    FUS(<a href='https://marketplace-stg-unstable.luxhub.local/'>Marketplace STG frontend</a>)
+end
+
+FSD -->|NGINX| GD(<a href='https://apgf1-dev.luxhub.local:20065/marketplace-back/v1/api/'>API Gateway DIX</a>)
+FSS -->|NGINX| GS(<a href='https://apgf1-dev.luxhub.local:8065/marketplace-back/v1/api/'>API Gateway STX</a>)
+FUD -->|NGINX| GD
+FUS -->|NGINX| GS
+
+GD -->|K8S| BD(<a href='https://dix-marketplaceback.kube-dev.luxhub.local/'>Marketplace DIX backend</a>)
+GS -->|K8S| BS(<a href='https://stx-marketplaceback.kube-dev.luxhub.local/'>Marketplace STX backend</a>)
+```
+
+_Stable environments of the frontend:_
+- [Marketplace DIN - https://marketplace-din-stable.luxhub.local/](https://marketplace-din-stable.luxhub.local/)
+- [Marketplace STG - https://marketplace-stg-stable.luxhub.local/](https://marketplace-stg-stable.luxhub.local/)
+
+_Unstable environments of the frontend:_
+- [Marketplace DIN - https://marketplace-din-unstable.luxhub.local/](https://marketplace-din-unstable.luxhub.local/)
+- [Marketplace STG - https://marketplace-stg-unstable.luxhub.local/](https://marketplace-stg-unstable.luxhub.local/)
 
 #### Published artifacts
 
@@ -77,68 +147,22 @@ _Pipelines execute these 3 checks:_
 
 #### Details
 
-Static web files are archived into a zip file published on Nexus by [Marketplace-Frontend-Auto](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/).
+We archive static web files into a zip file published on Nexus by [Marketplace-Frontend-Auto](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/).
 On deployment, they are exploded and stored in a frontend server (not in the cluster) and served by an Apache `httpd` properly configured sur such a rich JavaScript application (including deeplink support).
 
-> Marketplace Front is deployed into `port1-dev.luxhub.local` and `port2-dev.luxhub.local`
+> Marketplace Front deploys into `port1-dev.luxhub.local` and `port2-dev.luxhub.local`
 > (accessible using ssh through `jump-dev.luxhub.local`).
 
 _There are currently 4 instances:_
 
-| Environment  | Marketplace-front URL                          | Alternate URL                       | Actual files location                            |
-| ------------ | ---------------------------------------------- | ----------------------------------- | ------------------------------------------------ |
-| DEV Unstable | https://marketplace-din-unstable.luxhub.local/ | https://port2-dev.luxhub.local:446/ | port2-dev:/opt/axway/apiportal/htdoc_mktp_dindix |
-| DEV Stable   | https://marketplace-din-stable.luxhub.local/   | https://port1-dev.luxhub.local:446/ | port1-dev:/opt/axway/apiportal/htdoc_mktp_dindix |
-| STG Unstable | https://marketplace-stg-unstable.luxhub.local/ | https://port2-dev.luxhub.local:447/ | port2-dev:/opt/axway/apiportal/htdoc_mktp_stgstx |
-| STG Stable   | https://marketplace-stg-stable.luxhub.local/   | https://port1-dev.luxhub.local:447/ | port1-dev:/opt/axway/apiportal/htdoc_mktp_stgstx |
+| Environment  | Marketplace-front URL                          | Actual files location                            |
+| ------------ | ---------------------------------------------- | ------------------------------------------------ |
+| DEV Unstable | https://marketplace-din-unstable.luxhub.local/ | port2-dev:/opt/axway/apiportal/htdoc_mktp_dindix |
+| DEV Stable   | https://marketplace-din-stable.luxhub.local/   | port1-dev:/opt/axway/apiportal/htdoc_mktp_dindix |
+| STG Unstable | https://marketplace-stg-unstable.luxhub.local/ | port2-dev:/opt/axway/apiportal/htdoc_mktp_stgstx |
+| STG Stable   | https://marketplace-stg-stable.luxhub.local/   | port1-dev:/opt/axway/apiportal/htdoc_mktp_stgstx |
 
-_Useful commands:_
-
-- Get httpd service status:
-  `systemctl status httpd24-httpd.service`
-- View static files deployed for marketplace-front as apache, for example:
-  `sudo -u apache ls -l /opt/axway/apiportal/htdoc_mktp_dindix`
-- View service configuration:
-  `vi /usr/lib/systemd/system/httpd24-httpd.service`
-- View and modify httpd configuration as apg2adm:
-  `sudo -u apg2adm vi /opt/rh/httpd24/root/etc/httpd/conf.d/apiportal-ssl.conf`
-- Reload configuration as root:
-  `sudo -u root systemctl reload httpd24-httpd.service`
-- Check general httpd logs:
-  `sudo -u apg2adm vi /opt/rh/httpd24/root/etc/httpd/logs/error_log`
-
-_Configuration for marketplace-front (DEV Stable on port1-dev):_
-
-```
-<VirtualHost *:446>
-    SSLEngine on
-    SSLCertificateFile "/etc/pki/tls/certs/luxhub/luxhub_local.crt"
-    SSLCertificateChainFile "/etc/pki/tls/certs/luxhub/luxhub_local_chain.crt"
-    SSLCertificateKeyFile "/etc/pki/tls/private/luxhub/luxhub_local.key"
-    SSLProtocol -all +TLSv1.2
-    SSLCipherSuite EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH+aRSA+RC4:EECDH:EDH+aRSA:HIGH:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS
-
-    SSLHonorCipherOrder on
-    Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
-    Header always append X-Frame-Options SAMEORIGIN
-    Header set X-XSS-Protection "1; mode=block"
-    Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains;"
-    Header set X-Content-Type-Options nosniff
-
-    CustomLog "logs/marketplace_stable_access_dindix_log" portal
-    ErrorLog "logs/marketplace_stable_error_dindix_log"
-
-    DocumentRoot "/opt/axway/apiportal/htdoc_mktp_dindix"
-    <Directory "/opt/axway/apiportal/htdoc_mktp_dindix">
-                Options Indexes FollowSymLinks
-                AllowOverride All
-                Require all granted
-        </Directory>
-    RewriteEngine On
-</VirtualHost>
-```
-
-> TODO: Redirect `/api` to backend (commented above)
+[Apache httpd server configuration details](doc/apache-config.md)
 
 ## Local development
 
