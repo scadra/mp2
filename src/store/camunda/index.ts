@@ -6,7 +6,7 @@ import { Inject } from "inversify-props";
 import { CamundaRequest } from "Models/api/camunda-request";
 import { StepResponse } from "Models/step/step-response";
 // Services
-import ICamundaService from "Interfaces/api/camunda.interface";
+import CamundaService from "Services/api/camunda.service";
 
 /**
  * Define the camunda module
@@ -14,8 +14,8 @@ import ICamundaService from "Interfaces/api/camunda.interface";
  */
 @Module({ namespaced: true })
 class CamundaStore extends VuexModule {
-  @Inject()
-  private camundaService!: ICamundaService;
+  // Services
+  private camundaService = new CamundaService();
 
   @Inject()
   private configurationService!: IConfigurationService;

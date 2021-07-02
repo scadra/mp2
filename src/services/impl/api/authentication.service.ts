@@ -3,15 +3,16 @@ import IAuthenticationService from "Interfaces/api/authentication.interface";
 //Models
 import { UserLogin } from "Models/user/user-login";
 // Dependencies
-import { injectable } from "inversify-props";
 import axios from "axios";
 import { ResetPassword } from "Models/user/reset-password";
 
 axios.defaults.withCredentials = true;
 
-@injectable()
 export default class AuthenticationService implements IAuthenticationService {
-  private path = "api";
+  private path =
+    process.env.NODE_ENV.toUpperCase() !== "PRODUCTION"
+      ? "api"
+      : `${process.env.GRIDSOME_BACK_URL}/api`;
 
   /**
    * login
@@ -21,12 +22,8 @@ export default class AuthenticationService implements IAuthenticationService {
   async login(user: UserLogin): Promise<void> {
     const options = this.initHeaderWithCaptcha(user.recaptcha);
     try {
-      console.log("AuthenticationService Before");
       await axios.post(`${this.path}/login`, user, options);
-      console.log("AuthenticationService After");
     } catch (error) {
-      console.log("AuthenticationService Error");
-      console.log("Error: " + error + " - " + typeof error);
       throw Error(error);
     }
   }
@@ -60,7 +57,6 @@ export default class AuthenticationService implements IAuthenticationService {
         options
       );
     } catch (error) {
-      console.log("Error: " + error + " - " + typeof error);
       throw Error(error);
     }
   }

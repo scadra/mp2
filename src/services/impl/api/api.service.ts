@@ -1,10 +1,8 @@
 // Interfaces
 import IApiService from "Interfaces/api/api.interface";
 // Dependencies
-import { injectable } from "inversify-props";
 import axios from "axios";
 
-@injectable()
 export default class ApiService implements IApiService {
   private path = "api";
 
