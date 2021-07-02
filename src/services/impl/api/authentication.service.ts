@@ -9,7 +9,11 @@ import { ResetPassword } from "Models/user/reset-password";
 axios.defaults.withCredentials = true;
 
 export default class AuthenticationService implements IAuthenticationService {
-  private path = "api";
+  private path =
+    process.env.NODE_ENV.toUpperCase() !== "PRODUCTION"
+      ? "api"
+      : `${process.env.GRIDSOME_HOST}/api`;
+
   /**
    * login
    * @UserLogin user information: username + password
