@@ -12,7 +12,7 @@ export default class AuthenticationService implements IAuthenticationService {
   private path =
     process.env.NODE_ENV.toUpperCase() !== "PRODUCTION"
       ? "api"
-      : `${process.env.GRIDSOME_BACK_URL}/api`;
+      : `${process.env.GRIDSOME_HOST}/api`;
 
   /**
    * login
@@ -20,6 +20,7 @@ export default class AuthenticationService implements IAuthenticationService {
    * @return Promise function with type void
    */
   async login(user: UserLogin): Promise<void> {
+    console.log(process.env.NODE_ENV.toUpperCase());
     const options = this.initHeaderWithCaptcha(user.recaptcha);
     try {
       await axios.post(`${this.path}/login`, user, options);
@@ -84,8 +85,11 @@ export default class AuthenticationService implements IAuthenticationService {
   private initHeaderWithCaptcha(recaptcha: string) {
     return recaptcha != null
       ? {
-          headers: { captchaCode: recaptcha },
+          headers: {
+            captchaCode: recaptcha,
+            "Content-Type": "application/json",
+          },
         }
-      : {};
+      : { "Content-Type": "application/json" };
   }
 }
