@@ -37,11 +37,11 @@ Built with VueJS, Typescript, Gridsome, Bulma.
 
 ### Jenkins
 
-| Pipeline                                                                                                                 | Purpose                                                    | State                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [Marketplace-Frontend-Auto](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/)                 | Automatic trigger on each push                             | (multi-branch)                                                                                |
-| [Marketplace-Frontend-BuildRelease](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/) | Build or release in nexus <br> (zip with static web files) | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-BuildRelease) |
-| [Marketplace-Frontend-Deploy](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/)             | Deploy webapp                                              | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-Deploy)       |
+| Pipeline                                                                                                                 | Purpose                                                     | State                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [Marketplace-Frontend-Auto](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Auto/)                 | Automatic trigger on each push <br> (mail on failure)       | (multi-branch)                                                                                |
+| [Marketplace-Frontend-BuildRelease](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/) | Build and release in Nexus <br> (zip with static web files) | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-BuildRelease) |
+| [Marketplace-Frontend-Deploy](https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-Deploy/)             | Deploy webapp <br> (use versioned zip from Nexus)           | ![](https://jenkins.luxhub.local:8443/buildStatus/icon?job=Marketplace-Frontend-Deploy)       |
 
 ### Quality
 
@@ -68,7 +68,24 @@ _Pipelines execute these 3 checks:_
 
 ```mermaid
 graph LR
-    DF[<a href='http://google.com'>Marketplace DIN frontend</a>] -->|NGINX| B(Gateway)
+
+subgraph stable
+    FSD(<a href='https://marketplace-din-stable.luxhub.local/'>Marketplace DIN frontend</a>)
+    FSS(<a href='https://marketplace-stg-stable.luxhub.local/'>Marketplace STG frontend</a>)
+end
+
+subgraph unstable
+    FUD(<a href='https://marketplace-din-unstable.luxhub.local/'>Marketplace DIN frontend</a>)
+    FUS(<a href='https://marketplace-stg-unstable.luxhub.local/'>Marketplace STG frontend</a>)
+end
+
+FSD -->|NGINX| GD(<a href='https://apgf1-dev.luxhub.local:20065/marketplace-back/v1/api/'>API Gateway DIX</a>)
+FSS -->|NGINX| GS(<a href='https://apgf1-dev.luxhub.local:8065/marketplace-back/v1/api/'>API Gateway STX</a>)
+FUD -->|NGINX| GD
+FUS -->|NGINX| GS
+
+GD -->|K8S| BD(<a href='https://dix-marketplaceback.kube-dev.luxhub.local/'>Marketplace DIX backend</a>)
+GS -->|K8S| BS(<a href='https://stx-marketplaceback.kube-dev.luxhub.local/'>Marketplace STX backend</a>)
 ```
 
 _Stable environments:_
