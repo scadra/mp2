@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "npm run lint -- --fix",
     "prepare": "husky install",
-    "test-build": "serve dist"
+    "test-build": "serve dist --cors"
   },
   "dependencies": {
     "axios": "^0.21.1",
