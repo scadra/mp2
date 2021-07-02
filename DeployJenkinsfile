@@ -1,5 +1,6 @@
 def groupId = 'com.luxhub.agora'
 def artifactId = 'marketplace-front'
+def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml -B' // TODO replace -B by --no-transfer-progress on Maven 3.6.1+
 def mvnCoordinates = "${groupId}:${artifactId}:${params.version}:zip:bin"
 def artifactFile = "${artifactId}-${params.version}-bin.zip"
 def repo = params.version.endsWith('-SNAPSHOT')
@@ -13,8 +14,7 @@ def targetServer = targetComponents[2].trim()
 def targetPath = "/opt/axway/apiportal/${targetComponents[3].trim()}"
 def sshCmd = "ssh -o StrictHostKeyChecking=no"
 def sshOrig = "jenk2adm@${env.JENKINS_URL.contains('prd') ? 'jump-prd.luxhub.local' : 'jump-dev.luxhub.local'}"
-def sshDest = "jenk2adm@${(targetServer as String).split(':')[0]}"
-def deployBadge = addEmbeddableBadgeConfiguration(id: 'deploy', subject: targetComponents[0].trim(), status: 'running')
+def sshDest = "jenk2adm@${targetServer}"
 
 pipeline {
 
@@ -30,10 +30,10 @@ pipeline {
     parameters {
         string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: 'Version to deploy')
         choice(name: 'target', choices: [
-            '1. DEV Unstable - https://marketplace-din-unstable.luxhub.local/ - port2-dev.luxhub.local:446 - htdoc_mktp_dindix',
-            '2. DEV Stable - https://marketplace-din-stable.luxhub.local/ - port1-dev.luxhub.local:446 - htdoc_mktp_dindix',
-            '3. STG Unstable - https://marketplace-stg-unstable.luxhub.local/ - port2-dev.luxhub.local:447 - htdoc_mktp_stgstx',
-            '4. STG Stable - https://marketplace-stg-stable.luxhub.local/ - port1-dev.luxhub.local:447 - htdoc_mktp_stgstx'
+            '1. DEV Unstable - https://marketplace-din-unstable.luxhub.local/ - port2-dev.luxhub.local - htdoc_mktp_dindix',
+            '2. DEV Stable - https://marketplace-din-stable.luxhub.local/ - port1-dev.luxhub.local - htdoc_mktp_dindix',
+            '3. STG Unstable - https://marketplace-stg-unstable.luxhub.local/ - port2-dev.luxhub.local - htdoc_mktp_stgstx',
+            '4. STG Stable - https://marketplace-stg-stable.luxhub.local/ - port1-dev.luxhub.local - htdoc_mktp_stgstx'
         ], description: 'Server where to deploy')
         booleanParam(name: 'cleanup', defaultValue: false, description: 'Cleanup deployment directory of its existing files')
     }
@@ -50,7 +50,6 @@ pipeline {
                     echo packageJson.name
                     echo packageJson.version
                     echo packageJson.description
-                    def mvnCmd = 'mvn -s /opt/jenkins/home/maven-settings.xml -B' // TODO replace -B by --no-transfer-progress on Maven 3.6.1+
                     // Get artifact into local repo
                     sh "${mvnCmd} dependency:get -DremoteRepositories=${repo.nexusId}::${repo.layout}::${repo.nexusUrl} -Dartifact=${mvnCoordinates}"
                     // Copy artifact from local repo to current directory
@@ -115,7 +114,6 @@ pipeline {
     post {
         success {
             script {
-                deployBadge.setStatus(params.version)
                 def groupPath = groupId.replace('.', '/')
                 def actualVersion = version.endsWith('-SNAPSHOT')
                         ? sh (script: "curl -k ${repo.nexusUrl}/${groupPath}/${artifactId}/${version}/maven-metadata.xml | grep '<value>' | head -1 | sed 's/<value>\\(.*\\)<\\/value>/\\1/'", returnStdout: true).trim()
@@ -130,11 +128,10 @@ pipeline {
                             <html><body>
                             <h1>${currentBuild.currentResult}: ${env.JOB_BASE_NAME}</h1>
                             <h2>Suggested action</h2>
-                            <p>Test the new features of the application: <a href="${targetUrl}">${targetUrl}</a> (<a href="https://${targetServer}/">https://${targetServer}/</a>).</p>
+                            <p>Test the new features of the application: <a href="${targetUrl}">${targetUrl}</a>.</p>
                             <h2>Execution</h2>
                             <p>
-                                <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>
-                                ran on the branch <strong>${params['git.branch']}</strong>.
+                                <a href="${env.BUILD_URL}">Build <strong>#${env.BUILD_NUMBER}</strong></a> of the job <strong>${env.JOB_NAME}</strong>.
                             </p>
                             <h2>Outcome</h2>
                             <p>
@@ -142,11 +139,6 @@ pipeline {
                             </p>
                             </body></html>
                           """
-            }
-        }
-        failure {
-            script {
-                deployBadge.setStatus('failing')
             }
         }
         always {

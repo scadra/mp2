@@ -22,15 +22,20 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
 
+    tools {
+        nodejs "nodejs-14.15.0"
+        maven 'maven-3.6.0'
+    }
+
     parameters {
         string(name: 'branch', defaultValue: 'master', description: 'Branch to build and release')
         string(name: 'version', defaultValue: '0.0.1-SNAPSHOT', description: 'Artifact version to publish to Nexus')
         choice(name: 'deploy', choices: [
             '',
-            '1. DEV Unstable - https://marketplace-din-unstable.luxhub.local/ - port2-dev.luxhub.local:446 - htdoc_mktp_dindix',
-            '2. DEV Stable - https://marketplace-din-stable.luxhub.local/ - port1-dev.luxhub.local:446 - htdoc_mktp_dindix',
-            '3. STG Unstable - https://marketplace-stg-unstable.luxhub.local/ - port2-dev.luxhub.local:447 - htdoc_mktp_stgstx',
-            '4. STG Stable - https://marketplace-stg-stable.luxhub.local/ - port1-dev.luxhub.local:447 - htdoc_mktp_stgstx'
+            '1. DEV Unstable - https://marketplace-din-unstable.luxhub.local/ - port2-dev.luxhub.local - htdoc_mktp_dindix',
+            '2. DEV Stable - https://marketplace-din-stable.luxhub.local/ - port1-dev.luxhub.local - htdoc_mktp_dindix',
+            '3. STG Unstable - https://marketplace-stg-unstable.luxhub.local/ - port2-dev.luxhub.local - htdoc_mktp_stgstx',
+            '4. STG Stable - https://marketplace-stg-stable.luxhub.local/ - port1-dev.luxhub.local - htdoc_mktp_stgstx'
         ], description: 'Server where to deploy')
     }
 
@@ -53,9 +58,6 @@ pipeline {
         }
 
         stage('Build') {
-            tools {
-                nodejs "nodejs-14.15.0"
-            }
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
@@ -70,9 +72,6 @@ pipeline {
         stage('QA') {
             options {
                 timeout(time: 15, unit: 'MINUTES')
-            }
-            tools {
-                nodejs "nodejs-14.15.0"
             }
             steps {
                 echo 'Dependency check for vulnerabilities'
@@ -99,9 +98,6 @@ pipeline {
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
-            tools {
-                nodejs "nodejs-14.15.0"
-            }
             when {
                 expression {
                     params.branch == 'master' || params.branch ==~ /\/master/
@@ -115,9 +111,6 @@ pipeline {
         }
 
         stage('Publish') {
-            tools {
-                maven 'maven-3.6.0'
-            }
             steps {
                 echo "Publishing to ${nexusId}"
                 script {
