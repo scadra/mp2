@@ -3,7 +3,24 @@
 Frontend (static web files) for Marketplace v2.
 Built with VueJS, Typescript, Gridsome, Bulma.
 
-> This application requires **marketplace-back** as a runtime backend.
+> This application requires [marketplace-back](https://gitlab.luxhub.local/dev-luxhub/marketplace-back) as a runtime backend.
+
+- [Marketplace Front](#marketplace-front)
+  * [How to start the application](#how-to-start-the-application)
+  * [Dependencies](#dependencies)
+    + [Technologies](#technologies)
+    + [Projects](#projects)
+    + [Runtime](#runtime)
+  * [CI/CD](#ci-cd)
+    + [Jenkins](#jenkins)
+    + [Quality](#quality)
+    + [Deployment](#deployment)
+      - [Application environments](#application-environments)
+      - [Published artifacts](#published-artifacts)
+      - [Details](#details)
+  * [Local development](#local-development)
+    + [NodeJS / NPM](#nodejs---npm)
+    + [Jenkinsfile](#jenkinsfile)
 
 ## How to start the application
 
@@ -66,6 +83,33 @@ _Pipelines execute these 3 checks:_
 
 #### Application environments
 
+_Deployed components diagram: static web files_
+
+NGINX first grabs the calls from vhosts then proxies to **port1-dev** and **port2-dev** Apache HTTPD servers.
+
+```mermaid
+graph LR
+
+subgraph stable
+FSD(<a href='https://marketplace-din-stable.luxhub.local/'>Marketplace DIN frontend</a>)
+FSS(<a href='https://marketplace-stg-stable.luxhub.local/'>Marketplace STG frontend</a>)
+end
+
+subgraph unstable
+FUD(<a href='https://marketplace-din-unstable.luxhub.local/'>Marketplace DIN frontend</a>)
+FUS(<a href='https://marketplace-stg-unstable.luxhub.local/'>Marketplace STG frontend</a>)
+end
+
+FSD --> |NGINX,Apache| PSD(<a href='https://port1-dev.luxhub.local:446/'>Webserver DIN stable</a>)
+FSS --> |NGINX,Apache| PSS(<a href='https://port1-dev.luxhub.local:447/'>Webserver STG stable</a>)
+FUD --> |NGINX,Apache| PUD(<a href='https://port2-dev.luxhub.local:446/'>Webserver DIN unstable</a>)
+FUS --> |NGINX,Apache| PUS(<a href='https://port2-dev.luxhub.local:447/'>Webserver STG unstable</a>)
+```
+
+_Deployed components diagram: APIs_
+
+NGINX first grabs the calls from vhosts then proxies to Axway API Gateway witch itself proxies Marketplace backend.
+
 ```mermaid
 graph LR
 
@@ -88,11 +132,11 @@ GD -->|K8S| BD(<a href='https://dix-marketplaceback.kube-dev.luxhub.local/'>Mark
 GS -->|K8S| BS(<a href='https://stx-marketplaceback.kube-dev.luxhub.local/'>Marketplace STX backend</a>)
 ```
 
-_Stable environments:_
+_Stable environments of the frontend:_
 - [Marketplace DIN - https://marketplace-din-stable.luxhub.local/](https://marketplace-din-stable.luxhub.local/)
 - [Marketplace STG - https://marketplace-stg-stable.luxhub.local/](https://marketplace-stg-stable.luxhub.local/)
 
-_Unstable environments:_
+_Unstable environments of the frontend:_
 - [Marketplace DIN - https://marketplace-din-unstable.luxhub.local/](https://marketplace-din-unstable.luxhub.local/)
 - [Marketplace STG - https://marketplace-stg-unstable.luxhub.local/](https://marketplace-stg-unstable.luxhub.local/)
 
