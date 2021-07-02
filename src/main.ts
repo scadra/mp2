@@ -7,7 +7,7 @@ import Vuex from "vuex";
 import Vuelidate from "vuelidate";
 import VueRouter from "vue-router";
 import "reflect-metadata";
-import PerfectScrollbar from 'vue2-perfect-scrollbar';
+import PerfectScrollbar from "vue2-perfect-scrollbar";
 //Layouts
 import RootLayout from "Layouts/root/root.vue";
 import Logo from "Layouts/logo/logo.vue";
@@ -18,7 +18,7 @@ import "Styles/main.scss";
 import "buefy/dist/buefy.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css';
+import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
 //Internal dependencies
 import store from "Store/index";
 
@@ -38,8 +38,7 @@ const client: any = function (
     Vue.use(Vuex);
     Vue.use(VueRouter);
     Vue.use(require("vue-moment"));
-    Vue.use(PerfectScrollbar)
-
+    Vue.use(PerfectScrollbar);
   }
   // Define globale use for ts
   Vue.use(Vuelidate);

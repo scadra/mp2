@@ -1,14 +1,14 @@
 import { Module, Action } from "vuex-module-decorators";
-import { Inject } from "inversify-props";
 import StoreBase from "../store-base";
-import IApiService from "Interfaces/api/api.interface";
 import { StoreEnum } from "Models/enum/store.enum";
 import { Api } from "Models/api/api.model";
+import ApiService from "Services/api/api.service";
 
 @Module({ namespaced: true })
 export default class ApiStore extends StoreBase {
-  @Inject()
-  private apiService!: IApiService;
+  // Services
+  private apiService = new ApiService();
+
   private apiMessageError =
     "An error occured when trying to fetch APIs. Please try again or contact Luxhub support (TDB).";
 

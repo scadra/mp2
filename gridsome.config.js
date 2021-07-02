@@ -35,6 +35,7 @@ module.exports = {
       proxy: {
         "/api": {
           target: process.env.GRIDSOME_CAMUNDA_URL,
+          changeOrigin: true,
         },
       },
     }),
