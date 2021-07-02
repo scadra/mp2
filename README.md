@@ -85,7 +85,7 @@ _Pipelines execute these 3 checks:_
 
 _Deployed components diagram: static web files_
 
-NGINX first grabs the calls from vhosts then proxies to **port1-dev** and **port2-dev** Apache HTTPD servers.
+**NGINX** first grabs the calls from vhosts then proxies all except `/api/*` to **port1-dev** and **port2-dev** Apache HTTPD servers.
 
 ```mermaid
 graph LR
@@ -108,7 +108,7 @@ FUS --> |NGINX,Apache| PUS(<a href='https://port2-dev.luxhub.local:447/'>Webserv
 
 _Deployed components diagram: APIs_
 
-NGINX first grabs the calls from vhosts then proxies to Axway API Gateway witch itself proxies Marketplace backend.
+**NGINX** first grabs the calls from vhosts then proxies `/api/*` to **Axway API Gateway** witch itself proxies to **Marketplace backend**.
 
 ```mermaid
 graph LR
