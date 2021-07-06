@@ -1,3 +1,4 @@
+import { FilterStoreModel } from "./../../../models/filters/filter-store.model";
 // Add dependencies
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
@@ -9,6 +10,7 @@ import FilterDropdown from "Components/shared/filter-dropdown/filter-dropdown.vu
 import { Provider } from "@/models/api/provider.model";
 import { FilterDropdownModel } from "@/models/filters/filter-dropdown.model";
 import { NodeGraphQl } from "Models/graphql/node-graph-ql.model";
+
 const ApiStore = namespace("ApiStore");
 
 /**
@@ -21,6 +23,9 @@ const ApiStore = namespace("ApiStore");
 export default class ApiFilter extends Vue {
   providerFilter: FilterDropdownModel[];
 
+  @ApiStore.Action
+  addFilter!: (filter: FilterStoreModel<Api>) => void;
+
   beforeMount() {
     this.initFilters();
   }
@@ -28,7 +33,6 @@ export default class ApiFilter extends Vue {
   initFilters() {
     this.providerFilter = this.$static.providers.edges.map(
       (provider: NodeGraphQl<Provider>) => {
-        console.log(new FilterDropdownModel(provider.node.name));
         return new FilterDropdownModel(provider.node.name);
       }
     );

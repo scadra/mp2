@@ -1,5 +1,6 @@
 import { Module, Action, Mutation } from "vuex-module-decorators";
 import StoreBase from "../store-base";
+import { FilterStoreModel } from "Models/filters/filter-store.model";
 
 @Module({ namespaced: true })
 export default class FiltersStore<T> extends StoreBase {
@@ -95,11 +96,7 @@ export default class FiltersStore<T> extends StoreBase {
   }
 
   @Action
-  async addFilter(filter: {
-    callable: (data: T[], filter: string[]) => T[];
-    filters: string[];
-    key: string;
-  }): Promise<void> {
+  async addFilter(filter: FilterStoreModel<T>): Promise<void> {
     this.context.commit("pushFilter", filter);
   }
 
