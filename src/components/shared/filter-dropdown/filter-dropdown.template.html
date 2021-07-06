@@ -1,0 +1,44 @@
+<div>
+  <div class="label-container">
+    <label for="search">{{ label }}</label>
+    <!-- <a
+      href="#"
+      v-if="selectedFilter.length"
+      @click="clearFilters()"
+      class="clearFilter"
+      >Clear filters</a
+    >
+  </div>-->
+    <div class="tags-group">
+      <b-field class="tags-container">
+        <badge v-for="tag in selectedFilter" :key="tag.id"> {{ tag }} </badge>
+      </b-field>
+    </div>
+    <div class="input-search-container-outside" @click="focus=true;">
+      <div class="input-search-container">
+        <em class="fas fa-search"></em>
+        <input
+          type="text"
+          id="search"
+          :placeholder="placeholder"
+          autocomplete="off"
+        />
+        <i class="fas fa-caret-down"></i>
+      </div>
+      {{listFilters}}
+      <ul
+        v-if="listFilters.length"
+        class="filter-list card"
+        :class="{'show' : focus}"
+      >
+        <li
+          v-for="filter in listFilters"
+          :key="filter.value"
+          @click="addFilterTag(filter)"
+        >
+          <span class="filter-item">{{ filter.text }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<template
+  src="Components/shared/filter-dropdown/filter-dropdown.template.html"
+></template>
+<script
+  src="Components/shared/filter-dropdown/filter-dropdown.component.ts"
+  lang="ts"
+></script>
+<style
+  src="Components/shared/filter-dropdown/filter-dropdown.style.scss"
+  lang="scss"
+  scoped
+></style>

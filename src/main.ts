@@ -11,8 +11,6 @@ import PerfectScrollbar from "vue2-perfect-scrollbar";
 //Layouts
 import RootLayout from "Layouts/root/root.vue";
 import Logo from "Layouts/logo/logo.vue";
-//Container
-import { buildDependencyContainer } from "@/app.container";
 //Scss files
 import "Styles/main.scss";
 import "buefy/dist/buefy.css";
@@ -26,7 +24,6 @@ const client: any = function (
   Vue: any,
   { router, head, isClient, appOptions }: any
 ): void {
-  buildDependencyContainer();
   // Create defaut component
   Vue.component("Layout", RootLayout);
   Vue.component("Logo", Logo);

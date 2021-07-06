@@ -1,7 +1,5 @@
-import { injectable } from "inversify-props";
 import IConfigurationService from "Interfaces/configuration.interface";
 
-@injectable()
 export default class ConfigurationService implements IConfigurationService {
   async getConfig(key: string): Promise<string> {
     const url =

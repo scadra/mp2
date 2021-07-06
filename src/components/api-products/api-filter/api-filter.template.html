@@ -1,5 +1,9 @@
 <div>
-  <div class="label-container">
+  <filter-dropdown
+    label="Providers"
+    :list-filters="providerFilter"
+  ></filter-dropdown>
+  <!--<div class="label-container">
     <label for="search">{{ label }}</label>
     <a href="#" v-if="selectedFilter.length" @click="clearFilters()" class="clearFilter">Clear filters</a>
   </div>
@@ -23,5 +27,5 @@
           class="filterItem">{{ ele }}</span></li>
     </ul>
 
-  </div>
+  </div>-->
 </div>

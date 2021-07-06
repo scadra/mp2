@@ -5,6 +5,10 @@ import { namespace } from "vuex-class";
 //Components
 //Models
 import { Api } from "Models/api/api.model";
+import FilterDropdown from "Components/shared/filter-dropdown/filter-dropdown.vue";
+import { Provider } from "@/models/api/provider.model";
+import { FilterDropdownModel } from "@/models/filters/filter-dropdown.model";
+import { NodeGraphQl } from "Models/graphql/node-graph-ql.model";
 const ApiStore = namespace("ApiStore");
 
 /**
@@ -12,10 +16,25 @@ const ApiStore = namespace("ApiStore");
  * @Component
  */
 @Component({
-  components: {},
+  components: { FilterDropdown },
 })
 export default class ApiFilter extends Vue {
-  @ApiStore.Getter
+  providerFilter: FilterDropdownModel[];
+
+  beforeMount() {
+    this.initFilters();
+  }
+
+  initFilters() {
+    this.providerFilter = this.$static.providers.edges.map(
+      (provider: NodeGraphQl<Provider>) => {
+        console.log(new FilterDropdownModel(provider.node.name));
+        return new FilterDropdownModel(provider.node.name);
+      }
+    );
+  }
+
+  /*@ApiStore.Getter
   getFilterDataByKey!: (key: string) => string[];
 
   @ApiStore.Action
@@ -30,11 +49,6 @@ export default class ApiFilter extends Vue {
     filters: string[];
     key: string;
   }) => void;
-
-  @Prop() filterList: string[];
-  @Prop() placeholder: string;
-  @Prop() label: string;
-  @Prop() icon: string;
 
   selectedFilter: string[] = [];
   filterListComponent: string[] = [];
@@ -126,5 +140,5 @@ export default class ApiFilter extends Vue {
   sortApis(): void {
     this.updateFilterData({ filters: this.selectedFilter, key: "tagFilter" });
     this.sort();
-  }
+  }*/
 }
