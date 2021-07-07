@@ -7,12 +7,10 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const {
-  default: axios
-} = require("axios");
-const {
-  createProxyMiddleware
-} = require("http-proxy-middleware");
+const { default: axios } = require("axios");
+const { createProxyMiddleware } = require("http-proxy-middleware");
+const https = require("https");
+const fs = require("fs");
 
 module.exports = function (api) {
   // Create middleware for api
@@ -25,9 +23,7 @@ module.exports = function (api) {
     );
   });
 
-  api.createPages(({
-    createPage
-  }) => {
+  api.createPages(({ createPage }) => {
     createPage({
       path: "/component/apiportal/reset",
       component: "./src/pages/new-password.vue",
@@ -41,8 +37,9 @@ module.exports = function (api) {
       cert: fs.readFileSync("./LUXHUB_Root_CA.cer"),
     });
     const apis = await axios.get(
-      `${process.env.GRIDSOME_BACK_URL}/api/api-cards`, {
-        httpsAgent
+      `${process.env.GRIDSOME_BACK_URL}/api/api-cards`,
+      {
+        httpsAgent,
       }
     );
     const apisCollection = actions.addCollection({
@@ -78,7 +75,5 @@ module.exports = function (api) {
         name: item.name,
       });
     }
-
-
   });
 };
