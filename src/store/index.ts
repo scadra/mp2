@@ -4,6 +4,8 @@ import Vuex from "vuex";
 // Modules
 import CamundaStore from "Store/camunda";
 import AuthenticationStore from "Store/authentication";
+import ProviderStore from "Store/provider";
+import ProvidersFilterStore from "Store/provider-filter";
 
 Vue.use(Vuex);
 
@@ -15,6 +17,8 @@ const store = {
   modules: {
     CamundaStore,
     AuthenticationStore,
+    ProviderStore,
+    ProvidersFilterStore,
   },
 };
 

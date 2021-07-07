@@ -1,6 +1,7 @@
 <div>
-  <perfect-scrollbar class="is-12 column columns is-multiline api-list-container">
-    <api-card v-for="api in $static.apis.edges" :api="api.node" :key="api.id"class="is-4 column">
+  <perfect-scrollbar class="is-12 column columns is-multiline api-list-container" v-if="apiProductsComponent.length">
+    <api-card v-for="api in apiProductsComponent" :api="api" :key="api.id" class="is-4 column">
     </api-card>
   </perfect-scrollbar>
+  <span v-else>0 apis match.</span>
 </div>
