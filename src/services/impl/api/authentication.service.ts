@@ -23,7 +23,8 @@ export default class AuthenticationService implements IAuthenticationService {
     const options = this.initHeaderWithCaptcha(user.recaptcha);
     try {
       const response = await axios.post(`${this.path}/login`, user, options); // "http://localhost:8081/api/login"
-      axios.defaults.headers.common["Authorization"] = "Bearer " + (response.data as string);
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + (response.data as string);
     } catch (error) {
       throw Error(error);
     }
