@@ -62,7 +62,10 @@ module.exports = function (api) {
     }
 
     const providers = await axios.get(
-      `${process.env.GRIDSOME_BACK_URL}/api/api-providers`
+      `${process.env.GRIDSOME_BACK_URL}/api/api-providers`,
+      {
+        httpsAgent,
+      }
     );
     const providersCollection = actions.addCollection({
       typeName: "Provider",
