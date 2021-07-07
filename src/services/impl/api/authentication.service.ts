@@ -10,7 +10,9 @@ axios.defaults.withCredentials = true;
 
 export default class AuthenticationService implements IAuthenticationService {
   private path =
-      (typeof window === "undefined" ? process.env.GRIDSOME_HOST : window.location.origin) + "/api";
+    (typeof window === "undefined"
+      ? process.env.GRIDSOME_HOST // Node (server) mode
+      : window.location.origin) + "/api"; // Browser mode
 
   /**
    * login
