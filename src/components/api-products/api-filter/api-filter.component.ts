@@ -1,4 +1,4 @@
-import { FilterStoreModel } from "./../../../models/filters/filter-store.model";
+import { FilterStoreModel } from "Models/filters/filter-store.model";
 // Add dependencies
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
@@ -22,9 +22,13 @@ const ApiStore = namespace("ApiStore");
 })
 export default class ApiFilter extends Vue {
   providerFilter: FilterDropdownModel[];
+  filters: FilterStoreModel[] = [];
 
   @ApiStore.Action
-  addFilter!: (filter: FilterStoreModel<Api>) => void;
+  addFilter!: (filter: FilterStoreModel) => void;
+
+  @ApiStore.Action
+  removeFilter!: (filter: FilterStoreModel) => void;
 
   beforeMount() {
     this.initFilters();

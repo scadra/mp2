@@ -1,5 +1,4 @@
-export interface FilterStoreModel<T> {
-  callable: (data: T[], filter: string[]) => T[];
-  filters: string[];
+export interface FilterStoreModel {
+  filters: String[];
   key: string;
 }

@@ -1,6 +1,8 @@
+import { StoreEnum } from "Models/enum/store.enum";
 import { Module, Action, Mutation } from "vuex-module-decorators";
 import StoreBase from "../store-base";
 import { FilterStoreModel } from "Models/filters/filter-store.model";
+import { ArrayUtil } from "Utils/array-util";
 
 @Module({ namespaced: true })
 export default class FiltersStore<T> extends StoreBase {
@@ -9,43 +11,15 @@ export default class FiltersStore<T> extends StoreBase {
    * @T[]: the list of Data Objects to Store
    */
   protected data: T[] = [];
-  protected dataSorted: T[] = [];
-  protected filters: {
-    callable: (data: T[], filter: string[]) => T[];
-    filters: string[];
-    key: string;
-  }[] = [];
+  protected filteredData: T[] = [];
+  protected filters: FilterStoreModel[] = [];
 
-  get returnData(): T[] {
-    return this.data;
-  }
-
-  get returnSortedData(): T[] {
-    return this.dataSorted;
-  }
-
-  get returnFilters(): {
-    callable: (data: T[], filter: string[]) => T[];
-    filters: string[];
-    key: string;
-  }[] {
+  get returnFilters(): FilterStoreModel[] {
     return this.filters;
   }
 
-  get getFilterDataByKey(): (key: string) => string[] {
-    return (key: string) => {
-      const filter = this.returnFilters.filter((e) => {
-        return e.key == key;
-      });
-
-      return filter[0].filters;
-    };
-  }
-
-  //Mutations
-  @Mutation
-  setSortedData(data: T[]): void {
-    this.dataSorted = data;
+  get returnData(): T[] {
+    return this.filters.length > 0 ? this.filteredData : this.data;
   }
 
   @Mutation
@@ -54,62 +28,51 @@ export default class FiltersStore<T> extends StoreBase {
   }
 
   @Mutation
-  pushFilter(filter: {
-    callable: (data: T[], filter: string[]) => T[];
-    filters: string[];
-    key: string;
-  }): void {
-    if (!this.filters.filter((e) => e.key == filter.key).length) {
-      this.filters.push(filter);
-    }
+  setFilteredData(filteredData: T[]): void {
+    this.filteredData = filteredData;
   }
 
   @Mutation
-  setFilterData(filter: { filters: string[]; key: string }): void {
-    let index = 0;
-    let found = false;
-    for (let i = 0; i < this.filters.length; i++) {
-      if (this.filters[i].key == filter.key) {
-        found = true;
-        break;
-      }
-      index++;
-    }
-
-    if (found) {
-      this.filters[index].filters = filter.filters;
-    }
+  setFilters(filters: FilterStoreModel[]): void {
+    this.filters = filters;
   }
 
-  //Actions
   @Action
-  async sort(): Promise<void> {
-    let sortedData = this.data;
-    for (let i = 0; i < this.filters.length; i++) {
-      sortedData = this.filters[i].callable(
-        sortedData,
-        this.filters[i].filters
+  addFilter(newFilter: FilterStoreModel): void {
+    const index = this.filters.findIndex(
+      (filter) => filter.key === newFilter.key
+    );
+    if (index > -1) {
+      this.filters[index].filters = ArrayUtil.mergeArrayWithoutDuplicate(
+        this.filters[index].filters,
+        newFilter.filters
       );
+    } else {
+      this.filters.push(newFilter);
     }
-
-    this.context.commit("setSortedData", sortedData);
+    this.context.commit(StoreEnum.SETFILTERS, this.filters);
   }
 
   @Action
-  async addFilter(filter: FilterStoreModel<T>): Promise<void> {
-    this.context.commit("pushFilter", filter);
+  removeFilter(newFilter: FilterStoreModel): void {
+    const index = this.filters.findIndex(
+      (filter) => filter.key === newFilter.key
+    );
+    if (index > -1) {
+      if (this.filters[index].filters.length === 1) {
+        this.filters.splice(index, 1);
+      } else {
+        this.filters[index].filters = ArrayUtil.substractArrays(
+          this.filters[index].filters,
+          newFilter.filters
+        );
+      }
+    }
+    this.context.commit(StoreEnum.SETFILTERS, this.filters);
   }
 
   @Action
-  async addData(data: T[]): Promise<void> {
-    this.context.commit("setData", data);
-  }
-
-  @Action
-  async updateFilterData(filter: {
-    filters: string[];
-    key: string;
-  }): Promise<void> {
-    this.context.commit("setFilterData", filter);
+  addData(data: T[]): void {
+    this.context.commit(StoreEnum.SETDATA, data);
   }
 }

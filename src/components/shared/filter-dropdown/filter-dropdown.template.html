@@ -14,30 +14,29 @@
         <badge v-for="tag in selectedFilter" :key="tag.id"> {{ tag }} </badge>
       </b-field>
     </div>
-    <div class="input-search-container-outside" @click="focus=true;">
-      <div class="input-search-container">
-        <em class="fas fa-search"></em>
-        <input
-          type="text"
-          id="search"
-          :placeholder="placeholder"
-          autocomplete="off"
-        />
-        <i class="fas fa-caret-down"></i>
-      </div>
-      <ul
-        v-if="listFilters.length"
-        class="filter-list card"
-        :class="{'show' : focus}"
-      >
-        <li
-          v-for="filter in listFilters"
-          :key="filter.value"
-          @click="addFilterTag(filter)"
+    <b-dropdown v-model="modelSync" multiple aria-role="list" class="custom">
+      <template #trigger>
+        <b-button
+          icon-pack="fas"
+          icon-left="search"
+          type="is-primary"
+          icon-right="chevron-down"
+          class="dropdown-button"
         >
-          <span class="filter-item">{{ filter.text }}</span>
-        </li>
-      </ul>
-    </div>
+          <p class="btn-text"></p>
+        </b-button>
+      </template>
+      <b-dropdown-item custom aria-role="listitem">
+        <b-input v-model="searchTerm" placeholder="search" expanded />
+      </b-dropdown-item>
+      <b-dropdown-item
+        :value="filter.value"
+        aria-role="listitem"
+        v-for="(filter, index) in filteredData()"
+        :key="index"
+      >
+        <span>{{filter.text}}</span>
+      </b-dropdown-item>
+    </b-dropdown>
   </div>
 </div>
