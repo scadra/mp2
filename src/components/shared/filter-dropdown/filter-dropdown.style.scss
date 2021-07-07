@@ -3,11 +3,16 @@
   .dropdown {
     width: 100%;
   }
-  
-.dropdown-trigger {
 
-}
+  .dropdown-trigger {
+  }
 }
 .dropdown-button {
   width: 100%;
+}
+
+span {
+  & .btn-text {
+    width: 100%;
+  }
 }
