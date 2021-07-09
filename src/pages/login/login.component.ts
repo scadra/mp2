@@ -31,7 +31,7 @@ const AuthenticationStore = namespace("AuthenticationStore");
 })
 export default class Login extends Vue {
   @AuthenticationStore.Action
-  login!: (user: UserLogin) => void;
+  login!: (user: UserLogin) => Promise<void>;
 
   @AuthenticationStore.Action
   reinitMessage!: () => void;
@@ -65,9 +65,9 @@ export default class Login extends Vue {
     this.reinitMessage();
   }
 
-  signIn(): void {
+  async signIn(): Promise<void> {
     this.user.recaptcha = this.recaptchaValid;
-    this.login(this.user);
+    await this.login(this.user);
     if (this.returnIsAuth) {
       this.$router.push("/");
     }

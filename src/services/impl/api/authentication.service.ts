@@ -10,9 +10,9 @@ axios.defaults.withCredentials = true;
 
 export default class AuthenticationService implements IAuthenticationService {
   private path =
-    process.env.NODE_ENV.toUpperCase() !== "PRODUCTION"
-      ? "api"
-      : `${process.env.GRIDSOME_HOST}/api`;
+    (typeof window === "undefined"
+      ? process.env.GRIDSOME_HOST // Node (server) mode
+      : window.location.origin) + "/api"; // Browser mode
 
   /**
    * login
@@ -22,7 +22,9 @@ export default class AuthenticationService implements IAuthenticationService {
   async login(user: UserLogin): Promise<void> {
     const options = this.initHeaderWithCaptcha(user.recaptcha);
     try {
-      await axios.post(`${this.path}/login`, user, options);
+      const response = await axios.post(`${this.path}/login`, user, options); // "http://localhost:8081/api/login"
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + (response.data as string);
     } catch (error) {
       throw Error(error);
     }
