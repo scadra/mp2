@@ -1,20 +1,20 @@
 <div>
   <div class="label-container">
     <label for="search">{{ label }}</label>
-    <!-- <a
+    <a
       href="#"
-      v-if="selectedFilter.length"
+      v-if="modelSync.length"
       @click="clearFilters()"
       class="clearFilter"
       >Clear filters</a
     >
-  </div>-->
+  </div>
     <div class="tags-group">
-      <b-field class="tags-container">
-        <badge v-for="tag in selectedFilter" :key="tag.id"> {{ tag }} </badge>
+      <b-field class="badges-container">
+        <badge v-for="tag in modelSync" :key="tag.id" @update:badge="removeFilter(tag)"> {{ tag }} </badge>
       </b-field>
     </div>
-    <b-dropdown v-model="modelSync" multiple aria-role="list" class="custom">
+    <b-dropdown v-model="modelSync" :multiple="isMultiple" aria-role="list" class="lh-dropdown">
       <template #trigger>
         <b-button
           icon-pack="fas"

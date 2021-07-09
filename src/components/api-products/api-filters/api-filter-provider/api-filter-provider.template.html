@@ -1,0 +1,9 @@
+<div>
+  <filter-dropdown
+    label="Providers"
+    :list-filters="providerFilter"
+    :model.sync="filterStore.filters"
+    :is-multiple="true"
+    @update:model="applychanges()"
+  ></filter-dropdown>
+</div>

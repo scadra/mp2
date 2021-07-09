@@ -2,6 +2,7 @@
 @import "Styles/colors.scss";
 @import "Styles/input.scss";
 @import "Styles/buttons.scss";
+@import "Styles/dropdown.scss";
 
 .box {
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -33,7 +34,7 @@ body {
 }
 
 .container {
-  border: 1px solid $primary-color;
+  border: 1px solid $border-color;
   border-radius: 10px;
   background: $light-color;
   margin: auto !important;
@@ -51,4 +52,19 @@ body {
 
 .page-content {
   min-height: 89vh;
+}
+
+a {
+  color: $primary-color;
+}
+
+.badges-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .tags {
+    margin-top: 5px !important;
+    margin-bottom: 2px !important;
+    margin-right: 5px !important;
+  }
 }

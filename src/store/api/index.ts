@@ -1,4 +1,3 @@
-import { FilterStoreModel } from "@/models/filters/filter-store.model";
 import { Module, Action } from "vuex-module-decorators";
 import { StoreEnum } from "Models/enum/store.enum";
 import { Api } from "Models/api/api.model";
@@ -29,12 +28,6 @@ export default class ApiStore extends FiltersStore<Api> {
       this.context.commit(StoreEnum.SETERRORMESSAGE, this.apiMessageError);
     } finally {
       this.context.commit(StoreEnum.SETISLOADING, false);
-    }
-  }
-
-  @Action
-  async filterData(newFilter: FilterStoreModel): Promise<void> {
-    if (newFilter.key === "Global") {
     }
   }
 }

@@ -3,4 +3,6 @@ export enum StoreEnum {
   SETERRORMESSAGE = "setErrorMessage",
   SETFILTERS = "setFilters",
   SETDATA = "setData",
+  SETFILTEREDDATA = "setFilteredData",
+  SETSORTOPTION = "setSortOption",
 }

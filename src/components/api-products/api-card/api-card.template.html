@@ -1,17 +1,14 @@
-<div class="card-outer">
-  <div class="card card">
-    <div
-      class="
-        card-content card-content
-        is-flex is-flex-direction-column is-justify-content-space-between
-        p-4
-      "
-    >
+<div class="">
+  <div class="card">
+    <div class="card-content">
       <div class="card-top">
         <div class="media is-flex is-align-items-center">
           <div class="media-left">
             <figure class="image">
-              <img :src="api.logo ? api.logo : ''" alt="Api Logo" />
+              <img
+                src="https://sstudyhub.com/wp-content/uploads/2020/09/api.png"
+                alt="Api Logo"
+              />
             </figure>
           </div>
           <div class="media-content">
@@ -20,7 +17,7 @@
         </div>
 
         <div class="content">
-          <div v-show="api.description" v-html="api.description"></div>
+          <div v-show="api.description">{{formatDescription}}</div>
         </div>
         <div class="tags" v-if="api.tags && api.tags.length">
           <div class="tag" v-for="tag in formatApis">{{tag}}</div>

@@ -2,7 +2,8 @@
   attached
   closable
   aria-close-label="Remove"
-  @close="removeSelectedTag(tag)"
+  v-show="display"
+  @close="removeBadge()"
 >
   <slot></slot>
 </b-tag>

@@ -1,0 +1,28 @@
+<div class="is-12 column is-multiline columns">
+  <div class="is-7 column">
+    <div class="tags-group">
+      <b-field class="badges-container">
+        <badge
+          v-for="tag in filterStore.filters"
+          :key="tag.id"
+          @update:badge="removeFilter(tag)"
+        >
+          {{ tag }}
+        </badge>
+      </b-field>
+    </div>
+    <field-button
+      icon="search"
+      placeholder="Search"
+      buttonText="search"
+      @update:field="applychanges"
+    ></field-button>
+  </div>
+  <div class="is-5 column is-flex is-align-items-flex-end">
+    <sort-dropdown
+      :sort-options="sortOptions"
+      :model.sync="sortSelected"
+      @update:sort="sort()"
+    ></sort-dropdown>
+  </div>
+</div>

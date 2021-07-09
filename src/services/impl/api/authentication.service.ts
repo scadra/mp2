@@ -20,7 +20,6 @@ export default class AuthenticationService implements IAuthenticationService {
    * @return Promise function with type void
    */
   async login(user: UserLogin): Promise<void> {
-    console.log(process.env.NODE_ENV.toUpperCase());
     const options = this.initHeaderWithCaptcha(user.recaptcha);
     try {
       await axios.post(`${this.path}/login`, user, options);

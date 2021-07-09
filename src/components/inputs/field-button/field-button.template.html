@@ -1,0 +1,15 @@
+<form @submit.prevent="apply()">
+  <b-field>
+    <b-input
+      :placeholder="placeholder"
+      type="search"
+      :icon="icon"
+      icon-pack="fas"
+      v-model="toSearch"
+    >
+    </b-input>
+    <p class="control">
+      <b-button type="is-primary" :label="buttonText" native-type="submit" />
+    </p>
+  </b-field>
+</form>

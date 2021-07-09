@@ -1,3 +1,4 @@
+import { SortDropdownModel } from "Models/filters/sort-dropdown.model";
 import { StoreEnum } from "Models/enum/store.enum";
 import { Module, Action, Mutation } from "vuex-module-decorators";
 import StoreBase from "../store-base";
@@ -12,14 +13,22 @@ export default class FiltersStore<T> extends StoreBase {
    */
   protected data: T[] = [];
   protected filteredData: T[] = [];
-  protected filters: FilterStoreModel[] = [];
+  protected filters: FilterStoreModel<T>[] = [];
+  protected sortOption: SortDropdownModel = null;
 
-  get returnFilters(): FilterStoreModel[] {
+  get returnFilters(): FilterStoreModel<T>[] {
     return this.filters;
   }
 
   get returnData(): T[] {
-    return this.filters.length > 0 ? this.filteredData : this.data;
+    const result = this.filters.length > 0 ? this.filteredData : this.data;
+    return this.sortOption != null
+      ? ArrayUtil.sortData(
+          result,
+          this.sortOption.key,
+          this.sortOption.direction
+        )
+      : result;
   }
 
   @Mutation
@@ -33,20 +42,29 @@ export default class FiltersStore<T> extends StoreBase {
   }
 
   @Mutation
-  setFilters(filters: FilterStoreModel[]): void {
+  setFilters(filters: FilterStoreModel<T>[]): void {
     this.filters = filters;
   }
 
+  @Mutation
+  setSortOption(sortOption: SortDropdownModel): void {
+    this.sortOption = sortOption;
+  }
+
   @Action
-  addFilter(newFilter: FilterStoreModel): void {
+  updateFilters(newFilter: FilterStoreModel<T>): void {
     const index = this.filters.findIndex(
       (filter) => filter.key === newFilter.key
     );
     if (index > -1) {
-      this.filters[index].filters = ArrayUtil.mergeArrayWithoutDuplicate(
-        this.filters[index].filters,
-        newFilter.filters
-      );
+      if (newFilter.filters.length === 0) {
+        this.filters.splice(index, 1);
+      } else {
+        this.filters[index].filters = ArrayUtil.mergeArrayWithoutDuplicate(
+          this.filters[index].filters,
+          newFilter.filters
+        );
+      }
     } else {
       this.filters.push(newFilter);
     }
@@ -54,25 +72,24 @@ export default class FiltersStore<T> extends StoreBase {
   }
 
   @Action
-  removeFilter(newFilter: FilterStoreModel): void {
-    const index = this.filters.findIndex(
-      (filter) => filter.key === newFilter.key
-    );
-    if (index > -1) {
-      if (this.filters[index].filters.length === 1) {
-        this.filters.splice(index, 1);
-      } else {
-        this.filters[index].filters = ArrayUtil.substractArrays(
-          this.filters[index].filters,
-          newFilter.filters
-        );
-      }
-    }
-    this.context.commit(StoreEnum.SETFILTERS, this.filters);
+  addData(data: T[]): void {
+    this.context.commit(StoreEnum.SETDATA, data);
   }
 
   @Action
-  addData(data: T[]): void {
-    this.context.commit(StoreEnum.SETDATA, data);
+  addSortOption(sortOption: SortDropdownModel): void {
+    this.context.commit(StoreEnum.SETSORTOPTION, sortOption);
+  }
+
+  @Action
+  search(): void {
+    let result = this.data;
+    this.filters.forEach((toFind) => {
+      result = result.filter((data) => {
+        return toFind.lambda(data, toFind.filters);
+      });
+    });
+
+    this.context.commit(StoreEnum.SETFILTEREDDATA, result);
   }
 }

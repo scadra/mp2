@@ -1,0 +1,12 @@
+<template
+  src="Components/shared/sort-dropdown/sort-dropdown.template.html"
+></template>
+<script
+  src="Components/shared/sort-dropdown/sort-dropdown.component.ts"
+  lang="ts"
+></script>
+<style
+  src="Components/shared/sort-dropdown/sort-dropdown.style.scss"
+  lang="scss"
+  scoped
+></style>

@@ -73,6 +73,7 @@ module.exports = function (api) {
       providersCollection.addNode({
         id: item.id,
         name: item.name,
+        providerId: item.providerId,
       });
     }
   });

@@ -1,11 +1,10 @@
-import { ModelSync } from "vue-property-decorator";
 // Add dependencies
 import Vue from "vue";
 import { Component, Prop, PropSync } from "vue-property-decorator";
 // Components
-import Badge from "Components/shared/filter-dropdown/filter-dropdown.vue";
+import Badge from "Components/shared/badge/badge.vue";
+// Models
 import { FilterDropdownModel } from "Models/filters/filter-dropdown.model";
-import { FilterStoreModel } from "@/models/filters/filter-store.model";
 
 /**
  * Controller of filter
@@ -21,15 +20,40 @@ export default class FilterDropdown<T> extends Vue {
   @Prop() listFilters!: FilterDropdownModel[];
   @Prop() placeholder: string;
   @Prop() icon: string;
-  @PropSync("model") modelSync: T;
+  @Prop() isMultiple: boolean;
+  @PropSync("model") modelSync!: T[];
 
-  private focus = false;
   private searchTerm = "";
 
-  filteredData() {
+  /**
+   * filteredData
+   * @Component
+   */
+  filteredData(): FilterDropdownModel[] {
     return this.listFilters.filter(
       (filter) =>
         filter.text.toUpperCase().indexOf(this.searchTerm.toUpperCase()) >= 0
     );
+  }
+
+  /**
+   * clearFilters
+   * @Component
+   */
+  clearFilters(): void {
+    this.modelSync.splice(0, this.modelSync.length);
+    this.emitChanges();
+  }
+
+  removeFilter(tag: T): void {
+    const index = this.modelSync.findIndex((model) => model === tag);
+    if (index > -1) {
+      this.modelSync.splice(index, 1);
+    }
+    this.emitChanges();
+  }
+
+  emitChanges(): void {
+    this.$emit("update:model", this.modelSync);
   }
 }

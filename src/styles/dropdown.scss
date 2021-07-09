@@ -1,0 +1,30 @@
+@import "Styles/colors.scss";
+
+.dropdown-content {
+  a.dropdown-item.is-active,
+  .dropdown .dropdown-menu .has-link a.is-active,
+  button.dropdown-item.is-active {
+    background-color: $primary-color;
+  }
+}
+
+.lh-dropdown {
+  width: 100%;
+  .dropdown-trigger {
+    width: 100%;
+    .dropdown-button {
+      width: 100%;
+      background-color: white !important;
+      border-color: $border-color !important;
+      span {
+        color: $dark-color;
+        &:not(.icon) {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .dropdown-menu {
+    width: 100%;
+  }
+}

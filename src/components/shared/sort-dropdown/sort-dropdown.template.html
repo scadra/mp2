@@ -1,0 +1,26 @@
+<b-dropdown
+  v-model="modelSync"
+  aria-role="list"
+  class="lh-dropdown"
+  @change="apply"
+>
+  <template #trigger>
+    <b-button
+      icon-pack="fas"
+      icon-left="sort"
+      type="is-primary"
+      icon-right="chevron-down"
+      class="dropdown-button"
+    >
+      {{modelSync.text}}
+    </b-button>
+  </template>
+  <b-dropdown-item
+    aria-role="listitem"
+    v-for="(sort, index) in sortOptions"
+    :key="index"
+    :value="sort"
+  >
+    <span>{{sort.text}}</span>
+  </b-dropdown-item>
+</b-dropdown>

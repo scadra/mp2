@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 
 /**
  * Controller of badge
@@ -7,7 +7,10 @@ import { Component, Prop } from "vue-property-decorator";
  */
 @Component
 export default class Badge extends Vue {
-  removeSelectedTag(): void {
-    console.log("remove");
+  display = true;
+
+  removeBadge(): void {
+    this.display = false;
+    this.$emit("update:badge", false);
   }
 }

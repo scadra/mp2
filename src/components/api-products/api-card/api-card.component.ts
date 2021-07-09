@@ -21,4 +21,8 @@ export default class ApiCard extends Vue {
   get formatApis(): string[] {
     return StringFormat.getDataSplited(this.api.tags, ",");
   }
+
+  get formatDescription(): string {
+    return this.api.description.substring(0, 250) + "...";
+  }
 }
