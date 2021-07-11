@@ -11,6 +11,8 @@ const { default: axios } = require("axios");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const https = require("https");
 const fs = require("fs");
+const apis = require("./apis.json");
+const providers = require("./providers.json");
 
 module.exports = function (api) {
   // Create middleware for api
@@ -36,12 +38,12 @@ module.exports = function (api) {
       rejectUnauthorized: false, // (NOTE: this will disable client verification)
       cert: fs.readFileSync("./LUXHUB_Root_CA.cer"),
     });
-    const apis = await axios.get(
+    /*const apis = await axios.get(
       `${process.env.GRIDSOME_BACK_URL}/api/api-cards`,
       {
         httpsAgent,
       }
-    );
+    );*/
     const apisCollection = actions.addCollection({
       typeName: "Api",
     });
@@ -61,12 +63,12 @@ module.exports = function (api) {
       });
     }
 
-    const providers = await axios.get(
+    /*const providers = await axios.get(
       `${process.env.GRIDSOME_BACK_URL}/api/api-providers`,
       {
         httpsAgent,
       }
-    );
+    );*/
     const providersCollection = actions.addCollection({
       typeName: "Provider",
     });

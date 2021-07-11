@@ -1,66 +1,72 @@
 <div>
   <nav
-    class="navbar pr-10 pl-10"
-    role="navigation"
+    class="navbar is-fixed-top is-transparent"
+    :class="[!isScrolling && 'is-docked', isMobileNavOpen && 'is-solid']"
     aria-label="main navigation"
   >
     <div class="navbar-brand">
-      <g-link class="nav__link navbar-item" to="/">
-        <logo />
-      </g-link>
+      <a href="/" class="navbar-item">
+          <Logo />
+      </a>
 
       <a
         role="button"
+        :class="[isMobileNavOpen && 'is-active']"
         class="navbar-burger burger"
         aria-label="menu"
         aria-expanded="false"
-        data-target="navbarBasicExample"
+        @click="isMobileNavOpen = !isMobileNavOpen"
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
-    <div class="navbar-item">
-      <g-link class="nav__link navbar-item" to="/">Home</g-link>
-    </div>
-    <div class="navbar-item">
-      <g-link
-        class="nav__link navbar-item"
-        to="/api-register/"
-        v-if="returnIsAuth"
-        >Register an API</g-link
-      >
-    </div>
-    <div class="navbar-item">
-      <g-link class="nav__link navbar-item" to="/api-products/"
-        >Api Products</g-link
-      >
-    </div>
-    <div class="navbar-item">
-      <g-link class="nav__link navbar-item" to="/support/">Support</g-link>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item" v-if="!returnIsAuth">
-          <g-link class="nav__link navbar-item sign-up-item" to="/register/"
-            >Sign up <img alt="register image" src="~Assets/img/molecular.svg"
-          /></g-link>
-        </div>
-        <div class="navbar-item" v-if="!returnIsAuth">
-          <g-link class="navbar-item" to="/login/">Log In</g-link>
+
+    <div class="navbar-menu" :class="[isMobileNavOpen && 'is-active']">
+      <div class="navbar-start">
+        <div class="navbar-item">
+          <g-link
+            to="/get-started"
+            class="nav-link"
+          >
+          Get Started  
+          </g-link>
         </div>
 
         <div class="navbar-item">
           <g-link
-            class="nav__link navbar-item"
-            to="/api-register/"
-            v-if="returnIsAuth"
-            >Register an API</g-link
+            to="/api-products"
+            class="nav-link"
           >
+            API Products
+          </g-link>
         </div>
-        <div class="navbar-item" v-if="returnIsAuth">
-          <b-button @click="signOut()">Logout</b-button>
+
+
+        <div class="navbar-item">
+          <g-link
+            to="/api-products"
+            class="nav-link"
+          >
+            Support
+          </g-link>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <RouterLink :to="{ name: 'auth-login-1' }" class="nav-link">
+            Login
+          </RouterLink>
+        </div>
+        <div class="navbar-item">
+          <RouterLink
+            :to="{ name: 'auth-signup-1' }"
+            class="button v-button is-rounded is-info is-raised"
+          >
+            <strong>Sign up</strong>
+          </RouterLink>
         </div>
       </div>
     </div>

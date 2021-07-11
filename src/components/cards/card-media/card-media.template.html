@@ -1,0 +1,30 @@
+<div class="card v-card">
+    <div v-if="image" class="card-image">
+      <figure
+        class="image is-4by3"
+        :class="[format && `is-${format}`]"
+      >
+        <img
+          :src="image"
+          alt=""
+          @error.once="$event.target.src = placeholder"
+        />
+      </figure>
+    </div>
+    <div class="card-content">
+      <V-Block :title="title" :subtitle="subtitle" center narrow>
+        <template #icon>
+          <V-Avatar
+            v-if="avatar"
+            :picture="avatar"
+            :badge="badge"
+            size="medium"
+          />
+        </template>
+      </V-Block>
+
+      <div v-if="hasDefaultSlot" class="inner-content pt-5">
+        <slot></slot>
+      </div>
+    </div>
+  </div>

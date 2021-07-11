@@ -1,79 +1,79 @@
-@import "Styles/colors.scss";
+@import "Styles/abstracts/colors.scss";
 
 .select {
   select {
     &:focus {
-      border-color: $primary-color !important;
+      border-color: $primary !important;
     }
 
     &:active {
-      border-color: $primary-color !important;
+      border-color: $primary !important;
     }
   }
 
   select.is-focused {
-    border-color: $primary-color !important;
+    border-color: $primary !important;
   }
 
   select.is-active {
-    border-color: $primary-color !important;
+    border-color: $primary !important;
   }
 }
 
 .taginput {
   .taginput-container.is-focusable {
     &:focus {
-      border-color: $primary-color !important;
+      border-color: $primary !important;
     }
 
     &:active {
-      border-color: $primary-color !important;
+      border-color: $primary !important;
     }
   }
 
   .is-focused.taginput-container.is-focusable {
-    border-color: $primary-color !important;
+    border-color: $primary !important;
   }
 
   .is-active.taginput-container.is-focusable {
-    border-color: $primary-color !important;
+    border-color: $primary !important;
   }
 }
 
 .textarea {
   &:focus {
-    border-color: $primary-color !important;
+    border-color: $primary !important;
   }
 
   &:active {
-    border-color: $primary-color !important;
+    border-color: $primary !important;
   }
 }
 
 .input {
   &:focus {
-    border-color: $primary-color !important;
+    border-color: $primary !important;
   }
 
   &:active {
-    border-color: $primary-color !important;
+    border-color: $primary !important;
   }
 }
 
 .is-focused.textarea {
-  border-color: $primary-color !important;
+  border-color: $primary !important;
 }
 
 .is-focused.input {
-  border-color: $primary-color !important;
+  border-color: $primary !important;
 }
 
 .is-active.textarea {
-  border-color: $primary-color !important;
+  border-color: $primary !important;
 }
 
 .is-active.input {
-  border-color: $primary-color !important;
+  border-color: $primary !important;
 }
 
 .input {
@@ -81,7 +81,7 @@
   border: 1px solid $base-color !important;
 }
 .file.is-info .file-cta {
-  background-color: $complementary-color !important;
+  background-color: $accent !important;
 }
 .file-cta,
 .file-name {
@@ -125,7 +125,7 @@
   width: 100%;
 
   select {
-    background-color: $complementary-color !important;
+    background-color: $accent !important;
     color: white !important;
     width: 100%;
 

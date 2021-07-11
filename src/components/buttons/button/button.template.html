@@ -1,0 +1,72 @@
+<div>
+    <g-link
+      :aria-hidden="placeload && 'true'"
+      v-if="to"
+      :to="to"
+      :class="classes"
+    >
+      <span v-if="isIconIconify" class="icon">
+        <i aria-hidden="true" class="iconify" :data-icon="icon"></i>
+      </span>
+      <span v-else-if="icon" class="icon">
+        <i aria-hidden="true" :class="icon"></i>
+      </span>
+      <V-Placeload v-if="placeload" :width="placeload" />
+      <span v-else>
+        <slot></slot>
+      </span>
+      <span v-if="isCaretIconify" class="caret">
+        <i aria-hidden="true" class="iconify" :data-icon="iconCaret"></i>
+      </span>
+      <span v-else-if="iconCaret" class="caret">
+        <i aria-hidden="true" :class="iconCaret"></i>
+      </span>
+    </g-link>
+    <a
+      :aria-hidden="placeload && 'true'"
+      v-else-if="href"
+      :href="href"
+      :class="classes"
+    >
+      <span v-if="isIconIconify" class="icon">
+        <i aria-hidden="true" class="iconify" :data-icon="icon"></i>
+      </span>
+      <span v-else-if="icon" class="icon">
+        <i aria-hidden="true" :class="icon"></i>
+      </span>
+      <V-Placeload v-if="placeload" :width="placeload" />
+      <span v-else>
+        <slot></slot>
+      </span>
+      <span v-if="isCaretIconify" class="caret">
+        <i aria-hidden="true" class="iconify" :data-icon="iconCaret"></i>
+      </span>
+      <span v-else-if="iconCaret" class="caret">
+        <i aria-hidden="true" :class="iconCaret"></i>
+      </span>
+    </a>
+    <button
+      :aria-hidden="placeload && 'true'"
+      v-else
+      :class="classes"
+      :disabled="disabled"
+    >
+      <span v-if="isIconIconify" class="icon">
+        <i aria-hidden="true" class="iconify" :data-icon="icon"></i>
+      </span>
+      <span v-else-if="icon" class="icon">
+        <i aria-hidden="true" :class="icon"></i>
+      </span>
+  
+      <V-Placeload v-if="placeload" :width="placeload" />
+      <span v-else>
+        <slot></slot>
+      </span>
+      <span v-if="isCaretIconify" class="caret">
+        <i aria-hidden="true" class="iconify" :data-icon="iconCaret"></i>
+      </span>
+      <span v-else-if="iconCaret" class="caret">
+        <i aria-hidden="true" :class="iconCaret"></i>
+      </span>
+    </button>
+</div>

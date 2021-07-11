@@ -1,0 +1,37 @@
+<div
+    class="v-avatar"
+    :class="[
+      size && `is-${size}`,
+      dot && 'has-dot',
+      dotColor && `dot-${dotColor}`,
+      squared && dot && 'has-dot-squared',
+    ]"
+  >
+    <slot name="avatar">
+      <img
+        v-if="picture"
+        class="avatar"
+        :class="[squared && 'is-squared']"
+        :src="picture"
+        alt=""
+        @error.once="$event.target.src = 'https://via.placeholder.com/150x150'"
+      />
+      <span
+        v-else
+        class="avatar is-fake"
+        :class="[squared && 'is-squared', color && `is-${color}`]"
+      >
+        <span>{{ initials }}</span>
+      </span>
+    </slot>
+
+    <slot name="badge">
+      <img
+        v-if="badge"
+        class="badge"
+        :src="badge"
+        alt=""
+        @error.once="$event.target.src = 'https://via.placeholder.com/150x150'"
+      />
+    </slot>
+  </div>

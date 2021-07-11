@@ -1,13 +1,12 @@
-@import "Styles/colors.scss";
+@import "Styles/abstracts/colors.scss";
 
 .button.is-link{
-    background-color: $secondary-color !important;
+    background-color: $secondary !important;
 }
 
 .button.is-primary{
-    background-color: $primary-color !important;
+    background-color: $primary !important;
     color: white !important;
-    border-color: $complementary-color !important;
 }
 .button.is-danger {
     background: $error-color !important;

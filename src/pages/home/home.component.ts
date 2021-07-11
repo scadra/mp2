@@ -1,6 +1,8 @@
 // Dependencies
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
+import HomeHeader from "Pages/home/home-header/home-header.vue";
+import HomeBody from "Pages/home/home-body/home-body.vue";
 
 /**
  * The home page
@@ -10,6 +12,9 @@ import Vue from "vue";
   metaInfo: {
     title: "home",
   },
-  components: {},
+  components: {
+    HomeHeader,
+    HomeBody,
+  },
 })
 export default class Home extends Vue {}

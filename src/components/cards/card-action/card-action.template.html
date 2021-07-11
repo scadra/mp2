@@ -1,0 +1,20 @@
+<div
+class="is-raised"
+:class="[
+  radius === 'regular' && 's-card',
+  radius === 'smooth' && 'r-card',
+  radius === 'rounded' && 'l-card',
+]"
+>
+<div class="card-head">
+  <mp-block :title="title" :subtitle="subtitle" center>
+    <template #icon>
+      <mp-avatar :picture="avatar" :badge="badge" />
+    </template>
+    <template #action><slot name="action"></slot></template>
+  </mp-block>
+</div>
+<div v-if="hasDefaultSlot" class="card-inner">
+  <slot></slot>
+</div>
+</div>

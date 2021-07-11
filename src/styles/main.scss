@@ -1,9 +1,71 @@
 @import "bulma-o-steps/bulma-steps.sass";
-@import "Styles/colors.scss";
+@import "Styles/abstracts/colors.scss";
 @import "Styles/input.scss";
 @import "Styles/buttons.scss";
 @import "Styles/dropdown.scss";
+@import "Styles/hero.scss";
 
+@import './abstracts/mixins.scss';
+
+@import './extensions/all.scss';
+
+@import './abstracts/typography.scss';
+@import './abstracts/animations.scss';
+@import './abstracts/transitions.scss';
+@import './abstracts/helpers.scss';
+
+@import './layout/_layout.scss';
+@import './layout/_utilities.scss';
+
+@import './elements/_buttons.scss';
+@import './elements/_blocks.scss';
+@import './elements/_cards.scss';
+@import './elements/_content.scss';
+@import './elements/_forms-general.scss';
+@import './elements/_forms-combos.scss';
+@import './elements/_forms-checkboxes.scss';
+@import './elements/_forms-slider.scss';
+@import './elements/_forms-multiselect.scss';
+@import './elements/_icons.scss';
+@import './elements/_links.scss';
+@import './elements/_lists.scss';
+@import './elements/_tags.scss';
+
+@import './components/_nprogress.scss';
+@import './components/_accordion.scss';
+@import './components/_breadcrumbs.scss';
+@import './components/_datepicker.scss';
+@import './components/_dropdowns.scss';
+@import './components/_editors.scss';
+@import './components/_modals.scss';
+@import './components/_message.scss';
+@import './components/_media.scss';
+@import './components/_charts.scss';
+@import './components/_loader.scss';
+@import './components/_toggles.scss';
+@import './components/_video-player.scss';
+@import './components/_placeholders.scss';
+@import './components/_placeload.scss';
+@import './components/_popovers.scss';
+@import './components/_progress.scss';
+@import './components/_theme-switch.scss';
+@import './components/_avatar.scss';
+@import './components/_snacks.scss';
+@import './components/_switch-segment.scss';
+@import './components/_tabs.scss';
+@import './components/_table.scss';
+@import './components/_datatable.scss';
+@import './components/_toasts.scss';
+@import './components/_toolbar.scss';
+@import './components/_tooltips.scss';
+@import './components/_circle-chart.scss';
+@import './components/_ckeditor.scss';
+@import './components/_credit-card.scss';
+
+
+.container{
+  padding-top: 5%;
+}
 .box {
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
@@ -33,31 +95,9 @@ body {
   min-height: 100vh;
 }
 
-.container {
-  border: 1px solid $border-color;
-  border-radius: 10px;
-  background: $light-color;
-  margin: auto !important;
-
-  .button-container {
-    width: 100%;
-    text-align: center;
-  }
-
-  h3 {
-    text-align: center;
-    margin: 3% 0;
-  }
-}
-
 .page-content {
   min-height: 89vh;
 }
-
-a {
-  color: $primary-color;
-}
-
 .badges-container {
   display: flex;
   flex-wrap: wrap;

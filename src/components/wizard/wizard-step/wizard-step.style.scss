@@ -1,4 +1,4 @@
-@import "Styles/colors.scss";
+@import "Styles/abstracts/colors.scss";
 
 
 .steps {
@@ -6,25 +6,25 @@
     &:not(.is-hollow) {
         .is-complete {
             &::after  {
-                background-color: $complementary-color !important;
+                background-color: $accent !important;
             }
             .steps-content {
-                    color: $complementary-color !important;
+                    color: $accent !important;
             }
         }
         .steps-segment.is-active {
             .steps-marker {
                 &:not(.is-hollow) {
-                    background-color: $complementary-color;
+                    background-color: $accent;
                 }
             }
 
             &::after {
-                background: linear-gradient(90deg, $complementary-color 50%, $base-color 50%);
+                background: linear-gradient(90deg, $accent 50%, $base-color 50%);
             }
 
             .steps-content {
-                color: $complementary-color;
+                color: $accent;
             }
         }
        .steps-segment {
@@ -60,7 +60,7 @@
         }
         .steps-marker {
             &:not(.is-hollow) {
-                background-color: $complementary-color;
+                background-color: $accent;
             }
             
         }

@@ -1,0 +1,27 @@
+{"data": [
+  {
+    "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3414",
+    "name": "Luxhub",
+    "providerId": "luxhub"
+  },
+  {
+    "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3424",
+    "name": "Agora",
+    "providerId": "AGORA"
+  },
+  {
+    "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3434",
+    "name": "Demo stet",
+    "providerId": "demolullstet"
+  },
+  {
+    "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3444",
+    "name": "Demo bank 1",
+    "providerId": "demobank1"
+  },
+  {
+    "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454",
+    "name": "Demo esse",
+    "providerId": "demoesse"
+  }
+]}

@@ -1,19 +1,4 @@
 <Layout>
-    <div class="columns is-centered">
-        <div class="card">
-            <div class="card-content">
-                <p class="title" v-html="$static.metadata.siteName"></p>
-                <p class="subtitle" v-html="$static.metadata.siteVersion"></p>
-                <p v-html="$static.metadata.siteDescription"></p>
-            </div>
-            <footer class="card-footer">
-                <p class="card-footer-item">
-                    <span>View <a href="https://gitlab.luxhub.local/dev-luxhub/marketplace-front/blob/master/README.md">README</a></span>
-                </p>
-                <p class="card-footer-item">
-                    <span>Built at <a href="https://jenkins.luxhub.local:8443/view/Agora/job/Marketplace-Frontend-BuildRelease/" v-html="$static.metadata.siteTimestamp"></a></span>
-                </p>
-            </footer>
-        </div>
-    </div>
+    <home-header></home-header>
+    <home-body></home-body>
 </Layout>

@@ -2,6 +2,7 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { namespace } from "vuex-class";
+import { useWindowScroll } from "@vueuse/core";
 
 const AuthenticationStore = namespace("AuthenticationStore");
 
@@ -19,5 +20,10 @@ export default class Navbar extends Vue {
 
   signOut(): void {
     this.logout();
+  }
+
+  get isScrolling(): boolean {
+    const { y } = useWindowScroll();
+    return y.value > 30;
   }
 }
