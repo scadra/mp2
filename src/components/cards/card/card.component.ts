@@ -15,6 +15,7 @@ export default class MPCard extends Vue {
   elevated!: boolean;
 
   get cardRadius(): string {
+    console.log(this.radius);
     if (this.radius === "smooth") {
       return "s-card";
     } else if (this.radius === "rounded") {

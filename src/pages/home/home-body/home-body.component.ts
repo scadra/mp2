@@ -2,7 +2,7 @@
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
 // Components
-import MPCardMedia from "@/components/cards/card-media/card-media.vue";
+import MpCard from "Components/cards/card/card.vue";
 
 /**
  * The home page
@@ -13,7 +13,7 @@ import MPCardMedia from "@/components/cards/card-media/card-media.vue";
     title: "home",
   },
   components: {
-    MPCardMedia,
+    MpCard,
   },
 })
 export default class HomeBody extends Vue {}
